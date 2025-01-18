@@ -56,6 +56,10 @@ jobs:
         java-version: '23'
         distribution: 'temurin'
 
+    - name: Change wrapper permissions
+      run: chmod +x ./gradlew
+      working-directory: ./backend
+
     - name: Build and analyze dependencies
       run: ./backend/gradlew dependencies
 
