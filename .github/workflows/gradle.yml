@@ -47,6 +47,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    defaults:
+      run:
+        working-directory: ./backend
 
     steps:
     - uses: actions/checkout@v4
@@ -58,10 +61,9 @@ jobs:
 
     - name: Change wrapper permissions
       run: chmod +x ./gradlew
-      working-directory: ./backend
 
     - name: Build and analyze dependencies
-      run: ./backend/gradlew dependencies
+      run: ./gradlew dependencies
 
     # # Generates and submits a dependency graph, enabling Dependabot Alerts for all project dependencies.
     # # See: https://github.com/gradle/actions/blob/main/dependency-submission/README.md
