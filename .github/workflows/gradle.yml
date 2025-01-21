@@ -38,7 +38,7 @@ jobs:
       working-directory: ./backend
 
     - name: Build with Gradle Wrapper
-      run: ./gradlew build
+      run: ./gradlew build --stacktrace --info
       working-directory: ./backend
 
 
