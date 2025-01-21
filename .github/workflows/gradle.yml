@@ -38,7 +38,7 @@ jobs:
       working-directory: ./backend
 
     - name: Build with Gradle Wrapper
-      run: ./gradlew build --stacktrace --info
+      run: ./gradlew build
       working-directory: ./backend
 
 
@@ -69,5 +69,4 @@ jobs:
     # # See: https://github.com/gradle/actions/blob/main/dependency-submission/README.md
     - name: Generate and submit dependency graph
       uses: gradle/actions/dependency-submission@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
-      with:
-        working-directory: "./backend"
+      
