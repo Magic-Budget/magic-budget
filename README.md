@@ -15,7 +15,7 @@ Stakeholders include:
 
 ### Feature 1: Receipt Scanner
 
-Uses want to scan there receipts so they can automatically keep track of their spending so they don’t have to manually import it.
+Users want to scan there receipts so they can automatically keep track of their spending so they don’t have to manually import it.
 
 ### Feature 2: Tracking spending habits
 
