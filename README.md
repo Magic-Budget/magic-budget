@@ -57,28 +57,28 @@ For testing the application we will use Playwright to test the website frontend.
 
 ### Receipt Scanner
 
-![Feature 1](Documentation\UserStories\Feature1.png)
+![Feature 1](./Documentation/UserStories/Feature1.png)
 
 ### Tracking spending habits
 
-![Feature 2](Documentation\UserStories\Feature2.png)
+![Feature 2](./Documentation/UserStories/Feature2.png)
 
 ### Split and track shared payments
 
-![Feature 3](Documentation\UserStories\Feature3.png)
+![Feature 3](./Documentation/UserStories/Feature3.png)
 
 ### Keep track of credit and fixed income
 
-![Feature 4](Documentation\UserStories\Feature4.png)
+![Feature 4](./Documentation/UserStories/Feature4.png)
 
 ### Set saving goals
 
-![Feature 5](Documentation\UserStories\Feature5.png)
+![Feature 5](./Documentation/UserStories/Feature5.png)
 
 ### Account and login
 
-![Feature 6](Documentation\UserStories\Feature6.png)
+![Feature 6](./Documentation/UserStories/Feature6.png)
 
 ### Support chat
 
-![Feature 7](Documentation\UserStories\Feature7.png)
+![Feature 7](./Documentation/UserStories/Feature7.png)
