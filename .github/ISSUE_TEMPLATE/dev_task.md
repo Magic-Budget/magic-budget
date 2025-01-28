@@ -13,4 +13,4 @@ Write a description of task
 
 ## Tasks
 
-[] List the subtasks
+- [] List the subtasks
