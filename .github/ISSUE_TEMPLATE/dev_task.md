@@ -4,7 +4,7 @@ about: Detail technical tasks
 title: ''
 labels: 'dev tasks'
 assignees: ''
-projects: ['Magic Budget']
+projects: ['magic-budget/1']
 ---
 
 ## Description
