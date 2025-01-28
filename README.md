@@ -53,6 +53,10 @@ For continuous integration and delivery (CI/CD), we will utilize GitHub Actions,
 
 For testing the application we will use Playwright to test the website frontend. JUnit and Mockito to handle testing the backend of the application. While also using Locust to load test the backend.
 
+## Block Diagram
+
+![Block Diagram](./Documentation/Diagrams/Block_Diagram.png)
+
 ## User Stories
 
 ### Receipt Scanner
