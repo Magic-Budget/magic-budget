@@ -65,3 +65,30 @@ We decided to build an AI-Enhanced Budgeting tool
 - DB: PostgreSQL or MySQL
 - Backend: Spring Boot
 - Frontend: Nextjs
+
+
+## Meeting 2 (January 21)
+
+### Agenda
+
+- Work on project proposal
+- Created user stories
+
+
+### Notes
+- Uploaded user stories on github
+
+## Meeting 3 (January 27)
+
+### Agenda
+
+- Work on block diagram
+- Continue on presentations
+- Create dev tasks
+
+
+
+### Notes
+- Looked over rubric
+- Used diagrams.net for block diagram
+- Continue working on dev tasks
