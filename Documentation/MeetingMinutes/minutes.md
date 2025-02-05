@@ -92,3 +92,22 @@ We decided to build an AI-Enhanced Budgeting tool
 - Looked over rubric
 - Used diagrams.net for block diagram
 - Continue working on dev tasks
+
+## Meeting 4 (February 5)
+
+### Agenda
+
+- Decide features for sprint 2
+- Assign dev tasks
+
+### Notes
+
+- Decided that the 4 features that we will work on for this sprint are
+    1. Account and Login
+    2. Transaction tracker
+    3. Saving goals tracker
+    4. Debits/credits and expense prediction
+- Assigned dev tasks to every member
+  - All of it is in the Github project
+- Created labels for frontend, backend and db-specific tasks
+- Created a milestone for sprint 2
