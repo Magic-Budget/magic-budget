@@ -1,24 +1,25 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TransactionTable from "./transactionTable";
+import TablePagination from "./paginationButton";
 
 export default function Transactions() {
 	return (
-		<div>
-			<Tabs defaultValue="transaction-table">
+		<div className="flex justify-center m-3">
+			<Tabs
+				defaultValue="transaction-table"
+				className="w-5/6"
+			>
 				<TabsList>
 					<TabsTrigger value="transaction-table">Table</TabsTrigger>
 					<TabsTrigger value="transaction-graph">Graph</TabsTrigger>
 				</TabsList>
-				
+
 				<TabsContent value="transaction-table">
-					<TransactionTable/>
+					<TransactionTable start={0} end={5}/>
 				</TabsContent>
 
-
-				<TabsContent value="transaction-graph">
-
-				</TabsContent>
+				<TabsContent value="transaction-graph"></TabsContent>
 			</Tabs>
 		</div>
 	);
