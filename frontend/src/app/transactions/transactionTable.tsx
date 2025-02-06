@@ -33,22 +33,35 @@ export default async function TransactionTable(props:Props) {
 				</TableHeader>
 
 				<TableBody className="bg-gray-200">
-					{(await getTransactions(username, props.start, props.end)).map(
-						(transaction: Transaction) => (
-							<TableRow key={"transaction-" + transaction.id}>
-								<TableCell className="font-medium">
-									{transaction.getDateString()}
-								</TableCell>
-								<TableCell className="font-bold">
-									{transaction.name}
-								</TableCell>
-								<TableCell>{transaction.amount}</TableCell>
-								<TableCell className="text-right">
-									{transaction.description}
-								</TableCell>
-							</TableRow>
-						)
-					)}
+					{(
+						await getTransactions(username, props.start, props.end)
+					).map((transaction: Transaction) => (
+						<TableRow key={"transaction-" + transaction.id}>
+							<TableCell
+								id={`transaction-${transaction.id}-date`}
+								className="font-medium"
+							>
+								{transaction.getDateString()}
+							</TableCell>
+							<TableCell
+								id={`transaction-${transaction.id}-name`}
+								className="font-bold"
+							>
+								{transaction.name}
+							</TableCell>
+							<TableCell
+								id={`transaction-${transaction.id}-amount`}
+							>
+								{`$${transaction.amount.toFixed(2)}`}
+							</TableCell>
+							<TableCell
+								id={`transaction-${transaction.id}-description`}
+								className="text-right"
+							>
+								{transaction.description}
+							</TableCell>
+						</TableRow>
+					))}
 				</TableBody>
 			</Table>
 			<TablePagination></TablePagination>
