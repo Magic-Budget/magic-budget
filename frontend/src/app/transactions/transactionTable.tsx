@@ -19,7 +19,7 @@ interface Props{
 export default async function TransactionTable(props:Props) {
 	let username = getUsername();
 	return (
-		<div className="items-align-center mx-3 w-4/5">
+		<div className="mx-3">
 			<Table>
 				<TableHeader>
 					<TableRow className="bg-gray-600">
