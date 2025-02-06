@@ -26,6 +26,7 @@ export default async function TransactionTable(props:Props) {
 						<TableHead className="w-25 text-white">Date</TableHead>
 						<TableHead className="text-white">Name</TableHead>
 						<TableHead className="text-white w-">Amount</TableHead>
+						<TableHead className="text-white w-">Category</TableHead>
 						<TableHead className="text-right text-white">
 							Description
 						</TableHead>
@@ -55,6 +56,11 @@ export default async function TransactionTable(props:Props) {
 								{`$${transaction.amount.toFixed(2)}`}
 							</TableCell>
 							<TableCell
+								id={`transaction-${transaction.id}-amount`}
+							>
+								{transaction.category}
+							</TableCell>
+							<TableCell
 								id={`transaction-${transaction.id}-description`}
 								className="text-right"
 							>
@@ -78,6 +84,7 @@ async function getTransactions(username:string, start:number, end:number):Promis
 			new Date(Date.now()).toISOString(),
 			`Transaction ${i}`,
 			0,
+			"Category 1",
 			"This is a test"
 		))
 	}
