@@ -19,14 +19,18 @@ interface Props{
 export default async function TransactionTable(props:Props) {
 	let username = getUsername();
 	return (
-		<div className="mx-3">
+		<div>
 			<Table>
 				<TableHeader>
 					<TableRow className="bg-gray-600">
-						<TableHead className="w-25 text-white">Date</TableHead>
-						<TableHead className="text-white">Name</TableHead>
-						<TableHead className="text-white w-">Amount</TableHead>
-						<TableHead className="text-white w-">Category</TableHead>
+						<TableHead className="w-1/8 text-white">Date</TableHead>
+						<TableHead className="w-1/5 text-white">Name</TableHead>
+						<TableHead className="w-1/5 text-white">
+							Amount
+						</TableHead>
+						<TableHead className="w-1/5 text-white ">
+							Category
+						</TableHead>
 						<TableHead className="text-right text-white">
 							Description
 						</TableHead>
@@ -79,14 +83,16 @@ export default async function TransactionTable(props:Props) {
 async function getTransactions(username:string, start:number, end:number):Promise<Transaction[]> {
 	let transacts:Transaction[] = [];
 	for (let i = start; i<end; i++){
-		transacts.push(new Transaction(
-			`transaction${i}`,
-			new Date(Date.now()).toISOString(),
-			`Transaction ${i}`,
-			0,
-			"Category 1",
-			"This is a test"
-		))
+		transacts.push(
+			new Transaction(
+				`transaction${i}`,
+				new Date(Date.now()).toISOString(),
+				`Transaction ${i}`,
+				0,
+				"Category 1",
+				"According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway, because bees don't care what humans think is impossible."
+			)
+		);
 	}
 	return transacts
 }

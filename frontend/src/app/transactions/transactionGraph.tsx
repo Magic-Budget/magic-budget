@@ -1,3 +1,8 @@
+/**
+ * This file is based in its entirety on the demo code on ShadCN documentation
+ * Retrieved from: https://ui.shadcn.com/charts
+ */
+
 "use client";
 
 import * as React from "react";
@@ -22,45 +27,52 @@ import {
 
 //const Data = getChartData(new Date(Date.now()).getMonth());
 
-const chartData = [
-	{ category: "groceries", amount: 275, fill: "var(--color-groceries)" },
-	{ category: "transportation", amount: 432, fill: "var(--color-transportation)" },
-	{ category: "restaurants", amount: 287, fill: "var(--color-restaurants)" },
-	{ category: "housing", amount: 173, fill: "var(--color-housing)" },
-	{ category: "utilities", amount: 173, fill: "var(--color-utilites)" },
-	{ category: "other", amount: 190, fill: "var(--color-other)" },
-];
+const chartData = getChartData();
 
+const chartConfig = getChartConfig();
 
-const chartConfig = {
-	totalAmount: {
-		label: "Total Amount",
-	},
-	groceries: {
-		label: "Groceries",
-		color: "hsl(var(--chart-1))",
-	},
-	transportation: {
-		label: "transportation",
-		color: "hsl(var(--chart-2))",
-	},
-	restaurants: {
-		label: "restaurants",
-		color: "hsl(var(--chart-3))",
-	},
-	housing: {
-		label: "housing",
-		color: "hsl(var(--chart-4))",
-	},
-	utilities: {
-		label: "utilities",
-		color: "hsl(var(--chart-5))",
-	},
-	other: {
-		label: "Other",
-		color: "hsl(var(--chart-5))",
-	},
-} satisfies ChartConfig;
+function getChartData() {
+	return [
+		{ category: "groceries", amount: 275, fill: "var(--color-groceries)" },
+		{ category: "transportation", amount: 432, fill: "var(--color-transportation)" },
+		{ category: "restaurants", amount: 287, fill: "var(--color-restaurants)" },
+		{ category: "housing", amount: 173, fill: "var(--color-housing)" },
+		{ category: "utilities", amount: 173, fill: "var(--color-utilities)" },
+		{ category: "other", amount: 190, fill: "var(--color-other)" },
+	];
+}
+
+function getChartConfig(): ChartConfig {
+	return {
+		totalAmount: {
+			label: "Total Amount",
+		},
+		groceries: {
+			label: "Groceries",
+			color: "hsl(var(--chart-1))",
+		},
+		transportation: {
+			label: "Transp.",
+			color: "hsl(var(--chart-2))",
+		},
+		restaurants: {
+			label: "Eat Outside",
+			color: "hsl(var(--chart-3))",
+		},
+		housing: {
+			label: "Housing",
+			color: "hsl(var(--chart-4))",
+		},
+		utilities: {
+			label: "Utilities",
+			color: "hsl(var(--chart-5))",
+		},
+		other: {
+			label: "Other",
+			color: "hsl(var(--chart-6))",
+		},
+	};
+}
 
 export default function TransactionGraph() {
 	const totalVisitors = React.useMemo(() => {
@@ -109,14 +121,14 @@ export default function TransactionGraph() {
 													y={viewBox.cy}
 													className="fill-foreground text-3xl font-bold"
 												>
-													{totalVisitors.toLocaleString()}
+													${totalVisitors.toLocaleString()}
 												</tspan>
 												<tspan
 													x={viewBox.cx}
 													y={(viewBox.cy || 0) + 24}
 													className="fill-muted-foreground"
 												>
-													Visitors
+													spent this month
 												</tspan>
 											</text>
 										);
