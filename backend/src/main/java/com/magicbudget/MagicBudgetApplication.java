@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MagicbudgetApplication {
+public class MagicBudgetApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MagicbudgetApplication.class, args);
+		SpringApplication.run(MagicBudgetApplication.class, args);
 	}
 
 }
