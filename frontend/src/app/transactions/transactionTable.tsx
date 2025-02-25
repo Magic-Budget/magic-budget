@@ -10,14 +10,18 @@ import {
 } from "@/components/ui/table";
 import Transaction from "./(objects)/transaction";
 import TablePagination from "./paginationButton";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 interface Props{
 	start:number;
 	end:number;
 }
-
 export default async function TransactionTable(props:Props) {
 	let username = getUsername();
+	const { data: transactions } = useQuery({
+		queryKey: ["transactions", username, props.start, props.end],
+		queryFn: () => getTransactions(username, props.start, props.end),
+	});
 	return (
 		<div>
 			<Table>
@@ -25,22 +29,14 @@ export default async function TransactionTable(props:Props) {
 					<TableRow className="bg-gray-600">
 						<TableHead className="w-1/8 text-white">Date</TableHead>
 						<TableHead className="w-1/5 text-white">Name</TableHead>
-						<TableHead className="w-1/5 text-white">
-							Amount
-						</TableHead>
-						<TableHead className="w-1/5 text-white ">
-							Category
-						</TableHead>
-						<TableHead className="text-right text-white">
-							Description
-						</TableHead>
+						<TableHead className="w-1/5 text-white">Amount</TableHead>
+						<TableHead className="w-1/5 text-white ">Category</TableHead>
+						<TableHead className="text-right text-white">Description</TableHead>
 					</TableRow>
 				</TableHeader>
 
 				<TableBody className="bg-gray-200">
-					{(
-						await getTransactions(username, props.start, props.end)
-					).map((transaction: Transaction) => (
+					{transactions?.map((transaction: Transaction) => (
 						<TableRow key={"transaction-" + transaction.id}>
 							<TableCell
 								id={`transaction-${transaction.id}-date`}
