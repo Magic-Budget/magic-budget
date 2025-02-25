@@ -1,13 +1,10 @@
 import React from "react";
 import TransactionTable from "./transactionTable";
 import TransactionGraph from "./transactionGraph";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 
 export default function Transactions() {
-	const queryClient = new QueryClient();
 	return (
-		<QueryClientProvider client={queryClient}>
 				<div className="m-3">
 					<h1 className="text-2xl text-bold text-align-left">Welcome!</h1>
 					<div className="flex">
@@ -21,6 +18,5 @@ export default function Transactions() {
 						</div>
 					</div>
 				</div>
-		</QueryClientProvider>
 	);
 }

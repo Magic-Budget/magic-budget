@@ -18,10 +18,11 @@ interface Props{
 }
 export default async function TransactionTable(props:Props) {
 	let username = getUsername();
-	const { data: transactions } = useQuery({
-		queryKey: ["transactions", username, props.start, props.end],
-		queryFn: () => getTransactions(username, props.start, props.end),
-	});
+	const transactions  = getTransactions(
+		username,
+		props.start,
+		props.end
+	);
 	return (
 		<div>
 			<Table>
@@ -36,7 +37,7 @@ export default async function TransactionTable(props:Props) {
 				</TableHeader>
 
 				<TableBody className="bg-gray-200">
-					{transactions?.map((transaction: Transaction) => (
+					{(await transactions)?.map((transaction: Transaction) => (
 						<TableRow key={"transaction-" + transaction.id}>
 							<TableCell
 								id={`transaction-${transaction.id}-date`}
