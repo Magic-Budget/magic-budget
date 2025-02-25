@@ -44,6 +44,9 @@ public class Transaction {
   @NotNull
   private String description;
 
+  public Transaction() {
+  }
+
   public Transaction(UUID id, User user, String name, LocalDateTime transactionDate,
       BigDecimal amount, String description) {
     this.id = id;

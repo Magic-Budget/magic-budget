@@ -36,6 +36,16 @@ public class SavingGoal {
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
 
+  public SavingGoal() {
+  }
+
+  public SavingGoal(BigDecimal amount, UUID id, String name, User user) {
+    this.amount = amount;
+    this.id = id;
+    this.name = name;
+    this.user = user;
+  }
+
   public UUID id() {
     return id;
   }

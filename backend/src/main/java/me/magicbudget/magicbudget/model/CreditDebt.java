@@ -42,6 +42,18 @@ public class CreditDebt {
   @Column(precision = 19, scale = 4)
   private BigDecimal interestRate;
 
+  public CreditDebt() {
+  }
+
+  public CreditDebt(UUID id, Business business, User user, BigDecimal amount,
+      BigDecimal interestRate) {
+    this.id = id;
+    this.business = business;
+    this.user = user;
+    this.amount = amount;
+    this.interestRate = interestRate;
+  }
+
   public UUID id() {
     return id;
   }

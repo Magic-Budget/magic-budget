@@ -32,6 +32,9 @@ public class User {
   @NotNull
   private String hashedPassword;
 
+  public User() {
+  }
+
   public User(UUID id, String username, String firstName, String lastName, String hashedPassword) {
     this.id = id;
     this.username = username;
@@ -46,6 +49,14 @@ public class User {
 
   public void setId(UUID id) {
     this.id = id;
+  }
+
+  public @NotNull @Size(max = 50) String username() {
+    return username;
+  }
+
+  public void setUsername(@NotNull @Size(max = 50) String username) {
+    this.username = username;
   }
 
   public @NotNull @Size(max = 50) String firstName() {

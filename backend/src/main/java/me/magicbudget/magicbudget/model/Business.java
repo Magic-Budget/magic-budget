@@ -1,5 +1,6 @@
 package me.magicbudget.magicbudget.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +20,16 @@ public class Business {
 
   @NotNull
   @Size(max = 50)
+  @Column(unique = true)
   private String name;
+
+  public Business() {
+  }
+
+  public Business(UUID id, @NotNull @Size(max = 50) String name) {
+    this.id = id;
+    this.name = name;
+  }
 
   public UUID id() {
     return id;
