@@ -1,10 +1,10 @@
-package com.magicbudget.security.service;
+package me.magicbudget.security.service;
 
-import com.magicbudget.data.dto.RegistrationAndAuthRequest;
-import com.magicbudget.data.entities.Role;
-import com.magicbudget.data.entities.User;
-import com.magicbudget.data.repository.UserRepository;
-import com.magicbudget.security.jwt.JwtImplementationService;
+import me.magicbudget.data.dto.RegistrationAndAuthRequest;
+import me.magicbudget.data.entities.AuthUsers;
+import me.magicbudget.data.entities.Role;
+import me.magicbudget.data.repository.UserRepository;
+import me.magicbudget.security.jwt.JwtImplementationService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,8 +34,8 @@ public class RegistrationAndAuthService {
     if(userRepository.findUserByUsername(userRequest.username()) != null){
       return false;
     }
-    User user = new User(userRequest.username(), passwordEncoder.encode(userRequest.password()), Role.USER);
-    userRepository.save(user);
+    AuthUsers authUsers = new AuthUsers(userRequest.username(), passwordEncoder.encode(userRequest.password()), Role.USER);
+    userRepository.save(authUsers);
     return true;
   }
 

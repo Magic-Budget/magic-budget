@@ -1,10 +1,6 @@
-package com.magicbudget.configuration;
+package me.magicbudget.configuration;
 
-import com.magicbudget.data.entities.Role;
-import com.magicbudget.data.entities.User;
-import com.magicbudget.data.repository.UserRepository;
-import com.magicbudget.security.service.UserDetailsServiceImpl;
-import org.springframework.boot.CommandLineRunner;
+import me.magicbudget.security.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,19 +28,12 @@ public class ApplicationConfiguration   {
     return new BCryptPasswordEncoder();
   }
   @Bean
-  public AuthenticationProvider authenticationProvider(){
+  public AuthenticationProvider authenticationProvider() {
 
     DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
     authenticationProvider.setPasswordEncoder(passwordEncoder());
     authenticationProvider.setUserDetailsService(userDetailsService);
     return authenticationProvider;
-  }
-  @Bean
-  public CommandLineRunner commandLineRunner(UserRepository userRepository){
-    return args -> {
-      User user = new User("AdminUser",passwordEncoder().encode("1234"), Role.USER);
-      userRepository.save(user);
-    };
   }
 
 }

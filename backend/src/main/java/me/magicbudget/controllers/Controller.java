@@ -1,8 +1,9 @@
-package com.magicbudget.controllers;
+package me.magicbudget.controllers;
 
-import com.magicbudget.data.dto.RegistrationAndAuthRequest;
-import com.magicbudget.security.service.RegistrationAndAuthService;
+import me.magicbudget.data.dto.RegistrationAndAuthRequest;
+import me.magicbudget.security.service.RegistrationAndAuthService;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,18 +24,18 @@ public class Controller {
   @PostMapping("/api/v1/auth/register")
   public ResponseEntity<String> registerUser(@RequestBody RegistrationAndAuthRequest request){
     if(request.username() == null || request.password() == null)
-      return new ResponseEntity<>("Invalid Details",HttpStatusCode.valueOf(401));
+      return new ResponseEntity<>("Invalid Details", HttpStatus.UNAUTHORIZED);
 
     if(!registrationAndAuthService.registerUser(request))
-      return new ResponseEntity<>("Username already Taken",HttpStatusCode.valueOf(401));
+      return new ResponseEntity<>("Username already Taken",HttpStatus.UNAUTHORIZED);
 
-    return new ResponseEntity<>("Registration complete",HttpStatusCode.valueOf(200));
+    return new ResponseEntity<>("Registration complete",HttpStatus.OK);
   }
 
   @PostMapping("/api/v1/auth/sign-in")
   public ResponseEntity<String> authenticateUser(@RequestBody RegistrationAndAuthRequest request){
     if(request.username() == null || request.password() == null)
-      return new ResponseEntity<>("Invalid Details",HttpStatusCode.valueOf(401));
+      return new ResponseEntity<>("Invalid Details",HttpStatus.UNAUTHORIZED);
 
     String authenticate = registrationAndAuthService.authenticate(request);
     String authorizationKey = "Bearer " + authenticate;
@@ -48,7 +49,7 @@ public class Controller {
 
   @GetMapping("/api/v1/hello")
   public ResponseEntity<String> helloUser(){
-    return new ResponseEntity<>("Hello from JWT",HttpStatusCode.valueOf(200));
+    return new ResponseEntity<>("Hello from JWT",HttpStatus.OK);
   }
 }
 

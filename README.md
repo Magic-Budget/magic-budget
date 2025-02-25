@@ -2,7 +2,7 @@
 
 ## Project Summary and Vision
 
-The project aims to create a comprehensive and user-friendly family budgeting and expense management application. The primary goal is to help families efficiently manage their finances by providing a centralized platform for tracking expenses, managing shared bills, and achieving savings goals. The application will cater to modern financial challenges by integrating innovative features like receipt scanning, and classification of expenditures.
+The project aims to create a comprehensive and authUsers-friendly family budgeting and expense management application. The primary goal is to help families efficiently manage their finances by providing a centralized platform for tracking expenses, managing shared bills, and achieving savings goals. The application will cater to modern financial challenges by integrating innovative features like receipt scanning, and classification of expenditures.
 
 ---
 Stakeholders include:

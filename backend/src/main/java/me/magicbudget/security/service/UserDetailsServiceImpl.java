@@ -1,6 +1,6 @@
-package com.magicbudget.security.service;
+package me.magicbudget.security.service;
 
-import com.magicbudget.data.repository.UserRepository;
+import me.magicbudget.data.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,7 +17,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     UserDetails user = userRepository.findUserByUsername(username);
     if(user == null){
-      throw new UsernameNotFoundException("User with username" + username + "not found");
+      throw new UsernameNotFoundException("AuthUsers with username" + username + "not found");
     }
     return user;
   }

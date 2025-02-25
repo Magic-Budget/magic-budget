@@ -1,7 +1,7 @@
-package com.magicbudget.security.jwt;
+package me.magicbudget.security.jwt;
 
 
-import com.magicbudget.security.service.UserDetailsServiceImpl;
+import me.magicbudget.security.service.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package com.magicbudget.data.dto;
+package me.magicbudget.data.dto;
 
 public record RegistrationAndAuthRequest(String username, String password) {
 }

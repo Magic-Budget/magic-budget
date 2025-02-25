@@ -1,4 +1,4 @@
-package com.magicbudget.data.entities;
+package me.magicbudget.data.entities;
 
 
 import jakarta.persistence.*;
@@ -8,13 +8,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
-@Table(name="app_users")
-public class User  implements UserDetails {
+@Table(name="auth_users")
+public class AuthUsers implements UserDetails {
+
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private UUID id;
 
   private String username;
 
@@ -24,12 +26,12 @@ public class User  implements UserDetails {
   private Role role;
 
 
-  public User(String username, String password, Role role) {
+  public AuthUsers(String username, String password, Role role) {
     this.username = username;
     this.password = password;
     this.role = role;
   }
-  public User() {
+  public AuthUsers() {
 
   }
 
@@ -63,6 +65,10 @@ public class User  implements UserDetails {
   @Override
   public String getUsername() {
     return this.username;
+  }
+
+  public UUID getId() {
+    return id;
   }
 }
 

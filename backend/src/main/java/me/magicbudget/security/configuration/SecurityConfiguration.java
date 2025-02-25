@@ -1,6 +1,6 @@
-package com.magicbudget.security.configuration;
+package me.magicbudget.security.configuration;
 
-import com.magicbudget.security.jwt.JwtAuthenticationFilter;
+import me.magicbudget.security.jwt.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;

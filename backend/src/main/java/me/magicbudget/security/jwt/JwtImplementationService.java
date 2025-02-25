@@ -1,4 +1,4 @@
-package com.magicbudget.security.jwt;
+package me.magicbudget.security.jwt;
 
 
 import io.jsonwebtoken.Claims;

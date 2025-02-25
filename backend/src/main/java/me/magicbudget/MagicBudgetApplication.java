@@ -1,4 +1,4 @@
-package com.magicbudget;
+package me.magicbudget;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
