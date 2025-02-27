@@ -111,3 +111,25 @@ We decided to build an AI-Enhanced Budgeting tool
   - All of it is in the Github project
 - Created labels for frontend, backend and db-specific tasks
 - Created a milestone for sprint 2
+
+## Meeting 5 (February 25)
+
+### Agenda
+- Reviewing code
+- Merging
+
+### Notes
+
+- Saving goals was refactored to use props
+- Updated Gradle
+- Worked on merging the account feature and login page
+- Merged login page
+
+
+## Meeting 6 (February 27)
+
+### Agenda
+- More merging
+- Start on the seminar presentation
+
+### Notes
