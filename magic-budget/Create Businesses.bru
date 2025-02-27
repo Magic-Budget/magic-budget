@@ -1,0 +1,18 @@
+meta {
+  name: Create Businesses
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/api/businesses
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id": null,
+    "name": "Bruce Wayne"
+  }
+}
