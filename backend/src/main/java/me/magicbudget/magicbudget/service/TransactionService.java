@@ -1,10 +1,11 @@
 package me.magicbudget.magicbudget.service;
 
+import me.magicbudget.magicbudget.model.CategoryTotals;
 import me.magicbudget.magicbudget.model.Transaction;
 import me.magicbudget.magicbudget.repository.TransactionRepository;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -34,8 +35,12 @@ public final class TransactionService {
     return transactionRepository.findByUserId(userId);
   }
 
-  public List<Transaction> getTransactionsByTransactionDateBetween(@NonNull LocalDateTime start,
-      @NonNull LocalDateTime end) {
+  public List<Transaction> getTransactionsByTransactionDateBetween(@NonNull LocalDate start,
+      @NonNull LocalDate end) {
     return transactionRepository.findByTransactionDateBetween(start, end);
+  }
+
+  public List<CategoryTotals> getCategoryTotals() {
+    return transactionRepository.findTotalAmountPerCategory();
   }
 }
