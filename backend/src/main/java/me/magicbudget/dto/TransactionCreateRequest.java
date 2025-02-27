@@ -6,9 +6,6 @@ import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-/**
- * DTO for creating a new transaction.
- */
 public class TransactionCreateRequest {
 
     @Size(max = 50)

@@ -5,9 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 
-/**
- * DTO for creating a new saving goal.
- */
 public class SavingGoalCreateRequest {
     
     @Size(max = 50)

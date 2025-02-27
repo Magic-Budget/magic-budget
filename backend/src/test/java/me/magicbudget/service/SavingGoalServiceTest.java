@@ -1,3 +1,5 @@
+// This code was generated with Claud 3.7 Thinker inside VScode with
+// the prompt "Create a test class for the SavingGoalService class".
 package me.magicbudget.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
