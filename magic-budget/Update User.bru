@@ -6,6 +6,16 @@ meta {
 
 put {
   url: http://localhost:8080/api/users/dc9ea163-282c-44dc-9ccd-e3cd389686f9
-  body: none
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "id": "dc9ea163-282c-44dc-9ccd-e3cd389686f9",
+    "username": "Bruce123",
+    "firstName": "ecurb",
+    "lastName": "emi",
+    "hashedPassword": "asd"
+  }
 }
