@@ -1,0 +1,20 @@
+meta {
+  name: Create Transaction
+  type: http
+  seq: 7
+}
+
+post {
+  url: http://localhost:8080/api/transactions/dc9ea163-282c-44dc-9ccd-e3cd389686f9
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Grocery Shopping",
+    "transactionDate": "2025-02-26T15:30:00",
+    "amount": 84.75,
+    "description": "Weekly grocery shopping at Whole Foods"
+  }
+}
