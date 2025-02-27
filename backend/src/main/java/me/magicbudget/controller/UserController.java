@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/")
 public class UserController {
 
   private final UserService userService;
@@ -63,12 +63,11 @@ public class UserController {
     if (userRequest.getLastName() != null) {
       existingUser.setLastName(userRequest.getLastName());
     }
-    if (userRequest.getHashedPassword() != null) {
-      existingUser.setHashedPassword(userRequest.getHashedPassword());
+    if (userRequest.getPassword() != null) {
+      existingUser.setPassword(userRequest.getPassword());
     }
 
     User updatedUser = userService.updateUser(existingUser);
     return new ResponseEntity<>(updatedUser, HttpStatus.OK);
   }
-
 }

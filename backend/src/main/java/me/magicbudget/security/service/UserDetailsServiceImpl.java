@@ -1,10 +1,10 @@
 package me.magicbudget.security.service;
 
-import me.magicbudget.data.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import me.magicbudget.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -15,9 +15,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   }
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    UserDetails user = userRepository.findUserByUsername(username);
-    if(user == null){
-      throw new UsernameNotFoundException("AuthUsers with username" + username + "not found");
+    UserDetails user=  userRepository.findUserByUsername(username);
+    if(user == null) {
+      throw new UsernameNotFoundException("User with username" + username + "not found");
     }
     return user;
   }

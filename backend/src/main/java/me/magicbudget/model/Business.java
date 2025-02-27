@@ -25,6 +25,8 @@ public class Business {
   // @JsonProperty("name")
   private String name;
 
+
+
   public Business() {
   }
 

@@ -72,11 +72,11 @@ We decided to build an AI-Enhanced Budgeting tool
 ### Agenda
 
 - Work on project proposal
-- Created authUsers stories
+- Created user stories
 
 
 ### Notes
-- Uploaded authUsers stories on github
+- Uploaded user stories on github
 
 ## Meeting 3 (January 27)
 
