@@ -18,14 +18,14 @@ import { Label } from "@/components/ui/label";
 import { PlusCircle } from "lucide-react";
 
 const today = new Date().toISOString().split("T")[0];
-const mockGoals = [
-  new Goal("1", today, "House", 140000, 300000),
-  new Goal("2", today, "PC upgrade", 100, 2000),
-  new Goal("3", today, "Vacation", 4300, 5000),
-];
+// const mockGoals = [
+//   new Goal("1", today, "House", 140000, 300000),
+//   new Goal("2", today, "PC upgrade", 100, 2000),
+//   new Goal("3", today, "Vacation", 4300, 5000),
+// ];
 
 export default function Goals() {
-  const [goals, setGoals] = useState<Goal[]>(mockGoals);
+  const [goals, setGoals] = useState<Goal[]>([]);
   const [open, setOpen] = useState(false);
   const [newGoal, setNewGoal] = useState({
     name: "",
