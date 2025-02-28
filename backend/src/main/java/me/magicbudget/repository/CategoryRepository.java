@@ -5,10 +5,13 @@ import java.util.UUID;
 import me.magicbudget.model.Category;
 import me.magicbudget.model.CategoryTotals;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, UUID> {
 
+  @Query("SELECT new me.magicbudget.model.CategoryTotals(c.name, SUM(t.amount)) "
+      + "FROM Category c JOIN Transaction t JOIN User u GROUP BY c.name")
   List<CategoryTotals> findTotalAmountPerCategory();
 }
