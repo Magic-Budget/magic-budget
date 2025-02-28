@@ -35,8 +35,6 @@ interface ChartDataItem {
 	fill: string;
 }
 
-const chartData = getChartData();
-
 const chartConfig = getChartConfig();
 
 async function getChartData(): Promise<ChartDataItem[]> {
