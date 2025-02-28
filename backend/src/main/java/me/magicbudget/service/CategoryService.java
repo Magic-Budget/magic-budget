@@ -26,7 +26,7 @@ public class CategoryService {
     return this.categoryRepository.save(transaction);
   }
 
-  public List<CategoryTotals> getCategoryTotals() {
-    return this.categoryRepository.findTotalAmountPerCategory();
+  public List<CategoryTotals> getCategoryTotals(@NonNull UUID userID) {
+    return this.categoryRepository.findTotalAmountPerCategory(userID);
   }
 }

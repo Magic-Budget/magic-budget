@@ -4,7 +4,10 @@ import me.magicbudget.model.CategoryTotals;
 import me.magicbudget.service.CategoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
+import java.util.UUID;
 
 public class CategoryController {
 
@@ -15,8 +18,8 @@ public class CategoryController {
   }
 
   @GetMapping("/categories/totals")
-  public ResponseEntity<List<CategoryTotals>> getTransactionByCategoryTotals() {
-    List<CategoryTotals> categoryTotals = categoryService.getCategoryTotals();
+  public ResponseEntity<List<CategoryTotals>> getTransactionByCategoryTotals(@RequestHeader("X-User-Id") UUID userId) {
+    List<CategoryTotals> categoryTotals = categoryService.getCategoryTotals(userId);
     return categoryTotals.isEmpty()
         ? ResponseEntity.notFound().build()
         : ResponseEntity.ok(categoryTotals);
