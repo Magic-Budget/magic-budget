@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import Goal from "./objects/goal";
+import { CalendarClock, Flag, Target } from "lucide-react";
 
 interface GoalsListProps {
   goals: Goal[];
@@ -30,7 +31,7 @@ export default function GoalsList({ goals, onUpdateGoal }: GoalsListProps) {
   const [editingGoal, setEditingGoal] = useState<Goal | null>(null);
 
   const handleEditGoal = (goalId: string) => {
-    const goalToEdit = goals.find(goal => goal.id === goalId);
+    const goalToEdit = goals.find((goal) => goal.id === goalId);
     if (goalToEdit) {
       setEditingGoal(goalToEdit);
     }
@@ -63,7 +64,11 @@ export default function GoalsList({ goals, onUpdateGoal }: GoalsListProps) {
             <CardFooter className="flex justify-between items-center">
               <p className="text-lg font-medium">${goal.currAmount}</p>
               <p className="text-lg font-medium">${goal.targetPrice}</p>
-              <Button variant="outline" size="sm" onClick={() => handleEditGoal(goal.id)}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => handleEditGoal(goal.id)}
+              >
                 Edit Goal
               </Button>
             </CardFooter>
@@ -78,7 +83,9 @@ export default function GoalsList({ goals, onUpdateGoal }: GoalsListProps) {
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
-                <label htmlFor="currentAmount" className="text-right">Current Amount</label>
+                <label htmlFor="currentAmount" className="text-right">
+                  Current Amount
+                </label>
                 <Input
                   id="currentAmount"
                   value={editingGoal.currAmount.toString()}
@@ -98,7 +105,9 @@ export default function GoalsList({ goals, onUpdateGoal }: GoalsListProps) {
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <label htmlFor="targetPrice" className="text-right">Target Price</label>
+                <label htmlFor="targetPrice" className="text-right">
+                  Target Price
+                </label>
                 <Input
                   id="targetPrice"
                   value={editingGoal.targetPrice.toString()}

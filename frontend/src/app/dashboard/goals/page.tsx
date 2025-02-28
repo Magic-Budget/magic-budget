@@ -12,28 +12,34 @@ const mockGoals = [
 ];
 
 export default function Goals() {
-
   const [goals, setGoals] = useState<Goal[]>(mockGoals);
 
   const onUpdateGoal = (updatedGoal: Goal) => {
-    setGoals(prevGoals => prevGoals.map(goal => 
-      goal.id === updatedGoal.id ? new Goal(
-        updatedGoal.id,
-        updatedGoal.due.toISOString().split('T')[0], // Convert Date to string
-        updatedGoal.name,
-        updatedGoal.currAmount,
-        updatedGoal.targetPrice
-      ) : goal
-    ));
+    setGoals((prevGoals) =>
+      prevGoals.map((goal) =>
+        goal.id === updatedGoal.id
+          ? new Goal(
+              updatedGoal.id,
+              updatedGoal.due.toISOString().split("T")[0], // Convert Date to string
+              updatedGoal.name,
+              updatedGoal.currAmount,
+              updatedGoal.targetPrice
+            )
+          : goal
+      )
+    );
   };
 
   return (
-    <div className="m-3 w-full">
-      <h1 className="text-4xl p-4"> Your goals</h1>
-      <div id="goals-container" className="w-full">
-        <div className="w-full pl-4 pr-4">
+    <div className="m-3">
+      <div>
+        <h2 className="text-2xl font-bold tracking-tight">Goals</h2>
+        <p className="text-muted-foreground">
+          Set your goals and start saving for them
+        </p>
+      </div>
+      <div id="goals-container" className="py-4">
           <GoalsList goals={goals} onUpdateGoal={onUpdateGoal} />
-        </div>
       </div>
     </div>
   );
