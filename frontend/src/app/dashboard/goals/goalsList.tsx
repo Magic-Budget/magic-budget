@@ -8,6 +8,7 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import Goal from "./objects/goal";
+import { CalendarClock, Flag, Target } from "lucide-react";
 
 interface GoalsListProps {
   goals: Goal[];
@@ -15,12 +16,16 @@ interface GoalsListProps {
 
 export default function GoalsList({ goals }: GoalsListProps) {
   return (
-    <div className="flex justify-between gap-4">
+    <div className="flex flex-wrap justify-start gap-4 w-full">
       {goals.map((goal: Goal) => (
-        <Card key={goal.id}>
+        <Card key={goal.id} className="w-64">
           <CardHeader>
-            <CardTitle>Goal: {goal.name}</CardTitle>
-            <CardDescription>Save By: {goal.getDateString()}</CardDescription>
+            <CardTitle className="flex items-center gap-1">
+              {goal.name}
+            </CardTitle>
+            <CardDescription className="flex items-center gap-1">
+              <CalendarClock className="h-4 w-4" /> {goal.getDateString()}
+            </CardDescription>
           </CardHeader>
 
           <CardContent>
