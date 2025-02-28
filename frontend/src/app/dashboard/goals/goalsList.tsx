@@ -15,9 +15,9 @@ interface GoalsListProps {
 
 export default function GoalsList({ goals }: GoalsListProps) {
   return (
-    <div className="space-y-6">
+    <div className="flex justify-between gap-4">
       {goals.map((goal: Goal) => (
-        <Card key={goal.id} className="w-full">
+        <Card key={goal.id}>
           <CardHeader>
             <CardTitle>Goal: {goal.name}</CardTitle>
             <CardDescription>Save By: {goal.getDateString()}</CardDescription>

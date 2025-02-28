@@ -14,7 +14,7 @@ import { Home, ScrollText, Target } from "lucide-react";
 const items = [
   {
     title: "Home",
-    url: "/",
+    url: "/dashboard",
     icon: Home,
   },
   {

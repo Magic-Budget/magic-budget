@@ -12,11 +12,14 @@ const mockGoals = [
 export default function Goals() {
   return (
     <div className="m-3">
-      <h1 className="text-4xl p-4"> Your goals</h1>
-      <div id="goals-container" className="flex">
-        <div className="w-full pl-8 pr-8">
-          <GoalsList goals={mockGoals} />
-        </div>
+      <div>
+        <h2 className="text-2xl font-bold tracking-tight">Goals</h2>
+        <p className="text-muted-foreground">
+          Set your goals and start saving for them
+        </p>
+      </div>
+      <div id="goals-container" className="py-4">
+        <GoalsList goals={mockGoals} />
       </div>
     </div>
   );
