@@ -29,8 +29,8 @@ export function ExpenseForm() {
   const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       try {
-        //const response = await api.post('/expenses', formData); //Need to implement server-side
-        console.log("Expense added: " + formData.date + formData.name + formData.amount );
+        const response = await api.post('/api/transactions/expenses', formData); //Need to implement server-side
+        console.log("Expense added: " + response );
         setSuccessMessage('Expense added successfully!');
         setErrorMessage('');
         // Reset fields after submission

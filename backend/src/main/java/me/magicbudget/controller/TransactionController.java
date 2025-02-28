@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.UUID;
 import me.magicbudget.dto.TransactionCreateRequest;
 import me.magicbudget.model.Transaction;
+import me.magicbudget.dto.ExpenseCreateRequest;
+import me.magicbudget.model.Expense;
 import me.magicbudget.model.User;
 import me.magicbudget.service.TransactionService;
 import me.magicbudget.service.UserService;
@@ -111,5 +113,28 @@ public final class TransactionController {
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteTransaction(@PathVariable UUID id) {
     throw new UnsupportedOperationException("Not implemented");
+  }
+
+  @PostMapping("/expenses/{id}")
+  public ResponseEntity<Expense> createTransaction(@PathVariable UUID id,
+      @RequestBody ExpenseCreateRequest newExpense) {
+    try {
+      User user = userService.getUserById(id)
+          .orElse(null);
+
+      if (user == null) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+
+      Expense expense = new Expense(null, user, newExpense.getName(),
+          newExpense.getTransactionDate(), newExpense.getAmount(),
+          newExpense.getDescription(), newExpense.getBusiness());
+      Expense createdExpense = (Expense)transactionService.createTransaction(expense);
+      return new ResponseEntity<>(createdExpense, HttpStatus.CREATED);
+    } catch (DataIntegrityViolationException e) {
+      return new ResponseEntity<>(HttpStatus.CONFLICT);
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

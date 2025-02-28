@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import GoalsList from "./goalsList";
 import Goal from "./objects/goal";
 
@@ -10,12 +12,27 @@ const mockGoals = [
 ];
 
 export default function Goals() {
+
+  const [goals, setGoals] = useState<Goal[]>(mockGoals);
+
+  const onUpdateGoal = (updatedGoal: Goal) => {
+    setGoals(prevGoals => prevGoals.map(goal => 
+      goal.id === updatedGoal.id ? new Goal(
+        updatedGoal.id,
+        updatedGoal.due.toISOString().split('T')[0], // Convert Date to string
+        updatedGoal.name,
+        updatedGoal.currAmount,
+        updatedGoal.targetPrice
+      ) : goal
+    ));
+  };
+
   return (
     <div className="m-3">
       <h1 className="text-4xl p-4"> Your goals</h1>
       <div id="goals-container" className="flex">
         <div className="w-full pl-8 pr-8">
-          <GoalsList goals={mockGoals} />
+          <GoalsList goals={goals} onUpdateGoal={onUpdateGoal} />
         </div>
       </div>
     </div>

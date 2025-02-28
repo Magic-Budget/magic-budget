@@ -6,12 +6,13 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @DiscriminatorValue("EXPENSE")
-@Table(name = "expenses")
 public class Expense extends Transaction {
     
     @ManyToOne
