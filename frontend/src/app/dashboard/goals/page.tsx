@@ -39,9 +39,7 @@ export default function Goals() {
         </p>
       </div>
       <div id="goals-container" className="py-4">
-        <div className="w-full pl-4 pr-4">
           <GoalsList goals={goals} onUpdateGoal={onUpdateGoal} />
-        </div>
       </div>
     </div>
   );
