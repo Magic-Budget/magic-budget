@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import me.magicbudget.model.CategoryTotals;
 import me.magicbudget.model.Transaction;
 import me.magicbudget.repository.TransactionRepository;
 import org.springframework.lang.NonNull;
@@ -25,10 +24,6 @@ public final class TransactionService {
 
   public Optional<Transaction> getTransactionById(@NonNull UUID transactionId) {
     return transactionRepository.findById(transactionId);
-  }
-
-  public List<CategoryTotals> getCategoryTotals() {
-    return transactionRepository.findTotalAmountPerCategory();
   }
 
   public Transaction updateTransaction(@NonNull Transaction transaction) {
