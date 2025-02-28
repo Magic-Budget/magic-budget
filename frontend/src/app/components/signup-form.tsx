@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,29 +16,44 @@ import { useState } from "react";
 import axios from "axios";
 
 export function SignupForm({
-  className,
-  ...props
+	className,
+	...props
 }: React.ComponentPropsWithoutRef<"div">) {
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+	const [name, setName] = useState("");
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-
-  const createAccount = (event: React.FormEvent) => {
+	const createAccount = (event: React.FormEvent) => {
 		event.preventDefault();
 		console.log("Username:", username);
 		console.log("Password:", password);
 
-    axios.post("http://localhost:8080/api/auth/register", {
-      "id":null,
-      username,
-      "lastName": "Jerry",
-      "firstName": "Smith",
-      password
-    })
-  };
+		axios({
+			url: "http://localhost:8080/api/auth/register",
+			method: "POST",
+			data: {
+				id: null,
+				username,
+				lastName: "Jerry",
+				firstName: "Smith",
+				password,
+			},
+			withCredentials: false,
+		})
+			.then((response) => {
+				console.log("Account created successfully:", response.data);
+				// Handle successful account creation (e.g., redirect to login page)
+			})
+			.catch((error) => {
+				console.error(
+					"There was an error creating the account:",
+					error
+				);
+				// Handle error (e.g., show error message to the user)
+			});
+	};
 
-  return (
+	return (
 		<div className={cn("flex flex-col gap-6", className)} {...props}>
 			<Card>
 				<CardHeader>
@@ -58,9 +73,7 @@ export function SignupForm({
 									type="text"
 									placeholder="Your username"
 									value={name}
-									onChange={(e) =>
-										setName(e.target.value)
-									}
+									onChange={(e) => setName(e.target.value)}
 									required
 								/>
 							</div>
@@ -73,7 +86,9 @@ export function SignupForm({
 									type="email"
 									placeholder="mail@example.com"
 									value={username}
-									onChange={(e) => setUsername(e.target.value)}
+									onChange={(e) =>
+										setUsername(e.target.value)
+									}
 									required
 								/>
 							</div>
@@ -113,5 +128,5 @@ export function SignupForm({
 				</CardContent>
 			</Card>
 		</div>
-  );
+	);
 }
