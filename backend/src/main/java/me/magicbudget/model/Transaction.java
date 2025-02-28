@@ -9,6 +9,9 @@ import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.DiscriminatorColumn;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -17,6 +20,8 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "transaction_type")
 @Table(name = "transactions",
     indexes = {@Index(name = "idx_transactions_user_id", columnList = "user_id")})
 public class Transaction {
@@ -104,5 +109,5 @@ public class Transaction {
   public void setDescription(@NotNull String description) {
     this.description = description;
   }
-
+  
 }
