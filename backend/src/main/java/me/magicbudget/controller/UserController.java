@@ -1,9 +1,10 @@
 package me.magicbudget.controller;
 
-import java.util.Optional;
-import java.util.UUID;
+import me.magicbudget.dto.RegistrationAndAuthRequest;
 import me.magicbudget.model.User;
+import me.magicbudget.security.service.RegistrationAndAuthService;
 import me.magicbudget.service.UserService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,37 +12,52 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/users")
 public class UserController {
 
+  private final RegistrationAndAuthService registrationAndAuthService;
   private final UserService userService;
 
-  public UserController(UserService userService) {
+
+  public UserController(RegistrationAndAuthService registrationAndAuthService, UserService userService) {
+    this.registrationAndAuthService = registrationAndAuthService;
     this.userService = userService;
   }
 
-  @PostMapping
-  public ResponseEntity<User> createUser(@RequestBody User user) {
-    User createdUser = userService.createUser(user);
-    return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+  @PostMapping("/api/auth/register")
+  public ResponseEntity<String> registerUser(@RequestBody RegistrationAndAuthRequest request){
+    if(request.username() == null || request.password() == null)
+      return new ResponseEntity<>("Invalid Details", HttpStatus.UNAUTHORIZED);
+
+    if(!registrationAndAuthService.registerUser(request))
+      return new ResponseEntity<>("Username already Taken",HttpStatus.UNAUTHORIZED);
+
+    return new ResponseEntity<>("Registration complete",HttpStatus.OK);
   }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<User> getUserById(@PathVariable UUID id) {
-    Optional<User> user = userService.getUserById(id);
-    return user.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-        .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+  @PostMapping("/api/auth/sign-in")
+  public ResponseEntity<String> authenticateUser(@RequestBody RegistrationAndAuthRequest request){
+    if(request.username() == null || request.password() == null)
+      return new ResponseEntity<>("Invalid Details",HttpStatus.UNAUTHORIZED);
+
+    String authenticate = registrationAndAuthService.authenticate(request);
+    String authorizationKey = "Bearer " + authenticate;
+    HttpHeaders headers = new HttpHeaders();
+    headers.add(HttpHeaders.AUTHORIZATION,authorizationKey);
+
+    User user = userService.getUserByUsername(request.username()).get();
+    headers.add("X-User-Id", user.getId().toString());
+
+    return new ResponseEntity<>(headers, HttpStatus.OK);
   }
 
-  @GetMapping("/username/{username}")
-  public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
-    Optional<User> user = userService.getUserByUsername(username);
-    return user.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-        .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+  @GetMapping("/api/hello")
+  public ResponseEntity<String> helloUser(){
+    return new ResponseEntity<>("Hello from JWT",HttpStatus.OK);
   }
 
   @PutMapping("/{id}")
@@ -63,12 +79,27 @@ public class UserController {
     if (userRequest.getLastName() != null) {
       existingUser.setLastName(userRequest.getLastName());
     }
-    if (userRequest.getHashedPassword() != null) {
-      existingUser.setHashedPassword(userRequest.getHashedPassword());
+    if (userRequest.getPassword() != null) {
+      existingUser.setPassword(userRequest.getPassword());
     }
 
     User updatedUser = userService.updateUser(existingUser);
     return new ResponseEntity<>(updatedUser, HttpStatus.OK);
   }
 
+
+  @GetMapping("/username/{username}")
+  public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
+    Optional<User> user = userService.getUserByUsername(username);
+    return user.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+        .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<User> getUserById(@PathVariable UUID id) {
+    Optional<User> user = userService.getUserById(id);
+    return user.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+        .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+  }
 }
+

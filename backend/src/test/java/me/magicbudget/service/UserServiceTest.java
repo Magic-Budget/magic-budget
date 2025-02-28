@@ -71,7 +71,7 @@ class UserServiceTest {
     assertEquals("testuser3", retrievedUser.getUsername());
     assertEquals("Diana", retrievedUser.getFirstName());
     assertEquals("Prince", retrievedUser.getLastName());
-    assertEquals("hashedPass789", retrievedUser.getHashedPassword());
+    assertEquals("hashedPass789", retrievedUser.getPassword());
   }
 
   @Test
@@ -85,9 +85,9 @@ class UserServiceTest {
     );
     User savedUser = userService.createUser(user);
 
-    savedUser.setHashedPassword("newHashedPass000");
+    savedUser.setPassword("newHashedPass000");
     User updatedUser = userService.updateUser(savedUser);
 
-    assertEquals("newHashedPass000", updatedUser.getHashedPassword());
+    assertEquals("newHashedPass000", updatedUser.getPassword());
   }
 }

@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -16,21 +18,24 @@ public class Business {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  // @JsonProperty("id")
   private UUID id;
 
   @NotNull
   @Size(max = 50)
   @Column(unique = true)
-  // @JsonProperty("name")
   private String name;
+
+  @ManyToOne
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
 
   public Business() {
   }
 
-  public Business(UUID id, @NotNull @Size(max = 50) String name) {
+  public Business(UUID id, @NotNull @Size(max = 50) String name, @NotNull User user) {
     this.id = id;
     this.name = name;
+    this.user = user;
   }
 
   public UUID getId() {
@@ -47,6 +52,14 @@ public class Business {
 
   public void setName(@NotNull @Size(max = 50) String name) {
     this.name = name;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
   }
 
   @Override
