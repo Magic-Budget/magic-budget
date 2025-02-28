@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import me.magicbudget.dto.TransactionCreateRequest;
+import me.magicbudget.model.CategoryTotals;
 import me.magicbudget.model.Transaction;
 import me.magicbudget.model.User;
 import me.magicbudget.service.TransactionService;
@@ -78,6 +79,14 @@ public final class TransactionController {
     List<Transaction> transactions = transactionService.getTransactionsByTransactionDateBetween(
         start, end);
     return new ResponseEntity<>(transactions, HttpStatus.OK);
+  }
+
+  @GetMapping("/transactions/category-totals")
+  public ResponseEntity<List<CategoryTotals>> getTransactionByCategoryTotals() {
+    List<CategoryTotals> categoryTotals = transactionService.getCategoryTotals();
+    return categoryTotals.isEmpty()
+        ? ResponseEntity.notFound().build()
+        : ResponseEntity.ok(categoryTotals);
   }
 
   @PutMapping("/{id}")

@@ -1,11 +1,9 @@
-package me.magicbudget.magicbudget.service;
+package me.magicbudget.service;
 
-import me.magicbudget.magicbudget.model.Category;
-import me.magicbudget.magicbudget.model.CategoryTotals;
-import me.magicbudget.magicbudget.model.Category;
-import me.magicbudget.magicbudget.repository.CategoryRepository;
+import me.magicbudget.model.Category;
+import me.magicbudget.model.CategoryTotals;
+import me.magicbudget.repository.CategoryRepository;
 import org.springframework.lang.NonNull;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package me.magicbudget.magicbudget.model;
+package me.magicbudget.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
