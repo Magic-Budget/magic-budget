@@ -39,6 +39,10 @@ export function SignupForm({
 				password,
 			},
 			withCredentials: false,
+			headers: {
+				"Content-Type": "application/json",
+        "Access-Control-Allow-Origin":"*"
+			},
 		})
 			.then((response) => {
 				console.log("Account created successfully:", response.data);
