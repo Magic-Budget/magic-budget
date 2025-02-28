@@ -1,6 +1,6 @@
 package me.magicbudget.security.service;
 
-import me.magicbudget.data.dto.RegistrationAndAuthRequest;
+import me.magicbudget.dto.RegistrationAndAuthRequest;
 import me.magicbudget.model.User;
 import me.magicbudget.security.jwt.JwtImplementationService;
 import org.springframework.security.authentication.AuthenticationManager;

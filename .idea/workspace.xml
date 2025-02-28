@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0cd1a613-18eb-4fb3-8022-87895625e088" name="Changes" comment="Implementation of JWT is Done." />
+    <list default="true" id="0cd1a613-18eb-4fb3-8022-87895625e088" name="Changes" comment="chore: Updating .gitignore.">
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/model/Business.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/model/Business.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/security/jwt/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/security/jwt/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/security/jwt/JwtImplementationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/security/jwt/JwtImplementationService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,6 +20,11 @@
     </projectState>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="account_feature" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory"><![CDATA[{
@@ -25,7 +34,8 @@
   "selectedUrlAndAccountId": {
     "url": "https://github.com/Magic-Budget/magic-budget.git",
     "accountId": "fd975351-b205-44bb-8b93-c8d51fa8bc4b"
-  }
+  },
+  "editorReviewEnabled": false
 }]]></component>
   <component name="JpbToolWindowState">
     <option name="isToolWindowVisible" value="false" />
@@ -57,7 +67,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.MagicBudgetApplication (1).executor": "Run",
-    "Spring Boot.MagicBudgetApplication.executor": "Run",
+    "Spring Boot.MagicBudgetApplication.executor": "Debug",
     "git-widget-placeholder": "#82 on account__feature",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
@@ -69,7 +79,12 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Docker.docker-compose.yml.spring-boot-app: Compose Deployment">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.MagicBudgetApplication">
     <configuration name="MagicBudgetApplicationTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -165,9 +180,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.yml.spring-boot-app: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.yml.postgres: Compose Deployment" />
-        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
         <item itemvalue="Gradle.MagicBudgetApplicationTests" />
         <item itemvalue="Docker.backend/Dockerfile" />
       </list>
@@ -190,8 +205,17 @@
       <option name="presentableId" value="Default" />
       <updated>1737050685908</updated>
       <workItem from="1737050688716" duration="899000" />
-      <workItem from="1740681017037" duration="951000" />
+      <workItem from="1740681017037" duration="8228000" />
     </task>
+    <task id="LOCAL-00001" summary="chore: Refactoring.">
+      <option name="closed" value="true" />
+      <created>1740687102716</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1740687102716</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -223,6 +247,30 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Implementation of JWT is Done" />
     <MESSAGE value="Implementation of JWT is Done." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implementation of JWT is Done." />
+    <MESSAGE value="Merge branch 'main' into account_feature" />
+    <MESSAGE value="chore: Refactoring." />
+    <MESSAGE value="chore: Updating .gitignore." />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: Updating .gitignore." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/backend/src/main/java/me/magicbudget/controller/Controller.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/backend/src/main/java/me/magicbudget/security/service/RegistrationAndAuthService.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/backend/src/main/java/me/magicbudget/security/jwt/JwtAuthenticationFilter.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

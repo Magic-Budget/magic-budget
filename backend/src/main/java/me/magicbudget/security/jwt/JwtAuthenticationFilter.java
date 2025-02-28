@@ -19,7 +19,7 @@ import java.io.IOException;
 @Service
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-  private final  JwtImplementationService jwtImplementationService;
+  private final JwtImplementationService jwtImplementationService;
   private final UserDetailsServiceImpl userDetailsService;
 
   public JwtAuthenticationFilter(JwtImplementationService jwtImplementationService, UserDetailsServiceImpl userDetailsService) {
@@ -37,15 +37,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       return;
     }
     final String jwtToken = authorizationHeader.substring(7);
-    final String username = jwtImplementationService.extractUsername(jwtToken);
-    if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
-      UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-      if(jwtImplementationService.validateToken(jwtToken,userDetails)){
-        UsernamePasswordAuthenticationToken authenticationToken = new
-            UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
-        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+    try{
+      final String username = jwtImplementationService.extractUsername(jwtToken);
+      if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        if(jwtImplementationService.validateToken(jwtToken,userDetails)){
+          UsernamePasswordAuthenticationToken authenticationToken = new
+              UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+          authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+          SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        }
       }
+    }
+    catch (Exception e){
+      System.out.println("JWT token validation failed");
     }
     filterChain.doFilter(request,response);
   }

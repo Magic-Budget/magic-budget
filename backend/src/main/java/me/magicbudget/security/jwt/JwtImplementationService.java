@@ -2,6 +2,7 @@ package me.magicbudget.security.jwt;
 
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -29,8 +30,13 @@ public class JwtImplementationService {
   }
 
   private Claims getAllClaims(String jwtToken){
-    return Jwts.parserBuilder().setSigningKey(getSignatureKey()).build()
-        .parseClaimsJws(jwtToken).getBody();
+    try {
+      return Jwts.parserBuilder().setSigningKey(getSignatureKey()).build()
+          .parseClaimsJws(jwtToken).getBody();
+    }
+    catch (ExpiredJwtException e) {
+      throw new RuntimeException("JWT token has expired", e);
+    }
   }
 
   private Key getSignatureKey() {
@@ -51,12 +57,14 @@ public class JwtImplementationService {
   public boolean validateToken(String jwtToken , UserDetails userDetails){
     String extractUsername = extractUsername(jwtToken);
     String username = userDetails.getUsername();
-    return extractUsername.equals(username) && !isTokenExpired(jwtToken);
-
+    boolean check = isTokenExpired(jwtToken);
+    return extractUsername.equals(username) && !check;
   }
 
   private boolean isTokenExpired(String jwtToken) {
-    return extractExpirationDate(jwtToken).before(new Date());
+    Date date = extractExpirationDate(jwtToken);
+    Date when = new Date();
+    return date.before(when);
   }
   private Date extractExpirationDate(String jwtToken){
     return extractSpecificClaim(jwtToken,Claims::getExpiration);
