@@ -14,4 +14,5 @@ public interface TransactionRepository extends JpaRepository<Transaction, UUID> 
   List<Transaction> findByUserId(UUID userId);
 
   List<Transaction> findByTransactionDateBetween(LocalDateTime start, LocalDateTime end);
+
 }
