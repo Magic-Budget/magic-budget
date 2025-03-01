@@ -1,5 +1,6 @@
 package me.magicbudget.security.service;
 
+import me.magicbudget.dto.LoginUserRequest;
 import me.magicbudget.dto.RegistrationAndAuthRequest;
 import me.magicbudget.model.User;
 import me.magicbudget.security.jwt.JwtImplementationService;
@@ -30,21 +31,22 @@ public class RegistrationAndAuthService {
     this.jwtImplementationService = jwtImplementationService;
   }
 
-  public boolean registerUser(RegistrationAndAuthRequest userRequest){
-    if(userRepository.findUserByUsername(userRequest.username()) != null){
+  public boolean registerUser(RegistrationAndAuthRequest userRequest) {
+    if (userRepository.findUserByUsername(userRequest.username()) != null) {
       return false;
     }
-    User user = new User(null,userRequest.username(),
-        userRequest.firstName(),userRequest.lastName(),
+    User user = new User(null, userRequest.username(),
+        userRequest.firstName(), userRequest.lastName(),
         passwordEncoder.encode(userRequest.password()));
     userRepository.save(user);
     return true;
   }
 
-  public String authenticate(RegistrationAndAuthRequest userRequest){
-    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userRequest.username(),userRequest.password()));
-    UserDetails user = userRepository.findUserByUsername(userRequest.username());
-    return jwtImplementationService.generateToken(new HashMap<>(),user);
+  public String authenticate(LoginUserRequest request) {
+    authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(request.username(), request.password()));
+    UserDetails user = userRepository.findUserByUsername(request.username());
+    return jwtImplementationService.generateToken(new HashMap<>(), user);
   }
 
 }
