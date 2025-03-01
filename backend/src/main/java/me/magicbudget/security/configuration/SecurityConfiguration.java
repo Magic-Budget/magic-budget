@@ -11,6 +11,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -43,13 +47,18 @@ public class SecurityConfiguration {
     return http.build();
   }
 
-//  private AuthenticationEntryPoint authenticationEntryPoint() {
-//    // This custom entry point will redirect unauthenticated users to the sign-in page
-//    return (request, response, authException) -> {
-//      response.sendRedirect("/api/auth/sign-in");
-//    };
-//  }
+  @Bean
+  public CorsFilter corsFilter() {
+    CorsConfiguration config = new CorsConfiguration();
+    config.setAllowCredentials(true);
 
+    config.setAllowedOrigins(List.of("http://localhost:3000"));
+    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    config.setAllowedHeaders(List.of("*"));
 
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", config);
+    return new CorsFilter(source);
+  }
 }
 
