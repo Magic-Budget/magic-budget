@@ -1,6 +1,7 @@
 package me.magicbudget.controller;
 
 import me.magicbudget.dto.LoginUserRequest;
+import me.magicbudget.dto.LoginUserResponse;
 import me.magicbudget.dto.RegistrationAndAuthRequest;
 import me.magicbudget.model.User;
 import me.magicbudget.security.service.RegistrationAndAuthService;
@@ -43,9 +44,9 @@ public class UserController {
   }
 
   @PostMapping("/api/auth/sign-in")
-  public ResponseEntity<String> authenticateUser(@RequestBody LoginUserRequest request) {
+  public ResponseEntity<LoginUserResponse> authenticateUser(@RequestBody LoginUserRequest request) {
     if (request.username() == null || request.password() == null) {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Details");
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     try {
@@ -57,11 +58,12 @@ public class UserController {
             headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
             headers.add("X-User-Id", user.getId().toString());
 
-            return ResponseEntity.ok().headers(headers).body("Ok");
+            return ResponseEntity.ok().headers(headers)
+                .body(new LoginUserResponse(user.getId(), jwtToken));
           })
-          .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found"));
+          .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
   }
 
