@@ -26,7 +26,8 @@ export function LoginForm({
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const { updateBearerToken, updateId } = useUserStore();
+  const { updateBearerToken, updateId, updateFirstName, updateLastName } =
+    useUserStore();
   const router = useRouter();
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -43,6 +44,8 @@ export function LoginForm({
       .then((response) => {
         updateBearerToken(response.data.token);
         updateId(response.data.userId);
+        updateFirstName(response.data.firstName);
+        updateLastName(response.data.lastName);
         setLoading(false);
         router.push("/dashboard");
       })

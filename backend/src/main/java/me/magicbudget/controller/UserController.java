@@ -59,7 +59,8 @@ public class UserController {
             headers.add("X-User-Id", user.getId().toString());
 
             return ResponseEntity.ok().headers(headers)
-                .body(new LoginUserResponse(user.getId(), jwtToken));
+                .body(new LoginUserResponse(user.getId(), jwtToken, user.getFirstName(),
+                    user.getLastName()));
           })
           .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     } catch (Exception e) {
