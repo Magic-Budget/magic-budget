@@ -7,6 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IncomeRepository extends JpaRepository<Income, UUID> {
-  List<Income> findIncomeById(UUID id);
   List<Income> findIncomeByUserId(User user);
 }

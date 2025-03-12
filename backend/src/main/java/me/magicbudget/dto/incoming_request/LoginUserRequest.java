@@ -1,4 +1,4 @@
-package me.magicbudget.dto;
+package me.magicbudget.dto.incoming_request;
 
 public record LoginUserRequest(String username, String password) {
 

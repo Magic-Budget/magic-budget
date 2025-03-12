@@ -1,8 +1,10 @@
 package me.magicbudget.security.service;
 
-import me.magicbudget.dto.LoginUserRequest;
-import me.magicbudget.dto.RegistrationAndAuthRequest;
+import me.magicbudget.dto.incoming_request.LoginUserRequest;
+import me.magicbudget.dto.incoming_request.RegistrationAndAuthRequest;
 import me.magicbudget.model.User;
+import me.magicbudget.model.UserInformation;
+import me.magicbudget.repository.UserInformationRepository;
 import me.magicbudget.security.jwt.JwtImplementationService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,31 +23,46 @@ public class RegistrationAndAuthService {
   private final UserRepository userRepository;
   private final AuthenticationManager authenticationManager;
   private final JwtImplementationService jwtImplementationService;
+  private final UserInformationRepository userInformationRepository;
 
-  public RegistrationAndAuthService(PasswordEncoder passwordEncoder, UserRepository userRepository,
+  public RegistrationAndAuthService(PasswordEncoder passwordEncoder,
+      UserRepository userRepository,
       AuthenticationManager authenticationManager,
-      JwtImplementationService jwtImplementationService) {
+      JwtImplementationService jwtImplementationService,
+      UserInformationRepository userInformationRepository) {
     this.passwordEncoder = passwordEncoder;
     this.userRepository = userRepository;
     this.authenticationManager = authenticationManager;
     this.jwtImplementationService = jwtImplementationService;
+    this.userInformationRepository = userInformationRepository;
   }
 
   public boolean registerUser(RegistrationAndAuthRequest userRequest) {
-    if (userRepository.findUserByUsername(userRequest.username()) != null) {
+    if (userInformationRepository.findByUsername(userRequest.username()) != null) {
       return false;
     }
-    User user = new User(null, userRequest.username(),
-        userRequest.firstName(), userRequest.lastName(),
-        passwordEncoder.encode(userRequest.password()));
+
+    UserInformation userInformation = new UserInformation(userRequest.username(),
+        passwordEncoder.encode(userRequest.password()),
+        userRequest.firstName(),
+        userRequest.lastName(),
+        userRequest.email());
+
+    User user = new User(userInformation);
+
+    userInformationRepository.save(userInformation);
+    user.setId(userInformation.getId());
+    user.setInformation(userInformation);
+
     userRepository.save(user);
+
     return true;
   }
 
   public String authenticate(LoginUserRequest request) {
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(request.username(), request.password()));
-    UserDetails user = userRepository.findUserByUsername(request.username());
+    UserDetails user = userInformationRepository.findByUsername(request.username());
     return jwtImplementationService.generateToken(new HashMap<>(), user);
   }
 

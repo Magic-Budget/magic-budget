@@ -1,13 +1,13 @@
 package me.magicbudget.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import jakarta.persistence.OneToOne;
+
 
 import java.util.UUID;
 
@@ -15,47 +15,59 @@ import java.util.UUID;
 public class Expense {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
+
+  @OneToOne
+  @JoinColumn(name = "transactions_id", referencedColumnName = "id")
+  private Transaction transaction;
 
   @ManyToOne
   @JoinColumn(name = "user_id")
   private User userId;
 
-  private BigDecimal amount;
+  private String shopName;
 
-  private LocalDateTime dueDate;
+  @Enumerated(EnumType.STRING)
+  private ExpenseCategory expenseCategory;
 
   public Expense() {
   }
 
-  public Expense(User userId, BigDecimal amount, LocalDateTime dueDate) {
+  public Expense(User userId,
+      Transaction transaction,
+      String shopName,
+      ExpenseCategory expenseCategory) {
     this.userId = userId;
-    this.amount = amount;
-    this.dueDate = dueDate;
+    this.transaction = transaction;
+    this.shopName = shopName;
+    this.expenseCategory = expenseCategory;
+  }
+
+  public Transaction getTransaction() {
+    return transaction;
+  }
+
+  public void setTransaction(Transaction transaction) {
+    this.transaction = transaction;
   }
 
   public UUID getId() {
     return id;
   }
 
+  public void setId(UUID id) {
+    this.id = id;
+  }
+
   public User getUserId() {
     return userId;
   }
 
-  public BigDecimal getAmount() {
-    return amount;
+  public String getShopName() {
+    return shopName;
   }
 
-  public void setAmount(BigDecimal amount) {
-    this.amount = amount;
-  }
-
-  public LocalDateTime getDueDate() {
-    return dueDate;
-  }
-
-  public void setDueDate(LocalDateTime dueDate) {
-    this.dueDate = dueDate;
+  public ExpenseCategory getExpenseCategory() {
+    return expenseCategory;
   }
 }

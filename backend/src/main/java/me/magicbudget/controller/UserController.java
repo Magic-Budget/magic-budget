@@ -1,22 +1,16 @@
 package me.magicbudget.controller;
 
-import me.magicbudget.dto.LoginUserRequest;
-import me.magicbudget.dto.LoginUserResponse;
-import me.magicbudget.dto.RegistrationAndAuthRequest;
-import me.magicbudget.model.User;
+import me.magicbudget.dto.incoming_request.LoginUserRequest;
+import me.magicbudget.dto.outgoing_response.LoginUserResponse;
+import me.magicbudget.dto.incoming_request.RegistrationAndAuthRequest;
 import me.magicbudget.security.service.RegistrationAndAuthService;
 import me.magicbudget.service.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 public class UserController {
@@ -56,63 +50,27 @@ public class UserController {
           .map(user -> {
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
-            headers.add("X-User-Id", user.getId().toString());
 
             return ResponseEntity.ok().headers(headers)
-                .body(new LoginUserResponse(user.getId(), jwtToken, user.getFirstName(),
-                    user.getLastName()));
+                .body(new LoginUserResponse(user.getId()));
           })
           .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
   }
-
-  @GetMapping("/api/hello")
-  public ResponseEntity<String> helloUser() {
-    return new ResponseEntity<>("Hello from JWT", HttpStatus.OK);
-  }
-
-  @PutMapping("/{id}")
-  public ResponseEntity<User> updateUser(@PathVariable UUID id, @RequestBody User userRequest) {
-    // Fetch the existing user first
-    Optional<User> existingUserOpt = userService.getUserById(id);
-    if (existingUserOpt.isEmpty()) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    User existingUser = existingUserOpt.get();
-
-    if (userRequest.getUsername() != null) {
-      existingUser.setUsername(userRequest.getUsername());
-    }
-    if (userRequest.getFirstName() != null) {
-      existingUser.setFirstName(userRequest.getFirstName());
-    }
-    if (userRequest.getLastName() != null) {
-      existingUser.setLastName(userRequest.getLastName());
-    }
-    if (userRequest.getPassword() != null) {
-      existingUser.setPassword(userRequest.getPassword());
-    }
-
-    User updatedUser = userService.updateUser(existingUser);
-    return new ResponseEntity<>(updatedUser, HttpStatus.OK);
-  }
-
-
-  @GetMapping("/username/{username}")
-  public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
-    Optional<User> user = userService.getUserByUsername(username);
-    return user.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-        .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-  }
-
-  @GetMapping("/{id}")
-  public ResponseEntity<User> getUserById(@PathVariable UUID id) {
-    Optional<User> user = userService.getUserById(id);
-    return user.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-        .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-  }
+//
+//  @GetMapping("/api/hello")
+//  public ResponseEntity<String> helloUser() {
+//    return new ResponseEntity<>("Hello from JWT", HttpStatus.OK);
+//  }
+//
+//  @GetMapping("/{id}")
+//  public ResponseEntity<User> getUserById(@PathVariable UUID id) {
+//    Optional<User> user = userService.getUserById(id);
+//    return user.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+//        .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+//  }
 }
 

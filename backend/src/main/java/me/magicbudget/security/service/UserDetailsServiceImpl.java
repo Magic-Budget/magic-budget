@@ -1,5 +1,6 @@
 package me.magicbudget.security.service;
 
+import me.magicbudget.repository.UserInformationRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -8,14 +9,15 @@ import me.magicbudget.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-  private final UserRepository userRepository;
+  private final UserInformationRepository userInformationRepository;
 
-  public UserDetailsServiceImpl(UserRepository userRepository) {
-    this.userRepository = userRepository;
+  public UserDetailsServiceImpl(
+      UserInformationRepository userInformationRepository) {
+    this.userInformationRepository = userInformationRepository;
   }
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    UserDetails user=  userRepository.findUserByUsername(username);
+    UserDetails user=  userInformationRepository.findByUsername(username);
     if(user == null) {
       throw new UsernameNotFoundException("User with username" + username + "not found");
     }

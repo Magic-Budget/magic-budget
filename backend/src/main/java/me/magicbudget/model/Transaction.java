@@ -1,13 +1,17 @@
 package me.magicbudget.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
@@ -17,17 +21,13 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "transactions",
-    indexes = {@Index(name = "idx_transactions_user_id", columnList = "user_id")})
+@Table(name = "transactions")
+//    indexes = {@Index(name = "idx_transactions_user_id", columnList = "user_id")})
 public class Transaction {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
-
-  @ManyToOne
-  @JoinColumn(name = "user_id", nullable = false)
-  private User user;
 
   @Size(max = 50)
   private String name;
@@ -44,17 +44,27 @@ public class Transaction {
   @NotNull
   private String description;
 
+  @Enumerated(EnumType.STRING)
+  private TransactionType transactionType;
+
+//  @OneToOne(cascade = CascadeType.ALL)
+//  private User user;
+
+
   public Transaction() {
   }
 
-  public Transaction(UUID id, User user, String name, LocalDateTime transactionDate,
-      BigDecimal amount, String description) {
-    this.id = id;
-    this.user = user;
+  public Transaction(/**UUID id, User user,**/
+      String name,
+      LocalDateTime transactionDate,
+      BigDecimal amount,
+      String description,
+      TransactionType transactionType) {
     this.name = name;
     this.transactionDate = transactionDate;
     this.amount = amount;
     this.description = description;
+    this.transactionType = transactionType;
   }
 
   public UUID getId() {
@@ -65,12 +75,18 @@ public class Transaction {
     this.id = id;
   }
 
-  public User getUser() {
-    return user;
+
+
+  public LocalDateTime getTransactionDate() {
+    return transactionDate;
   }
 
-  public void setUser(User user) {
-    this.user = user;
+  public TransactionType getTransactionType() {
+    return transactionType;
+  }
+
+  public void setTransactionType(TransactionType transactionType) {
+    this.transactionType = transactionType;
   }
 
   public @Size(max = 50) String getName() {
