@@ -40,11 +40,11 @@ export function SignupForm({
 
     axios
       .post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
-        username,
-        email,
-        password,
-        firstName,
-        lastName,
+        username: username,
+        password: password,
+        fistName: firstName,
+        lastName: lastName,
+        email: email,
       })
       .then((response) => {
         updateBearerToken(response.data.token);
