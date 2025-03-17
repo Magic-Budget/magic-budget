@@ -1,4 +1,4 @@
-package me.magicbudget.dto;
+package me.magicbudget.dto.incomingrequest;
 
 import jakarta.annotation.Nonnull;
 

@@ -1,64 +1,75 @@
 package me.magicbudget.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import jakarta.persistence.OneToOne;
 import java.util.UUID;
-
-/**
- * {
- *   "userId" : "dsfdsf"
- *   "amount" :35.6
- *   "date" : "Date.now()"
- * }
- */
 
 @Entity
 public class Income {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
+
+  @OneToOne
+  @JoinColumn(name = "transactions_id", referencedColumnName = "id")
+  private Transaction transaction;
 
   @ManyToOne()
   @JoinColumn(name = "user_id")
   private User userId;
 
-  private BigDecimal amount;
+  @Enumerated(EnumType.STRING)
+  private IncomeType type;
 
-  private LocalDateTime date;
 
-  public Income(User userId, BigDecimal amount, LocalDateTime date) {
+  public Income(User userId,Transaction transaction, IncomeType incomeType) {
     this.userId = userId;
-    this.amount = amount;
-    this.date = date;
+    this.transaction = transaction;
+    this.type = incomeType;
   }
 
   public Income() {
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
   }
 
   public User getUserId() {
     return userId;
   }
 
-  public BigDecimal getAmount() {
-    return amount;
+  public UUID getId() {
+    return id;
   }
 
-  public void setAmount(BigDecimal amount) {
-    this.amount = amount;
+  public Transaction getTransaction() {
+    return transaction;
   }
 
-  public LocalDateTime getDate() {
-    return date;
+  public User getUser() {
+    return userId;
   }
 
-  public void setDate(LocalDateTime date) {
-    this.date = date;
+  public IncomeType getType() {
+    return type;
   }
+
+  public void setTransaction(Transaction transaction) {
+    this.transaction = transaction;
+  }
+
+  public void setUser(User user) {
+    this.userId = user;
+  }
+
+  public void setType(IncomeType type) {
+    this.type = type;
+  }
+
 }
