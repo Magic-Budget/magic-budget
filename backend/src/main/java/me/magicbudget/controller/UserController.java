@@ -1,16 +1,20 @@
 package me.magicbudget.controller;
 
-import me.magicbudget.dto.incomingrequest.LoginUserRequest;
-import me.magicbudget.dto.outgoingresponse.LoginUserResponse;
-import me.magicbudget.dto.incomingrequest.RegistrationAndAuthRequest;
+import me.magicbudget.dto.incoming_request.LoginUserRequest;
+import me.magicbudget.dto.outgoing_response.LoginUserResponse;
+import me.magicbudget.dto.incoming_request.RegistrationAndAuthRequest;
+import me.magicbudget.model.UserInformation;
 import me.magicbudget.security.service.RegistrationAndAuthService;
 import me.magicbudget.service.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.Map;
 
 @RestController
 public class UserController {
@@ -25,16 +29,23 @@ public class UserController {
   }
 
   @PostMapping("/api/auth/register")
-  public ResponseEntity<String> registerUser(@RequestBody RegistrationAndAuthRequest request) {
+  public ResponseEntity<LoginUserResponse> registerUser(
+      @RequestBody RegistrationAndAuthRequest request) {
     if (request.username() == null || request.password() == null) {
-      return new ResponseEntity<>("Invalid Details", HttpStatus.UNAUTHORIZED);
+      return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
     if (!registrationAndAuthService.registerUser(request)) {
-      return new ResponseEntity<>("Username already Taken", HttpStatus.UNAUTHORIZED);
+      return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
     }
 
-    return new ResponseEntity<>("Registration complete", HttpStatus.OK);
+    String jwtToken = registrationAndAuthService.authenticate(
+        new LoginUserRequest(request.email(), request.password()));
+    UserInformation userInformation = userService.getUserByUsername(request.username()).get();
+
+    return new ResponseEntity<>(
+        new LoginUserResponse(userInformation.getId(), jwtToken, request.firstName(),
+            request.lastName()), HttpStatus.CREATED);
   }
 
   @PostMapping("/api/auth/sign-in")
@@ -52,15 +63,15 @@ public class UserController {
             headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
 
             return ResponseEntity.ok().headers(headers)
-                .body(new LoginUserResponse(user.getId()));
+                .body(new LoginUserResponse(user.getId(), jwtToken, user.getFirstName(),
+                    user.getLastName()));
           })
           .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
   }
-//
+  //
 //  @GetMapping("/api/hello")
 //  public ResponseEntity<String> helloUser() {
 //    return new ResponseEntity<>("Hello from JWT", HttpStatus.OK);

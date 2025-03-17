@@ -28,6 +28,7 @@ export function LoginForm({
   const [error, setError] = useState("");
   const { updateBearerToken, updateId, updateFirstName, updateLastName } =
     useUserStore();
+
   const router = useRouter();
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -42,6 +43,7 @@ export function LoginForm({
         password,
       })
       .then((response) => {
+        console.log(response.data);
         updateBearerToken(response.data.token);
         updateId(response.data.userId);
         updateFirstName(response.data.firstName);
