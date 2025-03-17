@@ -1,4 +1,4 @@
-package me.magicbudget.dto.outgoing_response;
+package me.magicbudget.dto.outgoingresponse;
 
 import me.magicbudget.model.ExpenseCategory;
 import java.math.BigDecimal;

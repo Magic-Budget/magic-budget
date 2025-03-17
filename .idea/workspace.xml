@@ -5,50 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0cd1a613-18eb-4fb3-8022-87895625e088" name="Changes" comment="Backend-Feature of Income and Expense is done">
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/dto/incoming_request/ExpenseRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/dto/incoming_request/IncomeRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/dto/outgoing_response/ExpenseResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/dto/outgoing_response/IncomeResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/dto/outgoing_response/LoginUserResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/model/ExpenseCategory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/model/IncomeType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/model/TransactionType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/model/UserInformation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/repository/UserInformationRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/service/ExpenseService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/service/IncomeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/controller/BusinessController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/controller/BusinessController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/controller/CreditDebtController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/controller/CreditDebtController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/controller/ExpenseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/controller/ExpenseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/controller/IncomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/controller/IncomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/controller/SavingGoalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/controller/SavingGoalController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/controller/TransactionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/controller/TransactionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/dto/CreateBusinessRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/dto/incoming_request/CreateBusinessRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/dto/CreditDebtCreateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/dto/incoming_request/CreditDebtCreateRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/dto/ExpenseRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/dto/LoginUserRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/dto/incoming_request/LoginUserRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/dto/LoginUserResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/dto/RegistrationAndAuthRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/dto/incoming_request/RegistrationAndAuthRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/dto/SavingGoalCreateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/dto/incoming_request/SavingGoalCreateRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/dto/TransactionCreateRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/model/Expense.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/model/Expense.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/model/Income.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/model/Income.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/model/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/model/Transaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/repository/IncomeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/repository/IncomeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/repository/TransactionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/repository/TransactionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/security/service/RegistrationAndAuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/security/service/RegistrationAndAuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/security/service/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/security/service/UserDetailsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/service/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/service/TransactionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/me/magicbudget/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/test/java/me/magicbudget/service/TransactionServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/me/magicbudget/service/TransactionServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/test/java/me/magicbudget/service/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/me/magicbudget/service/UserServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,7 +174,7 @@
       <workItem from="1741110078084" duration="12701000" />
       <workItem from="1741388474701" duration="877000" />
       <workItem from="1741514017253" duration="5540000" />
-      <workItem from="1741723193440" duration="17948000" />
+      <workItem from="1741723193440" duration="21985000" />
     </task>
     <task id="LOCAL-00001" summary="chore: Refactoring.">
       <option name="closed" value="true" />

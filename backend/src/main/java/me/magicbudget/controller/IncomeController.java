@@ -1,11 +1,7 @@
 package me.magicbudget.controller;
 
-import me.magicbudget.dto.incoming_request.IncomeRequest;
-import me.magicbudget.dto.outgoing_response.IncomeResponse;
-import me.magicbudget.model.Income;
-import me.magicbudget.model.Transaction;
-import me.magicbudget.model.TransactionType;
-import me.magicbudget.model.User;
+import me.magicbudget.dto.incomingrequest.IncomeRequest;
+import me.magicbudget.dto.outgoingresponse.IncomeResponse;
 import me.magicbudget.repository.IncomeRepository;
 import me.magicbudget.repository.TransactionRepository;
 import me.magicbudget.service.IncomeService;
@@ -19,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("api/{userid}/income")
