@@ -12,7 +12,7 @@ export default function Transactions() {
         </p>
       </div>
       <div className="flex">
-        <div className="m-3 w-2/3">
+        <div className="m-3 w-full">
           <TransactionTable start={0} end={10} />
         </div>
       </div>

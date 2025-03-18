@@ -39,7 +39,7 @@ export function SignupForm({
     setError("");
 
     axios
-      .post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
+      .post(`http://localhost:8080/api/auth/register`, {
         username: username,
         password: password,
         fistName: firstName,
