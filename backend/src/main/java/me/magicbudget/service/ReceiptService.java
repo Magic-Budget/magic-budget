@@ -1,13 +1,16 @@
 package me.magicbudget.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import jakarta.transaction.Transactional;
 import me.magicbudget.dto.outgoingresponse.ReceiptResponse;
 import me.magicbudget.model.Receipt;
 import me.magicbudget.model.User;
@@ -33,6 +36,7 @@ public class ReceiptService {
     this.receiptRepository = receiptRepository;
   }
 
+  @Transactional
   public Receipt uploadDocument(@NonNull UUID userId, @NonNull MultipartFile file) {
     if (file.isEmpty()) {
       throw new IllegalArgumentException("File is empty");
@@ -59,7 +63,7 @@ public class ReceiptService {
         totalAmount = extractAmount(matcher.group(0));
       }
 
-      Receipt receipt = new Receipt(null, file.getBytes(), user, totalAmount);
+      Receipt receipt = new Receipt(null, convertImageToBase64(tempFile), user, totalAmount);
 
       return receiptRepository.save(receipt);
     } catch (Exception e) {
@@ -67,10 +71,11 @@ public class ReceiptService {
     }
   }
 
+  @Transactional
   public List<ReceiptResponse> fetchReceipts(UUID userId) {
     return receiptRepository.findByUserId(userId)
         .stream()
-        .map(receipt -> new ReceiptResponse(receipt.data(), receipt.amount()))
+        .map(receipt -> new ReceiptResponse(receipt.getImage(), receipt.getAmount()))
         .collect(Collectors.toList());
   }
 
@@ -82,5 +87,10 @@ public class ReceiptService {
       return new BigDecimal(amountStr);
     }
     return null;
+  }
+
+  public static String convertImageToBase64(File imageFile) throws IOException {
+    byte[] fileContent = Files.readAllBytes(imageFile.toPath());
+    return Base64.getEncoder().encodeToString(fileContent);
   }
 }

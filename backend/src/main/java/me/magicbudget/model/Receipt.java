@@ -1,22 +1,16 @@
 package me.magicbudget.model;
 
-import jakarta.persistence.Basic;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.UUID;
 
 @Entity
@@ -28,29 +22,28 @@ public class Receipt {
   private UUID id;
 
   @Lob
-  @Column(name = "data")
-  private byte[] data;
+  @Column(name = "image")
+  private String image;
 
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
 
-  @NotNull
   @Digits(integer = 19, fraction = 4)
-  @Column(precision = 19, scale = 4)
+  @Column(precision = 19, scale = 4, nullable = true)
   private BigDecimal amount;
 
   public Receipt() {
   }
 
-  public Receipt(UUID id, byte[] data, User user, BigDecimal amount) {
+  public Receipt(UUID id, String image, User user, BigDecimal amount) {
     this.id = id;
-    this.data = data;
+    this.image = image;
     this.user = user;
     this.amount = amount;
   }
 
-  public UUID id() {
+  public UUID getId() {
     return id;
   }
 
@@ -58,15 +51,15 @@ public class Receipt {
     this.id = id;
   }
 
-  public byte[] data() {
-    return data;
+  public String getImage() {
+    return image;
   }
 
-  public void setData(byte[] data) {
-    this.data = data;
+  public void setImage(String image) {
+    this.image = image;
   }
 
-  public User user() {
+  public User getUser() {
     return user;
   }
 
@@ -74,21 +67,11 @@ public class Receipt {
     this.user = user;
   }
 
-  public BigDecimal amount() {
+  public BigDecimal getAmount() {
     return amount;
   }
 
   public void setAmount(BigDecimal amount) {
     this.amount = amount;
-  }
-
-  @Override
-  public String toString() {
-    return "Receipt{" +
-        "id=" + id +
-        ", data=" + Arrays.toString(data) +
-        ", user=" + user +
-        ", amount=" + amount +
-        '}';
   }
 }
