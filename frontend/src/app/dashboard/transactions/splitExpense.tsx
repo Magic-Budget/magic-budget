@@ -16,14 +16,13 @@ const SplitExpense= () => {
 			<CollapsibleContent className="py-2">
 				<SplitForm />
 			</CollapsibleContent>
-			{isOpen ? <Button>Done</Button>:null}
 			<CollapsibleTrigger asChild>
 				{isOpen ? (
-					<Button variant={"outline"} className="mx-1">
+					<Button variant={"outline"} >
 						Cancel
 					</Button>
 				) : (
-					<Button className="mr-1">Split Expense</Button>
+					<Button>Split Expense</Button>
 				)}
 			</CollapsibleTrigger>
 		</Collapsible>

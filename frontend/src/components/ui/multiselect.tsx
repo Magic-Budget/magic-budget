@@ -16,22 +16,27 @@ interface Option {
 interface MultiSelectProps {
 	options: Option[];
 	placeholder?: string;
+	className?: string;
+	values?: string[];
+	onChange?: (value: string[]) => void;
 }
 
 const MultiSelect: React.FC<MultiSelectProps & { className?: string }> = ({
 	options,
-	placeholder,
-	className,
+    placeholder,
+    className,
+	values = [],
+    onChange
 }) => {
 
-	const [values, setValues] = useState<string[]>([]);
 	const handleToggle = (optionValue: string) => {
-		if (values.includes(optionValue)){
-			setValues(values.filter((value) =>  value !== optionValue));
-		}
-		else{
-			setValues([...values, optionValue]);
-		}
+		if (!onChange) return;
+        
+        if (values.includes(optionValue)) {
+            onChange(values.filter((v) => v !== optionValue));
+        } else {
+            onChange([...values, optionValue]);
+        }
 	};
 
 	return (
@@ -51,7 +56,7 @@ const MultiSelect: React.FC<MultiSelectProps & { className?: string }> = ({
 						: placeholder || "Select options"}
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent className="w-parent p-2" align="start">
+			<PopoverContent className="w-parent p-2" align="start" side="right">
 				<div className="space-y-2">
 					{
 					options.length > 0?
