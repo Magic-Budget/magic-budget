@@ -1,6 +1,7 @@
 import React from "react";
 import TransactionTable from "./transactionTable";
 import TransactionGraph from "./transactionGraph";
+import TransactionBarGraph from "./transactionBarGraph";
 
 export default function Transactions() {
   return (
@@ -10,6 +11,9 @@ export default function Transactions() {
         <p className="text-muted-foreground">
           View your transactions and track your spending
         </p>
+        <div>
+          <TransactionBarGraph/>
+        </div>
       </div>
       <div className="flex">
         <div className="m-3 w-full">

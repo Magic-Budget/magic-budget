@@ -1,14 +1,16 @@
 import IncomeTable from "./incomeTable";
-
+import IncomeGraph from "./incomeGraph";
 export default function incomes() {
   return (
     <div className="m-3">
-      
       <div>
         <h2 className="text-2xl font-bold tracking-tight">Income</h2>
         <p className="text-muted-foreground">
           View your credit and track your income
         </p>
+        <div>
+          <IncomeGraph/>
+        </div>
       </div>
       <div className="flex">
               <div className="m-3 w-full">
