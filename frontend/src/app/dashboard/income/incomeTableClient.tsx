@@ -108,11 +108,10 @@ export default function IncomeTableClient({incomes}: Props) {
                         />
                     )}
                 </DialogContent>
-                <DialogFooter>
-                    <Button onClick={handleCloseDialog}>Close</Button>
-                </DialogFooter>
+                
             </Dialog>
             <TablePagination />
         </div>
+
     );
 }

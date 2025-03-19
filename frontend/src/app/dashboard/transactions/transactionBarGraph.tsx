@@ -1,21 +1,17 @@
 import {BarGraph} from "@/components/ui/barGraph";
 const mockData = [
-    { month: "Oct", actual: 180, expected:  250},
-    { month: "Nov", actual: 220, expected:  300},
-    { month: "Dec", actual: 190, expected:  280},
-    { month: "Jan", actual: 210, expected:  350},
-    { month: "Feb", actual: 250, expected:  400},
-    { month: "Mar", actual: 300, expected:  450},
+    { month: "Oct", actual: 180},
+    { month: "Nov", actual: 220},
+    { month: "Dec", actual: 190},
+    { month: "Jan", actual: 210},
+    { month: "Feb", actual: 250},
+    { month: "Mar", actual: 300},
   ];
   
   const config = {
     actual: {
-      label: "Actual Spendings",
+      label: "Spendings",
       color: "#ff746c",
-    },
-    expected: {
-      label: "Expected Spendings",
-      color: "#274754",
     },
   };
 

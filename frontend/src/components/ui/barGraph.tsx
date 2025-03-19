@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/chart"
 
 interface BarGraphProps {
-    chartData: { month: string; actual: number; expected: number }[];
+    chartData: { month: string; actual: number; }[];
     chartConfig: ChartConfig;
   }
  
@@ -32,7 +32,6 @@ export function BarGraph({ chartData, chartConfig }: BarGraphProps) {
         <ChartTooltip content={<ChartTooltipContent />} />
         <ChartLegend content={<ChartLegendContent />} />
         <Bar dataKey="actual" fill={chartConfig.actual.color} radius={4} />
-        <Bar dataKey="expected" fill={chartConfig.expected.color} radius={4} />
       </BarChart>
     </ChartContainer>
   )
