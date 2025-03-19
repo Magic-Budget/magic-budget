@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import Transaction from "./(objects)/transaction";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import SplitExpense from "./splitExpense";
+import { Command, CommandInput } from "@/components/ui/command";
 
 export default function TransactionView(props: { transactionId: string }) {
 	const [transaction, setTransaction] = useState<Transaction>();
@@ -39,8 +42,9 @@ export default function TransactionView(props: { transactionId: string }) {
 				<b>Description:</b>
 				{transaction?.description}
 			</p>
-			<div className="flex my-2 px-4 justify-center">
+			<div className="my-2 justify-center">
 				<Button>Edit</Button>
+				<SplitExpense/>
 			</div>
 		</div>
 	);
