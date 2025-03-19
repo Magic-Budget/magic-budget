@@ -1,11 +1,11 @@
 import {BarGraph} from "@/components/ui/barGraph";
 const mockData = [
-    { month: "Oct", actual: 180},
-    { month: "Nov", actual: 220},
-    { month: "Dec", actual: 190},
-    { month: "Jan", actual: 210},
-    { month: "Feb", actual: 250},
-    { month: "Mar", actual: 300},
+  { month: "October", actual: 180},
+  { month: "November", actual: 220},
+  { month: "December", actual: 190},
+  { month: "January", actual: 210},
+  { month: "February", actual: 250},
+  { month: "Marchh", actual: 300},
   ];
   
   const config = {

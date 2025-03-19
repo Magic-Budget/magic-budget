@@ -21,7 +21,7 @@ export function BarGraph({ chartData, chartConfig }: BarGraphProps) {
   return (
     <ChartContainer config={chartConfig} className="max-h-[50vh] w-full ">
       <BarChart accessibilityLayer data={chartData}>
-        <CartesianGrid vertical={false} />
+        <CartesianGrid vertical={false} strokeWidth={6} />
         <XAxis
           dataKey="month"
           tickLine={false}
