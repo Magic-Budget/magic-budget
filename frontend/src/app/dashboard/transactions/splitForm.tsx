@@ -55,7 +55,7 @@ const SplitForm: React.FC = () => {
 
     const onSubmit = (data:FormValues)=>{
         console.log(data);
-        // Post the changes
+        // TODO: Post the changes
     }
 
     return (
