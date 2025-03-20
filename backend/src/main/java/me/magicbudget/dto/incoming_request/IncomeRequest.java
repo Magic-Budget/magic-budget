@@ -1,4 +1,4 @@
-package me.magicbudget.dto.incomingrequest;
+package me.magicbudget.dto.incoming_request;
 
 import me.magicbudget.model.IncomeType;
 import java.math.BigDecimal;
