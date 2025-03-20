@@ -23,20 +23,19 @@ interface MultiSelectProps {
 
 const MultiSelect: React.FC<MultiSelectProps & { className?: string }> = ({
 	options,
-    placeholder,
-    className,
+	placeholder,
+	className,
 	values = [],
-    onChange
+	onChange,
 }) => {
-
 	const handleToggle = (optionValue: string) => {
 		if (!onChange) return;
-        
-        if (values.includes(optionValue)) {
-            onChange(values.filter((v) => v !== optionValue));
-        } else {
-            onChange([...values, optionValue]);
-        }
+
+		if (values.includes(optionValue)) {
+			onChange(values.filter((v) => v !== optionValue));
+		} else {
+			onChange([...values, optionValue]);
+		}
 	};
 
 	return (
@@ -58,31 +57,30 @@ const MultiSelect: React.FC<MultiSelectProps & { className?: string }> = ({
 			</PopoverTrigger>
 			<PopoverContent className="w-parent p-2" align="start">
 				<div className="space-y-2">
-					{
-					options.length > 0?
-					options.map((option) => (
-						<div
-							key={option.value}
-							className="flex items-center space-x-2"
-						>
-							<Checkbox
-								checked={values.includes(option.value)}
-								onCheckedChange={() =>{
-									handleToggle(option.value);
-								}
-								}
-								id={option.value}
-							/>
-							<label
-								htmlFor={option.value}
-								className="text-sm font-medium leading-none"
+					{options.length > 0 ? (
+						options.map((option) => (
+							<div
+								key={option.value}
+								className="flex items-center space-x-2"
 							>
-								{option.label}
-							</label>
-						</div>
-					))
-					:<p>No options available</p>
-				}
+								<Checkbox
+									checked={values.includes(option.value)}
+									onCheckedChange={() => {
+										handleToggle(option.value);
+									}}
+									id={option.value}
+								/>
+								<label
+									htmlFor={option.value}
+									className="text-sm font-medium leading-none"
+								>
+									{option.label}
+								</label>
+							</div>
+						))
+					) : (
+						<p>No options available</p>
+					)}
 				</div>
 			</PopoverContent>
 		</Popover>
