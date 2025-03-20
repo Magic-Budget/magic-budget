@@ -23,15 +23,19 @@ async function getIncomes(
     end: number
 ): Promise<Income[]> {
     let incomes: Income[] = [];
+    let today = new Date();
     for (let i = start; i < end; i++) {
-        incomes.push({    
+        incomes.push({
             id: `transaction${i}`,
             amount: 0,
             name: `Income ${i}`,
-            date: new Date(Date.now()),
+            date: today,
+            description: "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway, because bees don't care what humans think is impossible.",
             type: "ONETIME",
-            description:
-                "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway, because bees don't care what humans think is impossible.",
+            getDateString: function (): string
+            {
+                return new Date().toISOString().split("T")[0];
+            }
         });
     }
     return incomes;

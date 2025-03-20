@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label";
 import Income from "./(objects)/income";
 import { PlusCircle } from "lucide-react";
 
-export default function incomes() {
+export default function Incomes() {
   const today = new Date().toISOString().split("T")[0];
 
   const [incomes, setIncomes] = useState<Income[]>([]);
@@ -102,13 +102,14 @@ export default function incomes() {
                   <Input
                     id="name"
                     name="name"
+                    type="text"
                     value={newIncome.name}
                     onChange={handleInputChange}
                     required
                   />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="tamount"> Amount ($)</Label>
+                  <Label htmlFor="amount"> Amount ($)</Label>
                   <Input
                     id="amount"
                     name="amount"
@@ -121,10 +122,11 @@ export default function incomes() {
                   />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="currAmount">Description ($)</Label>
+                  <Label htmlFor="description">Description ($)</Label>
                   <Input
                     id="description"
                     name="description"
+                    type="text"
                     value={newIncome.description}
                     onChange={handleInputChange}
                   />
@@ -145,6 +147,7 @@ export default function incomes() {
                   <Input
                     id="type"
                     name="type"
+                    type="text"
                     value={newIncome.type}
                     onChange={handleInputChange}
                     required
