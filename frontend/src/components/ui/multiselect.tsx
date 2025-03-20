@@ -44,7 +44,7 @@ const MultiSelect: React.FC<MultiSelectProps & { className?: string }> = ({
 			<PopoverTrigger asChild>
 				<Button
 					variant="outline"
-					className={cn("w-parent justify-between", className)}
+					className={cn("w-full justify-between", className)}
 				>
 					{values.length > 0
 						? options
@@ -56,7 +56,7 @@ const MultiSelect: React.FC<MultiSelectProps & { className?: string }> = ({
 						: placeholder || "Select options"}
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent className="w-parent p-2" align="start" side="right">
+			<PopoverContent className="w-parent p-2" align="start">
 				<div className="space-y-2">
 					{
 					options.length > 0?

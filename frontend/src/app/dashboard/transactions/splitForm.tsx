@@ -24,7 +24,8 @@ type FormValues = z.infer<typeof formSchema>;
 
 const SplitForm: React.FC = () => {
     const userId = useUserStore((state) => state.id);
-    const apiURL = `${process.env.NEXT_PUBLIC_API_URL}/api/${userId}`
+    // const apiURL = `${process.env.NEXT_PUBLIC_API_URL}/api/${userId}`
+    const apiURL = "/api"
     const [selectedFriends, setSelectedFriends] = React.useState<string[]>([]);
     const [friendOptions, setFriendOptions] = useState<MultiSelectOption[]>([]);
 
@@ -40,7 +41,7 @@ const SplitForm: React.FC = () => {
         const getFriends = async () => {
             try {
                 const response = await axios.get(`${apiURL}/friends`);
-                const friends = response.data.map((friend: any) => ({
+                const friends = response.data.map((friend: {id:string, name:string}) => ({
                     label: friend.name,
                     value: friend.id,
                 }));
@@ -54,6 +55,7 @@ const SplitForm: React.FC = () => {
 
     const onSubmit = (data:FormValues)=>{
         console.log(data);
+        // Post the changes
     }
 
     return (
