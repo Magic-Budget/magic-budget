@@ -1,13 +1,16 @@
-import { Button } from '@/components/ui/button';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@radix-ui/react-collapsible';
-import React from 'react';
-import SplitForm from './splitForm';
+import { Button } from "@/components/ui/button";
+import {
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger,
+} from "@radix-ui/react-collapsible";
+import React, { useState } from "react";
+import SplitForm from "./splitForm";
 
-const SplitExpense= () => {
+const SplitExpense = () => {
+	const [isOpen, setIsOpen] = useState(false);
 
-    const [isOpen, setIsOpen] = React.useState(false);
-
-    return (
+	return (
 		<Collapsible
 			open={isOpen}
 			onOpenChange={setIsOpen}
@@ -18,9 +21,7 @@ const SplitExpense= () => {
 			</CollapsibleContent>
 			<CollapsibleTrigger asChild>
 				{isOpen ? (
-					<Button variant={"outline"} >
-						Cancel
-					</Button>
+					<Button variant={"outline"}>Cancel</Button>
 				) : (
 					<Button>Split Expense</Button>
 				)}

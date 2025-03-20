@@ -10,19 +10,19 @@ export default function TransactionView(props: { transactionId: string }) {
 	const [transaction, setTransaction] = useState<Transaction>();
 
 	useEffect(() => {
-	    axios
-	        .get(`/api/transactions/${props.transactionId}`)
-	        .then((response) => {
-                const transactionData = response.data;
-                transactionData.date = new Date(transactionData.date);
-	            setTransaction(transactionData);
-	        })
-	        .catch((error) => {
-	            console.error(
-	                "There was an error fetching the transaction!",
-	                error
-	            );
-	        });
+		axios
+			.get(`/api/transactions/${props.transactionId}`)
+			.then((response) => {
+				const transactionData = response.data;
+				transactionData.date = new Date(transactionData.date);
+				setTransaction(transactionData);
+			})
+			.catch((error) => {
+				console.error(
+					"There was an error fetching the transaction!",
+					error
+				);
+			});
 	}, [props.transactionId]);
 
 	return (
@@ -44,7 +44,7 @@ export default function TransactionView(props: { transactionId: string }) {
 			</p>
 			<div className="my-2 justify-center">
 				<Button>Edit</Button>
-				<SplitExpense/>
+				<SplitExpense />
 			</div>
 		</div>
 	);
