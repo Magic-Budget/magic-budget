@@ -20,17 +20,17 @@ import TransactionView from "./transactionView";
 import { Button } from "@/components/ui/button";
 import TablePagination from "./paginationButton";
 import Transaction from "./(objects)/transaction";
+import { UUID } from "crypto";
 
 interface Props {
 	transactions: Transaction[];
 }
 
 export default function TransactionTableClient({ transactions }: Props) {
-	const [selectedTransactionId, setSelectedTransactionId] = useState<
-		string | null
-	>(null);
+	const [selectedTransactionId, setSelectedTransactionId] =
+		useState<UUID | null>(null);
 
-	const handleOpenDialog = (transactionId: string) => {
+	const handleOpenDialog = (transactionId: UUID) => {
 		setSelectedTransactionId(transactionId);
 	};
 
@@ -43,15 +43,15 @@ export default function TransactionTableClient({ transactions }: Props) {
 			<Table>
 				<TableHeader>
 					<TableRow className="bg-gray-600">
-						<TableHead className="w-1/8 text-white">Date</TableHead>
-						<TableHead className="w-1/5 text-white">Name</TableHead>
-						<TableHead className="w-1/5 text-white">
+						<TableHead className="w-28 text-white">Date</TableHead>
+						<TableHead className="w-56 text-white">Name</TableHead>
+						<TableHead className="w-56 text-white">
 							Amount
 						</TableHead>
-						<TableHead className="w-1/5 text-white">
+						<TableHead className="w-56 text-white">
 							Category
 						</TableHead>
-						<TableHead className="text-right text-white">
+						<TableHead className="w-96 text-right text-white">
 							Description
 						</TableHead>
 					</TableRow>
@@ -109,9 +109,6 @@ export default function TransactionTableClient({ transactions }: Props) {
 						/>
 					)}
 				</DialogContent>
-				<DialogFooter>
-					<Button onClick={handleCloseDialog}>Close</Button>
-				</DialogFooter>
 			</Dialog>
 			<TablePagination />
 		</div>

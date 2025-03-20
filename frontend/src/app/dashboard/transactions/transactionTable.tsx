@@ -1,3 +1,4 @@
+import axios from "axios";
 import Transaction from "./(objects)/transaction";
 import TransactionTableClient from "./transactionTableClient";
 
@@ -22,19 +23,18 @@ async function getTransactions(
 	start: number,
 	end: number
 ): Promise<Transaction[]> {
-	let transacts: Transaction[] = [];
-	for (let i = start; i < end; i++) {
-		transacts.push({
-			id: `transaction${i}`,
-			date: new Date(Date.now()),
-			name: `Transaction ${i}`,
-			amount: 0,
-			category: "Category 1",
-			description:
-				"According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway, because bees don't care what humans think is impossible.",
+	let transactions: Transaction[] = [];
+	axios
+		.get(
+			`${process.env.NEXT_PUBLIC_API_URL}/api/${username}/expense/view-all`
+		)
+		.then((response) => {
+			transactions = response.data.slice(start, end);
+		})
+		.catch((err) => {
+			console.log(err);
 		});
-	}
-	return transacts;
+	return transactions;
 }
 
 function getUsername() {
