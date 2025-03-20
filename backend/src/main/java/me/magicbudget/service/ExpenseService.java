@@ -11,9 +11,11 @@ import me.magicbudget.repository.ExpenseRepository;
 import me.magicbudget.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class ExpenseService {
@@ -77,5 +79,17 @@ public class ExpenseService {
     }
   }
 
+  public BigDecimal getTotalExpense(String userId) throws Exception {
+    Optional<User> userById = userService.getUserById(UUID.fromString(userId));
+    if (userById.isPresent()) {
+      List<Expense> expenses = expenseRepository.findExpenseByUserId(userById.get());
+
+
+      return expenses.stream()
+          .map(expense -> expense.getTransaction().getAmount())
+          .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+    throw new RuntimeException("User not found");
+  }
 }
 

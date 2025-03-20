@@ -1,8 +1,8 @@
 package me.magicbudget.controller;
 
-import me.magicbudget.dto.incoming_request.LoginUserRequest;
-import me.magicbudget.dto.outgoing_response.LoginUserResponse;
-import me.magicbudget.dto.incoming_request.RegistrationAndAuthRequest;
+import me.magicbudget.dto.incomingrequest.LoginUserRequest;
+import me.magicbudget.dto.outgoingresponse.LoginUserResponse;
+import me.magicbudget.dto.incomingrequest.RegistrationAndAuthRequest;
 import me.magicbudget.model.UserInformation;
 import me.magicbudget.security.service.RegistrationAndAuthService;
 import me.magicbudget.service.UserService;
@@ -71,7 +71,6 @@ public class UserController {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
   }
-  //
 //  @GetMapping("/api/hello")
 //  public ResponseEntity<String> helloUser() {
 //    return new ResponseEntity<>("Hello from JWT", HttpStatus.OK);

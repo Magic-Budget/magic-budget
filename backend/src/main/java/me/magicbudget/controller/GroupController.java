@@ -1,0 +1,65 @@
+package me.magicbudget.controller;
+
+
+import me.magicbudget.dto.incomingrequest.AddUserToGroupRequest;
+import me.magicbudget.dto.outgoingresponse.GroupResponse;
+import me.magicbudget.service.GroupService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
+
+@RestController
+@RequestMapping("api/{userid}/group")
+public class GroupController {
+
+  private final GroupService groupService;
+
+  public GroupController(GroupService groupService) {
+    this.groupService = groupService;
+  }
+
+  @PostMapping("/create-group")
+  public ResponseEntity<String> createGroup(@PathVariable("userid") String userId,
+      @RequestBody String groupName) {
+    try {
+      groupService.createGroup(groupName, userId);
+      return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+    catch (Exception e) {
+      return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @PostMapping("/add-user")
+  public ResponseEntity<String> addUserToGroup(@PathVariable("userid") String userid,
+      @RequestBody AddUserToGroupRequest request) {
+    try {
+      groupService.addUserToGroup(userid,
+          request.otherUsername(),
+          request.groupName());
+      return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+    catch (Exception e) {
+      return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @GetMapping("/")
+  public ResponseEntity<List<GroupResponse>> getGroups(@PathVariable String userid) {
+    try {
+      return new ResponseEntity<>(groupService.getGroups(userid),HttpStatus.OK);
+    }
+    catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+  }
+
+
+
+}

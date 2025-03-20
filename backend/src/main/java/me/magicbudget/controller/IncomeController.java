@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -44,6 +45,17 @@ public class IncomeController {
     try{
       incomeService.addIncome(userId, incomeRequest);
       return new ResponseEntity<>("Income added successfully", HttpStatus.CREATED);
+    }
+    catch (Exception e) {
+      return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+    }
+  }
+
+  @GetMapping("/total")
+  public ResponseEntity<BigDecimal> totalIncome(@PathVariable("userid") String userId) {
+    try {
+      BigDecimal bigDecimal = incomeService.totalIncome(userId);
+      return new ResponseEntity<>(bigDecimal, HttpStatus.OK);
     }
     catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
