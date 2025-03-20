@@ -18,6 +18,8 @@ import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { UUID } from "crypto";
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
 	friends: z.array(z.string()).min(1, "Select at least one friend"),
@@ -25,10 +27,9 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-const SplitForm: React.FC = () => {
+const SplitForm = (props: { expense_id: UUID }) => {
 	const userId = useUserStore((state) => state.id);
 	const apiURL = `${process.env.NEXT_PUBLIC_API_URL}/api/${userId}`;
-	const [selectedFriends, setSelectedFriends] = useState<string[]>([]);
 	const [friendOptions, setFriendOptions] = useState<MultiSelectOption[]>([]);
 
 	// Initialize form
@@ -42,7 +43,7 @@ const SplitForm: React.FC = () => {
 	useEffect(() => {
 		const getFriends = async () => {
 			try {
-				const response = await axios.get(`${apiURL}/friends`);
+				const response = await axios.get(`${apiURL}` + "/friend");
 				const friends = response.data.map(
 					(friend: { id: string; name: string }) => ({
 						label: friend.name,
@@ -58,8 +59,21 @@ const SplitForm: React.FC = () => {
 	}, [apiURL]);
 
 	const onSubmit = (data: FormValues) => {
-		// TODO: Post the changes
-		// Need the updated API endpoint
+		const { toast } = useToast();
+		axios
+			.post(apiURL + `/split`, {
+				split_with: data.friends,
+			})
+			.then(() => {
+				toast({
+					description: "Expense split successfully",
+				});
+			})
+			.catch(() => {
+				toast({
+					description: "Failed to split expense",
+				});
+			});
 	};
 
 	return (
