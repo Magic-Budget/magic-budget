@@ -9,7 +9,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Home, ScrollText, Target } from "lucide-react";
+import { Home, ScrollText, Target, Receipt } from "lucide-react";
 import Link from "next/link";
 
 const items = [
@@ -27,6 +27,11 @@ const items = [
     title: "Goals",
     url: "/dashboard/goals",
     icon: Target,
+  },
+  {
+    title: "Receipt",
+    url: "/dashboard/receipt",
+    icon: Receipt,
   },
 ];
 
