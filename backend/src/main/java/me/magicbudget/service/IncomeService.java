@@ -39,8 +39,8 @@ public class IncomeService {
   }
 
 
-  public List<IncomeResponse> viewAllIncome(String userId) throws Exception {
-    Optional<User> userById = userService.getUserById(UUID.fromString(userId));
+  public List<IncomeResponse> viewAllIncome(UUID userId) throws IllegalArgumentException {
+    Optional<User> userById = userService.getUserById(userId);
 
     if (userById.isPresent()) {
       List<Income> incomes = incomeRepository.findIncomeByUserId(userById.get());
@@ -54,12 +54,12 @@ public class IncomeService {
             income.getType());
       }).toList();
     }
-    throw new RuntimeException("User not found");
+    throw new IllegalArgumentException("User not found");
   }
 
   @Transactional
-  public void addIncome(String userId, IncomeRequest incomeRequest) throws Exception {
-    Optional<User> userById = userService.getUserById(UUID.fromString(userId));
+  public void addIncome(UUID userId, IncomeRequest incomeRequest) throws IllegalArgumentException {
+    Optional<User> userById = userService.getUserById(userId);
     if (userById.isPresent()) {
       User user = userById.get();
       try {
@@ -72,16 +72,16 @@ public class IncomeService {
         income.setId(transaction.getId());
         incomeRepository.save(income);
       } catch (Exception e) {
-        throw new RuntimeException("An error occurred while adding the income", e);
+        throw new IllegalArgumentException("An error occurred while adding the income", e);
       }
 
     }
-    throw new RuntimeException("User not found");
+    throw new IllegalArgumentException("User not found");
   }
 
-  public BigDecimal totalIncome(String userId) throws Exception {
+  public BigDecimal totalIncome(UUID userId) throws IllegalArgumentException {
 
-    Optional<User> userById = userService.getUserById(UUID.fromString(userId));
+    Optional<User> userById = userService.getUserById(userId);
     if (userById.isPresent()) {
 
       List<Income> incomeList = incomeRepository.findIncomeByUserId(userById.get());
@@ -117,6 +117,6 @@ public class IncomeService {
       }
       return totalIncome;
     }
-    throw new RuntimeException("User not found");
+    throw new IllegalArgumentException("User not found");
   }
 }

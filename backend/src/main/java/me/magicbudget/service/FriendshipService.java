@@ -8,6 +8,7 @@ import me.magicbudget.repository.FriendshipRepository;
 import me.magicbudget.repository.UserInformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,8 @@ public class FriendshipService {
     this.friendshipRepository = friendshipRepository;
   }
 
-  public void addFriend(String userId, String usernameToAdd) {
+  @Transactional(rollbackFor = IllegalArgumentException.class)
+  public void addFriend(UUID userId, String usernameToAdd) throws IllegalArgumentException {
     // Find the user by username
     Optional<UserInformation> friendOptional = Optional.ofNullable(
         userRepository.findByUsername(usernameToAdd));
@@ -40,7 +42,7 @@ public class FriendshipService {
 
     UserInformation friend = friendOptional.get();
 
-    Optional<UserInformation> user = userRepository.findById(UUID.fromString(userId));
+    Optional<UserInformation> user = userRepository.findById(userId);
 
     if(user.isEmpty()){
       throw new IllegalArgumentException("User with username " + userId + " not found.");
@@ -91,9 +93,9 @@ public class FriendshipService {
     return false;
   }
 
-  public List<FriendResponse> getFriends(String userId) {
+  public List<FriendResponse> getFriends(UUID userId) throws IllegalArgumentException {
 
-    Optional<UserInformation> user = userRepository.findById(UUID.fromString(userId));
+    Optional<UserInformation> user = userRepository.findById(userId);
 
     if(user.isEmpty()){
       throw new IllegalArgumentException("User with username " + userId + " not found.");
@@ -108,8 +110,7 @@ public class FriendshipService {
       FriendResponse friendResponse = new FriendResponse(friend.getUsername(),
           friend.getEmail(),
           friend.getFirstName() + " " +
-              friend.getLastName(),
-          new BigDecimal(-10));
+              friend.getLastName());
 
       response.add(friendResponse);
     }

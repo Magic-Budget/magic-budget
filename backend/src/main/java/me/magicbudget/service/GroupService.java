@@ -1,5 +1,6 @@
 package me.magicbudget.service;
 
+import jakarta.transaction.Transactional;
 import me.magicbudget.dto.BasicUserInformation;
 import me.magicbudget.dto.outgoingresponse.GroupResponse;
 import me.magicbudget.dto.outgoingresponse.SplitTransactionResponse;
@@ -39,9 +40,10 @@ public class GroupService {
     this.splitTransactionRepository = splitTransactionRepository;
   }
 
-  public void createGroup(String groupName, String userId) {
+  @Transactional(rollbackOn = IllegalArgumentException.class)
+  public void createGroup(String groupName, UUID userId) {
     // Ensure the currentUser exists in the database
-    UserInformation user = userRepository.findById(UUID.fromString(userId))
+    UserInformation user = userRepository.findById(userId)
         .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
     // Check if the user is already in a group with the same name
@@ -67,11 +69,12 @@ public class GroupService {
   }
 
 
-  public void addUserToGroup(String currentUser,
+  @Transactional(rollbackOn = IllegalArgumentException.class)
+  public void addUserToGroup(UUID currentUser,
       String otherUsername,
       String groupName) {
 
-    UserInformation userInformation = userRepository.findById(UUID.fromString(currentUser))
+    UserInformation userInformation = userRepository.findById(currentUser)
         .orElseThrow(() ->
             new IllegalArgumentException("User not found"));
 
@@ -108,9 +111,9 @@ public class GroupService {
   }
 
 
-  public List<GroupResponse> getGroups(String userid) {
+  public List<GroupResponse> getGroups(UUID userid) {
 
-    UserInformation userInformation = userRepository.findById(UUID.fromString(userid))
+    UserInformation userInformation = userRepository.findById(userid)
         .orElseThrow(() ->
             new IllegalArgumentException("User not found"));
 
@@ -133,7 +136,8 @@ public class GroupService {
     return responses;
   }
 
-  public void addTransaction(String userid,
+  @Transactional(rollbackOn = IllegalArgumentException.class)
+  public void addTransaction(UUID userid,
       String transactionName,
       LocalDateTime transactionDate,
       BigDecimal amount,
@@ -141,7 +145,7 @@ public class GroupService {
       List<String> splitWith,
       String groupName) {
 
-    UserInformation paidBy = userRepository.findById(UUID.fromString(userid))
+    UserInformation paidBy = userRepository.findById(userid)
         .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
     List<Group> groups = paidBy.getGroups();
@@ -177,9 +181,9 @@ public class GroupService {
 
   }
 
-  public List<SplitTransactionResponse> getTransactions(String userid, String groupName) {
+  public List<SplitTransactionResponse> getTransactions(UUID userid, String groupName) {
 
-    UserInformation user = userRepository.findById(UUID.fromString(userid))
+    UserInformation user = userRepository.findById(userid)
         .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
     Optional<Group> groupOptional = user.getGroups().stream()

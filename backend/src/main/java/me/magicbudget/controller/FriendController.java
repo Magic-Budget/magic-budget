@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/{userid}/friend")
@@ -25,23 +26,23 @@ public class FriendController {
   }
 
   @PostMapping("/add-friend")
-  public ResponseEntity<String> addFriend(@PathVariable("userid") String userId, @RequestBody String username) {
+  public ResponseEntity<String> addFriend(@PathVariable("userid") UUID userId, @RequestBody String username) {
     try {
       friendshipService.addFriend(userId, username);
       return new ResponseEntity<>(HttpStatus.OK);
     }
-    catch (Exception e) {
-      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
   }
 
   @GetMapping("/")
-  public ResponseEntity<List<FriendResponse>> getFriends(@PathVariable("userid") String userId) {
+  public ResponseEntity<List<FriendResponse>> getFriends(@PathVariable("userid") UUID userId) {
     try {
       return new ResponseEntity<>(friendshipService.getFriends(userId),HttpStatus.OK);
     }
-    catch (Exception e) {
-      return new ResponseEntity<>(List.of(), HttpStatus.BAD_REQUEST);
+    catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
   }
 

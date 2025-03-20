@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -27,31 +28,34 @@ public class ExpenseController {
 
   @GetMapping("/view-all")
   public ResponseEntity<List<ExpenseResponse>> findExpenseByUserId(
-      @PathVariable("userid") String userId) {
+      @PathVariable("userid") UUID userId) {
     try {
       return new ResponseEntity<>(expenseService.viewExpenses(userId), HttpStatus.OK);
+    }
+    catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     } catch (Exception e) {
-      return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+      throw new RuntimeException(e);
     }
   }
 
   @PostMapping("/add-expense")
-  public ResponseEntity<String> addExpense(@PathVariable("userid") String userId, @RequestBody
+  public ResponseEntity<String> addExpense(@PathVariable("userid") UUID userId, @RequestBody
   ExpenseRequest expenseRequest) {
     try {
       expenseService.addExpense(userId, expenseRequest);
       return new ResponseEntity<>(HttpStatus.CREATED);
-    } catch (Exception e) {
-      return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+    } catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
   }
 
   @GetMapping("/total")
-  public ResponseEntity<BigDecimal> totalExpense(@PathVariable("userid") String userId) {
+  public ResponseEntity<BigDecimal> totalExpense(@PathVariable("userid") UUID userId) {
     try {
       BigDecimal totalExpense = expenseService.getTotalExpense(userId);
       return new ResponseEntity<>(totalExpense, HttpStatus.OK);
-    } catch (Exception e) {
+    } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
     }
 

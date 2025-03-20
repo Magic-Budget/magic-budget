@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/{userid}/group")
@@ -29,19 +30,19 @@ public class GroupController {
   }
 
   @PostMapping("/create-group")
-  public ResponseEntity<String> createGroup(@PathVariable("userid") String userId,
+  public ResponseEntity<String> createGroup(@PathVariable("userid") UUID userId,
       @RequestBody String groupName) {
     try {
       groupService.createGroup(groupName, userId);
       return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    catch (Exception e) {
+    catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
     }
   }
 
   @PostMapping("/add-user")
-  public ResponseEntity<String> addUserToGroup(@PathVariable("userid") String userid,
+  public ResponseEntity<String> addUserToGroup(@PathVariable("userid") UUID userid,
       @RequestBody AddUserToGroupRequest request) {
     try {
       groupService.addUserToGroup(userid,
@@ -49,13 +50,14 @@ public class GroupController {
           request.groupName());
       return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    catch (Exception e) {
+    catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
     }
+
   }
 
   @GetMapping("/")
-  public ResponseEntity<List<GroupResponse>> getGroups(@PathVariable String userid) {
+  public ResponseEntity<List<GroupResponse>> getGroups(@PathVariable UUID userid) {
     try {
       return new ResponseEntity<>(groupService.getGroups(userid),HttpStatus.OK);
     }
@@ -66,7 +68,7 @@ public class GroupController {
 
   @PostMapping("/add-transaction")
   public ResponseEntity<String> addTransaction(
-      @PathVariable String userid ,
+      @PathVariable UUID userid ,
       @RequestBody TransactionRequest transactionRequest) {
 
     try{
@@ -88,13 +90,13 @@ public class GroupController {
           groupName);
       return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    catch (Exception e) {
+    catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
     }
   }
 
   @GetMapping("/{group}/get-transactions")
-  public ResponseEntity<List<SplitTransactionResponse>> getTransaction(@PathVariable String userid,
+  public ResponseEntity<List<SplitTransactionResponse>> getTransaction(@PathVariable UUID userid,
       @PathVariable(name = "group") String groupName) {
 
     try{

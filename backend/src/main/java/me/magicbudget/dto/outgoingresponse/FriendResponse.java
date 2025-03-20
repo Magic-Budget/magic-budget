@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 
 public record FriendResponse(String username,
                              String email,
-                             String name,
-                             BigDecimal amountOwed) {
+                        String name ) //,
+//                             BigDecimal amountOwed)
+                          {
 
 }

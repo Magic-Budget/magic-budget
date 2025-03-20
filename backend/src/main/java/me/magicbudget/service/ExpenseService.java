@@ -31,9 +31,9 @@ public class ExpenseService {
     this.userService = userService;
   }
 
-  public List<ExpenseResponse> viewExpenses(String userId) throws Exception {
+  public List<ExpenseResponse> viewExpenses(UUID userId) throws IllegalArgumentException {
 
-    Optional<User> userById = userService.getUserById(UUID.fromString(userId));
+    Optional<User> userById = userService.getUserById(userId);
 
     if (userById.isPresent()) {
       List<Expense> expenses = expenseRepository.findExpenseByUserId(userById.get());
@@ -49,12 +49,12 @@ public class ExpenseService {
       }).toList();
 
     }
-    throw new RuntimeException("User not found");
+    throw new IllegalArgumentException("User not found");
   }
 
   @Transactional
-  public void addExpense(String userId, ExpenseRequest expenseRequest) throws Exception {
-    Optional<User> userById = userService.getUserById(UUID.fromString(userId));
+  public void addExpense(UUID userId, ExpenseRequest expenseRequest) throws IllegalArgumentException {
+    Optional<User> userById = userService.getUserById(userId);
 
     if (userById.isPresent()) {
       User user = userById.get();
@@ -72,15 +72,15 @@ public class ExpenseService {
         expense.setId(transaction.getId());
         expenseRepository.save(expense);
       } catch (Exception e) {
-        throw new RuntimeException("An error occurred while adding the expense", e);
+        throw new IllegalArgumentException("An error occurred while adding the expense", e);
       }
     } else {
-      throw new RuntimeException("User not found");
+      throw new IllegalArgumentException("User not found");
     }
   }
 
-  public BigDecimal getTotalExpense(String userId) throws Exception {
-    Optional<User> userById = userService.getUserById(UUID.fromString(userId));
+  public BigDecimal getTotalExpense(UUID userId) throws IllegalArgumentException {
+    Optional<User> userById = userService.getUserById(userId);
     if (userById.isPresent()) {
       List<Expense> expenses = expenseRepository.findExpenseByUserId(userById.get());
 
@@ -89,7 +89,7 @@ public class ExpenseService {
           .map(expense -> expense.getTransaction().getAmount())
           .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
-    throw new RuntimeException("User not found");
+    throw new IllegalArgumentException("User not found");
   }
 }
 
