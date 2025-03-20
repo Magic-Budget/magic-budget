@@ -2,7 +2,9 @@ package me.magicbudget.controller;
 
 
 import me.magicbudget.dto.incomingrequest.AddUserToGroupRequest;
+import me.magicbudget.dto.incomingrequest.TransactionRequest;
 import me.magicbudget.dto.outgoingresponse.GroupResponse;
+import me.magicbudget.dto.outgoingresponse.SplitTransactionResponse;
 import me.magicbudget.service.GroupService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -60,6 +64,46 @@ public class GroupController {
     }
   }
 
+  @PostMapping("/add-transaction")
+  public ResponseEntity<String> addTransaction(
+      @PathVariable String userid ,
+      @RequestBody TransactionRequest transactionRequest) {
 
+    try{
+      String transactionName = transactionRequest.getName();
+      LocalDateTime transactionDate = transactionRequest.getTransactionDate();
+      BigDecimal amount = transactionRequest.getAmount();
+      String description = transactionRequest.getDescription();
+
+      List<String> usernames = transactionRequest.getUsers();
+
+      String groupName = transactionRequest.getGroupName();
+
+      groupService.addTransaction(userid,
+          transactionName,
+          transactionDate,
+          amount,
+          description,
+          usernames,
+          groupName);
+      return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+    catch (Exception e) {
+      return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @GetMapping("/{group}/get-transactions")
+  public ResponseEntity<List<SplitTransactionResponse>> getTransaction(@PathVariable String userid,
+      @PathVariable(name = "group") String groupName) {
+
+    try{
+      return new ResponseEntity<>(groupService.getTransactions(userid,groupName),HttpStatus.OK);
+    }
+    catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+  }
 
 }

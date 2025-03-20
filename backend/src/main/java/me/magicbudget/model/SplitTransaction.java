@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "split_transaction")
@@ -61,5 +62,40 @@ public class SplitTransaction extends Transaction {
 
   public void setGroup(Group group) {
     this.group = group;
+  }
+
+  public void setOwedTo(List<UserInformation> owedTo) {
+    this.owedTo = owedTo;
+  }
+
+
+  @Override
+  public LocalDateTime getTransactionDate() {
+    return super.getTransactionDate();
+  }
+
+  @Override
+  public String getName() {
+    return super.getName();
+  }
+
+  @Override
+  public LocalDateTime getTrasnactionDate() {
+    return super.getTrasnactionDate();
+  }
+
+  @Override
+  public BigDecimal getAmount() {
+    return super.getAmount();
+  }
+
+  @Override
+  public String getDescription() {
+    return super.getDescription();
+  }
+
+  @Override
+  public UUID getId() {
+    return super.getId();
   }
 }

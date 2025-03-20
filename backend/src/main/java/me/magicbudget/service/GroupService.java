@@ -2,12 +2,18 @@ package me.magicbudget.service;
 
 import me.magicbudget.dto.BasicUserInformation;
 import me.magicbudget.dto.outgoingresponse.GroupResponse;
+import me.magicbudget.dto.outgoingresponse.SplitTransactionResponse;
 import me.magicbudget.model.Group;
+import me.magicbudget.model.SplitTransaction;
+import me.magicbudget.model.TransactionType;
 import me.magicbudget.model.UserInformation;
 import me.magicbudget.repository.GroupRepository;
+import me.magicbudget.repository.SplitTransactionRepository;
 import me.magicbudget.repository.UserInformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,10 +28,15 @@ public class GroupService {
   @Autowired
   private final UserInformationRepository userRepository;
 
+  @Autowired
+  private final SplitTransactionRepository splitTransactionRepository;
+
   public GroupService(GroupRepository groupRepository,
-      UserInformationRepository userRepository) {
+      UserInformationRepository userRepository,
+      SplitTransactionRepository splitTransactionRepository) {
     this.groupRepository = groupRepository;
     this.userRepository = userRepository;
+    this.splitTransactionRepository = splitTransactionRepository;
   }
 
   public void createGroup(String groupName, String userId) {
@@ -120,5 +131,87 @@ public class GroupService {
       responses.add(groupResponse);
     }
     return responses;
+  }
+
+  public void addTransaction(String userid,
+      String transactionName,
+      LocalDateTime transactionDate,
+      BigDecimal amount,
+      String description,
+      List<String> splitWith,
+      String groupName) {
+
+    UserInformation paidBy = userRepository.findById(UUID.fromString(userid))
+        .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+    List<Group> groups = paidBy.getGroups();
+
+    Group group = groups.stream()
+        .filter(g -> g.getGroupName().equals(groupName))
+        .findFirst()
+        .orElseThrow(() -> new IllegalArgumentException("Group not found"));
+
+    SplitTransaction transaction = new SplitTransaction(transactionName,
+        transactionDate,
+        amount,
+        description,
+        TransactionType.SPILT,
+        paidBy);
+
+    transaction.setGroup(group);
+
+    List<UserInformation> usersToAdd = new ArrayList<>();
+    for (String splitUserId : splitWith) {
+      UserInformation userToSplit = userRepository.findById(UUID.fromString(splitUserId))
+          .orElseThrow(() -> new IllegalArgumentException("User " + splitUserId + " not found"));
+      usersToAdd.add(userToSplit);
+    }
+
+    transaction.setOwedTo(usersToAdd);
+
+    group.getTransactions().add(transaction);
+
+    splitTransactionRepository.save(transaction);
+
+    groupRepository.save(group);
+
+  }
+
+  public List<SplitTransactionResponse> getTransactions(String userid, String groupName) {
+
+    UserInformation user = userRepository.findById(UUID.fromString(userid))
+        .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+    Optional<Group> groupOptional = user.getGroups().stream()
+        .filter(g -> g.getGroupName().equals(groupName)).findFirst();
+
+    if (groupOptional.isEmpty()) {
+      throw new IllegalArgumentException("Group not found");
+    }
+
+    Group group = groupOptional.get();
+
+    List<SplitTransaction> transactions = group.getTransactions();
+
+    List<SplitTransactionResponse> transactionResponses = new ArrayList<>();
+    for (SplitTransaction transaction : transactions) {
+      SplitTransactionResponse response = new SplitTransactionResponse(
+          transaction.getId(),
+          transaction.getName(),
+          transaction.getTransactionDate(),
+          transaction.getAmount(),
+          transaction.getDescription(),
+          transaction.getPaidBy().getUsername()
+      );
+
+      for (UserInformation userInTransaction : transaction.getOwedTo()) {
+        response.getUsers().add(userInTransaction.getUsername());
+      }
+
+      transactionResponses.add(response);
+    }
+
+    return transactionResponses;
+
   }
 }
