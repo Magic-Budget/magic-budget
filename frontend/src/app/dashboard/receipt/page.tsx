@@ -5,23 +5,25 @@ import { Card, CardContent } from "@/components/ui/card";
 import {
   Dropzone,
   DropZoneArea,
-  DropzoneDescription,
-  DropzoneFileList,
-  DropzoneFileListItem,
-  DropzoneFileMessage,
   DropzoneMessage,
-  DropzoneRemoveFile,
-  DropzoneRetryFile,
   DropzoneTrigger,
-  InfiniteProgress,
   useDropzone,
 } from "@/components/ui/dropzone";
 import { useUserStore } from "@/stores/user-store";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { RefreshCw } from "lucide-react";
+import { UUID } from "crypto";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 
 interface ReceiptResponse {
+  receiptId: UUID;
   image: string; // Base64 encoded image
   amount: number | null;
 }
@@ -31,7 +33,11 @@ export default function Receipt() {
   const [isUploading, setIsUploading] = useState(false);
   const [receipts, setReceipts] = useState<ReceiptResponse[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedReceipt, setSelectedReceipt] =
+    useState<ReceiptResponse | null>(null);
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedAmount, setEditedAmount] = useState<string>("");
   const dropzone = useDropzone({
     onDropFile: async (file: File) => {
       try {
@@ -83,7 +89,7 @@ export default function Receipt() {
     try {
       setIsLoading(true);
       const response = await axios.get<ReceiptResponse[]>(
-        `http://localhost:8080/api/${userId}/receipt`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/${userId}/receipt`,
         {
           headers: {
             Authorization: `Bearer ${bearerToken}`,
@@ -91,6 +97,7 @@ export default function Receipt() {
         }
       );
       setReceipts(response.data);
+      console.log("Fetched receipts:", response.data);
     } catch (error) {
       console.error("Error fetching receipts:", error);
     } finally {
@@ -113,6 +120,49 @@ export default function Receipt() {
       fetchReceipts();
     }
   }, [isUploading, fetchReceipts]);
+
+  const updateReceiptAmount = async () => {
+    if (!selectedReceipt) return;
+
+    try {
+      const amount = parseFloat(editedAmount);
+      if (isNaN(amount)) return;
+
+      const receiptId = selectedReceipt?.receiptId ?? null;
+
+      await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/${userId}/receipt`,
+        {
+          receiptId: receiptId,
+          amount: amount,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${bearerToken}`,
+          },
+        }
+      );
+
+      setReceipts(
+        receipts.map((receipt) =>
+          receipt.receiptId === selectedReceipt.receiptId
+            ? { ...receipt, amount }
+            : receipt
+        )
+      );
+
+      setSelectedReceipt({ ...selectedReceipt, amount });
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating receipt:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (!selectedReceipt) {
+      setIsEditing(false);
+    }
+  }, [selectedReceipt]);
 
   return (
     <div>
@@ -156,7 +206,8 @@ export default function Receipt() {
               <img
                 src={`data:image/png;base64,${receipt.image}`}
                 alt={`Receipt ${index}`}
-                className="w-full h-40 object-cover rounded-lg"
+                className="w-full h-40 object-cover rounded-lg cursor-pointer"
+                onClick={() => setSelectedReceipt(receipt)}
               />
               <p className="text-center font-semibold mt-2">
                 {receipt.amount !== null
@@ -167,6 +218,71 @@ export default function Receipt() {
           </Card>
         ))}
       </div>
+      <Dialog
+        open={!!selectedReceipt}
+        onOpenChange={(open) => !open && setSelectedReceipt(null)}
+      >
+        <DialogContent className="sm:max-w-4xl max-h-[90vh]">
+          <DialogHeader>
+            <DialogTitle>Receipt Details</DialogTitle>
+          </DialogHeader>
+          {selectedReceipt && (
+            <>
+              <img
+                src={`data:image/png;base64,${selectedReceipt.image}`}
+                alt="Receipt"
+                className="max-h-[70vh] w-full object-contain"
+              />
+              <div className="flex items-center justify-center gap-2 mt-2">
+                {isEditing ? (
+                  <>
+                    <Input
+                      type="number"
+                      step="0.01"
+                      value={editedAmount}
+                      onChange={(e) => setEditedAmount(e.target.value)}
+                      className="w-24 text-center"
+                      placeholder="0.00"
+                    />
+                    <Button size="sm" onClick={updateReceiptAmount}>
+                      Save
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => setIsEditing(false)}
+                    >
+                      Cancel
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-center font-semibold">
+                      {selectedReceipt.amount !== null
+                        ? `$${selectedReceipt.amount.toFixed(2)}`
+                        : "Unknown"}
+                    </p>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => {
+                        setEditedAmount(
+                          selectedReceipt.amount !== null
+                            ? selectedReceipt.amount.toString()
+                            : ""
+                        );
+                        setIsEditing(true);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                  </>
+                )}
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

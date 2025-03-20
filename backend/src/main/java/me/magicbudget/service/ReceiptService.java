@@ -11,6 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import jakarta.transaction.Transactional;
+import me.magicbudget.dto.incomingrequest.ReceiptUpdateRequest;
 import me.magicbudget.dto.outgoingresponse.ReceiptResponse;
 import me.magicbudget.model.Receipt;
 import me.magicbudget.model.User;
@@ -36,8 +37,17 @@ public class ReceiptService {
     this.receiptRepository = receiptRepository;
   }
 
+  /**
+   * Uploads a document to the server. Then extracts the total amount from the document and saves it
+   * to the database.
+   * <p>
+   * Must be transactional due to the use of LOB from Hibernate.
+   *
+   * @param userId the user id
+   * @param file   the file to upload
+   */
   @Transactional
-  public Receipt uploadDocument(@NonNull UUID userId, @NonNull MultipartFile file) {
+  public void uploadDocument(@NonNull UUID userId, @NonNull MultipartFile file) {
     if (file.isEmpty()) {
       throw new IllegalArgumentException("File is empty");
     }
@@ -65,21 +75,52 @@ public class ReceiptService {
 
       Receipt receipt = new Receipt(null, convertImageToBase64(tempFile), user, totalAmount);
 
-      return receiptRepository.save(receipt);
+      receiptRepository.save(receipt);
     } catch (Exception e) {
       throw new RuntimeException("Failed to save file", e);
     }
   }
 
+  /**
+   * Fetches receipts for the given user. Must be transactional due to the use of LOB from
+   * Hibernate.
+   *
+   * @param userId the user id
+   * @return a list of receipt responses
+   */
   @Transactional
   public List<ReceiptResponse> fetchReceipts(UUID userId) {
     return receiptRepository.findByUserId(userId)
         .stream()
-        .map(receipt -> new ReceiptResponse(receipt.getImage(), receipt.getAmount()))
+        .map(receipt -> new ReceiptResponse(receipt.getId(), receipt.getImage(),
+            receipt.getAmount()))
         .collect(Collectors.toList());
   }
 
-  public static BigDecimal extractAmount(String input) {
+  /**
+   * Updates a receipt with the given request. Must be transactional due to the use of LOB from
+   * Hibernate.
+   *
+   * @param userId  the user id
+   * @param request the request
+   */
+  @Transactional
+  public void updateReceipt(UUID userId, ReceiptUpdateRequest request) {
+    if (request.amount() == null) { // Only update the amount
+      return;
+    }
+
+    Receipt receipt = receiptRepository.findById(request.receiptId())
+        .orElseThrow(() -> new IllegalArgumentException("Receipt not found"));
+
+    BigDecimal amount = BigDecimal.valueOf(Double.parseDouble(request.amount()));
+
+    receipt.setAmount(amount);
+
+    receiptRepository.save(receipt);
+  }
+
+  private static BigDecimal extractAmount(String input) {
     Pattern pattern = Pattern.compile("\\$([\\d,]+\\.?\\d*)");
     Matcher matcher = pattern.matcher(input);
     if (matcher.find()) {
@@ -89,7 +130,7 @@ public class ReceiptService {
     return null;
   }
 
-  public static String convertImageToBase64(File imageFile) throws IOException {
+  private static String convertImageToBase64(File imageFile) throws IOException {
     byte[] fileContent = Files.readAllBytes(imageFile.toPath());
     return Base64.getEncoder().encodeToString(fileContent);
   }
