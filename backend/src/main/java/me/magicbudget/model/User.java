@@ -23,8 +23,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "auth_users")
 public class User{
-
-  @Id
+  
   private UUID id;
 
   @OneToOne(cascade = CascadeType.ALL)
@@ -46,6 +45,7 @@ public class User{
     this.expenses = new ArrayList<>();
   }
 
+  @Id
   public UUID getId() {
     return id;
   }
