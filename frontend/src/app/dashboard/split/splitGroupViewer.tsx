@@ -27,7 +27,7 @@ const GroupsPage = () => {
   const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/${userId}`;
   const requestHeaders = { Authorization: `Bearer ${bearerToken}` };
 
-  useEffect(() => {
+  const fetchGroups = () => {
     axios
       .get(`${apiUrl}/group/`, { headers: requestHeaders })
       .then((response) => {
@@ -36,6 +36,12 @@ const GroupsPage = () => {
       .catch((error) => {
         console.error(error);
       });
+  };
+
+  useEffect(() => {
+    fetchGroups();
+    const intervalId = setInterval(fetchGroups, 30000);
+    return () => clearInterval(intervalId);
   }, []);
 
   return (

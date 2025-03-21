@@ -67,7 +67,7 @@ export default function GroupForm({ onSuccess }: GroupFormProps) {
 
   useEffect(() => {
     axios
-      .get(`${apiUrl}/friend`, { headers: requestHeaders })
+      .get(`${apiUrl}/friend/`, { headers: requestHeaders })
       .then((response) => {
         setFriends(response.data);
       });

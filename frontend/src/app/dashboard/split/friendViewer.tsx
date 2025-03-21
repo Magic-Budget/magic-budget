@@ -23,7 +23,7 @@ const FriendViewer = () => {
   const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/${userId}`;
   const requestHeaders = { Authorization: `Bearer ${bearerToken}` };
 
-  useEffect(() => {
+  const fetchFriends = () => {
     axios
       .get(`${apiUrl}/friend/`, { headers: requestHeaders })
       .then((response) => {
@@ -35,6 +35,14 @@ const FriendViewer = () => {
       .catch((error) => {
         console.error(error);
       });
+  };
+
+  useEffect(() => {
+    fetchFriends();
+
+    const intervalId = setInterval(fetchFriends, 30000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
