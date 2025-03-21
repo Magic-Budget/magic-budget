@@ -1,4 +1,4 @@
-/*import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
 	Collapsible,
 	CollapsibleContent,
@@ -31,4 +31,4 @@ const SplitExpense = (props: { expense_id: UUID }) => {
 	);
 };
 
-export default SplitExpense;*/
+export default SplitExpense;
