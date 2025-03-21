@@ -100,4 +100,5 @@ public final class SavingGoalController {
     savingGoalService.deleteSavingGoal(id);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
+
 }
