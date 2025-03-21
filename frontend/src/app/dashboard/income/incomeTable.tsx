@@ -24,11 +24,17 @@ export default function TransactionTable(props: {
 			setIncomes(fetchedIncomes);
 		}
 
-		fetchIncomes();
+		const intervalId = setInterval(() => {
+			fetchIncomes();
+		  }, 2000);
+	  
+		  return () => clearInterval(intervalId);
 	}, [userId, bearerToken, props.start, props.end]);
 
 	return <IncomeTableClient incomes={incomes} />;
 }
+
+
 
 
 async function getIncomes(
@@ -48,13 +54,15 @@ async function getIncomes(
 			}
 		);
 
+		
 		return response.data.map((income: any) => ({
-			id: income.id,
+			
+			id: income.transaction_id,
             amount: income.income_amount,
             name: income.income_name,
             description: income.income_description,
-			date: new Date(income.amount),
-			type: income.type,
+			date: new Date(income.income_posted_date),
+			type: income.income_type,
 			
 		}));
 	} catch (err) {

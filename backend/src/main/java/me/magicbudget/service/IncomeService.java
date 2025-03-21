@@ -72,9 +72,9 @@ public class IncomeService {
       catch (Exception e) {
         throw new RuntimeException("An error occurred while adding the income", e);
       }
-
+    } else{
+      throw new RuntimeException("User not found");
     }
-    throw new RuntimeException("User not found");
   }
 
 }

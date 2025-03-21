@@ -24,14 +24,6 @@ interface Props {
     incomes: Income[];
 }
 
-export const IncomeType = {
-    ONETIME: 1,
-    WEEKLY: 7,
-    BIWEEKLY: 14,
-    MONTHLY: 30,
-    YEARLY: 365,
-  };
-
 export default function IncomeTableClient({incomes}: Props) {
     const [selectedIncomeId, setSelectedIncomeId] = useState<UUID | null>(null);
 
@@ -58,35 +50,35 @@ export default function IncomeTableClient({incomes}: Props) {
 
                 
                 <TableBody className="bg-gray-200">
-                    {incomes.map((income) => (
-                        <TableRow
-                            key={"transaction-" + income.id}
-                            onClick={() => handleOpenDialog(income.id)}
-                        >
+					{incomes.map((income) => (
+						<TableRow
+							key={"income-" + income.id}
+							onClick={() => handleOpenDialog(income.id)}
+						>
                             <TableCell
-                                id={`transaction-${income.id}-date`}
+                                id={`income-${income.id}-date`}
                                 className="font-medium"
                             >
                                 {income.date.toLocaleDateString()}
                             </TableCell>
                             <TableCell
-                                id={`transaction-${income.id}-name`}
+                                id={`income-${income.id}-name`}
                                 className="font-bold"
                             >
                                 {income.name}
                             </TableCell>
                             <TableCell
-                                id={`transaction-${income.id}-amount`}
+                                id={`income-${income.id}-amount`}
                             >
                                 {`$${income.amount.toFixed(2)}`}
                             </TableCell>
                             <TableCell
-                                id={`transaction-${income.id}-amount`}
+                                id={`income-${income.id}-type`}
                             >
                                 {income.type}
                             </TableCell>
                             <TableCell
-                                id={`transaction-${income.id}-description`}
+                                id={`income-${income.id}-description`}
                                 className="text-right"
                             >
                                 {income.description}
