@@ -1,7 +1,7 @@
 package me.magicbudget.controller;
 
-import me.magicbudget.dto.incomingrequest.ReceiptUpdateRequest;
-import me.magicbudget.dto.outgoingresponse.ReceiptResponse;
+import me.magicbudget.dto.incoming_request.ReceiptUpdateRequest;
+import me.magicbudget.dto.outgoing_response.ReceiptResponse;
 import me.magicbudget.service.ReceiptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

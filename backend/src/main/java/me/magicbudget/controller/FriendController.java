@@ -1,8 +1,7 @@
 package me.magicbudget.controller;
 
 
-import me.magicbudget.dto.outgoingresponse.FriendResponse;
-import me.magicbudget.model.Friendship;
+import me.magicbudget.dto.outgoing_response.FriendResponse;
 import me.magicbudget.service.FriendshipService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
