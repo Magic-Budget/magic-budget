@@ -68,7 +68,7 @@ public class ExpenseService {
         );
         transactionRepository.save(transaction);
         Expense expense = new Expense(user, transaction, expenseRequest.shopName(),
-            ExpenseCategory.GROCERY);
+            expenseRequest.expenseCategory());
         expense.setId(transaction.getId());
         expenseRepository.save(expense);
       } catch (Exception e) {

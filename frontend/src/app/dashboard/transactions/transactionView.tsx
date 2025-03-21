@@ -4,8 +4,11 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import SplitExpense from "./splitExpense";
 import { UUID } from "crypto";
+import { useUserStore } from "@/stores/user-store";
 
 export default function TransactionView(props: { transactionId: UUID }) {
+	const { id: userid, bearerToken } = useUserStore();
+	const apiURL = `${process.env.NEXT_PUBLIC_API_URL}/api/${userid}/expense/view-all`;
 	const [transaction, setTransaction] = useState<Transaction>();
 
 	useEffect(() => {

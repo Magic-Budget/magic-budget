@@ -67,8 +67,7 @@ function getChartConfig(): ChartConfig {
 }
 
 export default function TransactionGraph() {
-	const userStore = useUserStore();
-	const userid = userStore.id;
+	const { id: userid, bearerToken } = useUserStore();
 	const chartConfig = getChartConfig();
 
 	const apiURL = `${process.env.NEXT_PUBLIC_API_URL}/api/${userid}/expense/view-all`;
@@ -77,7 +76,11 @@ export default function TransactionGraph() {
 
 	useEffect(() => {
 		axios
-			.get(apiURL)
+			.get(apiURL, {
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			})
 			.then((response) => {
 				setChartData(
 					response.data.map(

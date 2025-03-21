@@ -1,42 +1,62 @@
+"use client";
 import axios from "axios";
 import Transaction from "./(objects)/transaction";
 import TransactionTableClient from "./transactionTableClient";
+import { useUserStore } from "@/stores/user-store";
+import { UUID } from "crypto";
+import { useEffect, useState } from "react";
 
-interface Props {
+export default function TransactionTable(props: {
 	start: number;
 	end: number;
-}
+}) {
+	const { id: userid, bearerToken } = useUserStore();
+	const [transactions, setTransactions] = useState<Transaction[]>([]);
 
-export default async function TransactionTable(props: Props) {
-	let username = getUsername();
-	const transactions = await getTransactions(
-		username,
-		props.start,
-		props.end
-	);
+	useEffect(() => {
+		async function fetchTransactions() {
+			const fetchedTransactions = await getTransactions(
+				userid,
+				bearerToken,
+				props.start,
+				props.end
+			);
+			setTransactions(fetchedTransactions);
+		}
+
+		fetchTransactions();
+	}, [userid, bearerToken, props.start, props.end]);
 
 	return <TransactionTableClient transactions={transactions} />;
 }
 
 async function getTransactions(
-	username: string,
+	userId: UUID,
+	bearerToken: string,
 	start: number,
 	end: number
 ): Promise<Transaction[]> {
-	let transactions: Transaction[] = [];
-	axios
-		.get(
-			`${process.env.NEXT_PUBLIC_API_URL}/api/${username}/expense/view-all`
-		)
-		.then((response) => {
-			transactions = response.data.slice(start, end);
-		})
-		.catch((err) => {
-			console.log(err);
-		});
-	return transactions;
-}
+	try {
+		const response = await axios.get(
+			`${process.env.NEXT_PUBLIC_API_URL}/api/${userId}/expense/view-all`,
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
 
-function getUsername() {
-	return "username";
+		return response.data.map((expense: any) => ({
+			id: expense.transaction_id,
+			date: new Date(expense.expense_posted_date),
+			name: expense.expense_name,
+			amount: expense.income_amount,
+			description: expense.expense_description,
+			category: expense.category,
+			business_name: expense.business_name,
+		}));
+	} catch (err) {
+		console.error(err);
+		return [];
+	}
 }
