@@ -8,16 +8,27 @@ import { useUserStore } from "@/stores/user-store";
 
 export default function TransactionView(props: { transactionId: UUID }) {
 	const { id: userid, bearerToken } = useUserStore();
-	const apiURL = `${process.env.NEXT_PUBLIC_API_URL}/api/${userid}/expense/view-all`;
+	const apiURL = `${process.env.NEXT_PUBLIC_API_URL}/api/${userid}/expense/view/${props.transactionId}`;
 	const [transaction, setTransaction] = useState<Transaction>();
 
 	useEffect(() => {
 		axios
-			.get(`/api/transactions/${props.transactionId}`)
+			.get(`${apiURL}`, {
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			})
 			.then((response) => {
 				const transactionData = response.data;
-				transactionData.date = new Date(transactionData.date);
-				setTransaction(transactionData);
+				const data: Transaction = {
+					id: response.data.transaction_id,
+					date: new Date(response.data.expense_posted_date),
+					name: response.data.expense_name,
+					amount: response.data.income_amount,
+					description: response.data.expense_description,
+					category: response.data.category,
+				};
+				setTransaction(data);
 			})
 			.catch((error) => {
 				console.error(
@@ -29,19 +40,19 @@ export default function TransactionView(props: { transactionId: UUID }) {
 
 	return (
 		<div>
-			<p>
-				<b>Name:</b>
+			<p className="my-1">
+				<b>Name: </b>
 				{transaction?.name}
 			</p>
-			<p>
-				<b>Amount:</b>${transaction?.amount}
+			<p className="my-1">
+				<b>Amount: </b>${transaction?.amount}
 			</p>
-			<p>
-				<b>Date:</b>
+			<p className="my-1">
+				<b>Date: </b>
 				{transaction?.date.toLocaleDateString()}
 			</p>
-			<p>
-				<b>Description:</b>
+			<p className="my-1">
+				<b>Description: </b>
 				{transaction?.description}
 			</p>
 			<div className="my-2 justify-center">
