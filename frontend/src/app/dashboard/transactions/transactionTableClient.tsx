@@ -41,14 +41,18 @@ export default function TransactionTableClient({ transactions }: Props) {
 
 	return (
 		<div>
-			<Table className="m-3 w-11/12">
+			<Table className="m-3 w-full">
 				<TableHeader>
 					<TableRow className="bg-gray-600">
-						<TableHead className="text-white">Date</TableHead>
-						<TableHead className="text-white">Name</TableHead>
-						<TableHead className="text-white">Amount</TableHead>
-						<TableHead className="text-white">Category</TableHead>
-						<TableHead className="text-right text-white">
+						<TableHead className="w-fit text-white">Date</TableHead>
+						<TableHead className="w-1/5 text-white">Name</TableHead>
+						<TableHead className="w-1/5 text-white">
+							Amount
+						</TableHead>
+						<TableHead className="w-1/5 text-white">
+							Category
+						</TableHead>
+						<TableHead className="w-fit text-right text-white">
 							Description
 						</TableHead>
 					</TableRow>
