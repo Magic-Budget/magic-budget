@@ -1,7 +1,7 @@
 package me.magicbudget.controller;
 
-import me.magicbudget.dto.incoming_request.ExpenseRequest;
-import me.magicbudget.dto.outgoing_response.ExpenseResponse;
+import me.magicbudget.dto.incomingrequest.ExpenseRequest;
+import me.magicbudget.dto.outgoingresponse.ExpenseResponse;
 import me.magicbudget.service.ExpenseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

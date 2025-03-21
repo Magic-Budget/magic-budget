@@ -1,7 +1,7 @@
 package me.magicbudget.controller;
 
-import me.magicbudget.dto.incoming_request.IncomeRequest;
-import me.magicbudget.dto.outgoing_response.IncomeResponse;
+import me.magicbudget.dto.incomingrequest.IncomeRequest;
+import me.magicbudget.dto.outgoingresponse.IncomeResponse;
 import me.magicbudget.repository.IncomeRepository;
 import me.magicbudget.repository.TransactionRepository;
 import me.magicbudget.service.IncomeService;

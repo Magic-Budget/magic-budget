@@ -9,7 +9,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Home, ScrollText, Target, Receipt } from "lucide-react";
+import { Home, ScrollText, Target, Receipt, Split} from "lucide-react";
 import Link from "next/link";
 
 const items = [
@@ -32,6 +32,11 @@ const items = [
     title: "Receipt",
     url: "/dashboard/receipt",
     icon: Receipt,
+  },
+  {
+    title: "Split",
+    url: "/dashboard/split",
+    icon: Split,
   },
 ];
 

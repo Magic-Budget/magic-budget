@@ -1,4 +1,4 @@
-package me.magicbudget.dto.incoming_request;
+package me.magicbudget.dto.incomingrequest;
 
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
