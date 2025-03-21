@@ -14,7 +14,6 @@ import me.magicbudget.dto.incomingrequest.RegistrationAndAuthRequest;
 import me.magicbudget.model.SavingGoal;
 import me.magicbudget.model.UserInformation;
 import me.magicbudget.model.User;
-import me.magicbudget.security.jwt.JwtImplementationService;
 import me.magicbudget.security.service.RegistrationAndAuthService;
 import me.magicbudget.service.SavingGoalService;
 import me.magicbudget.service.UserService;
@@ -52,9 +51,6 @@ public class SavingGoalControllerTest {
 
   @Autowired
   private SavingGoalService savingGoalService;
-
-  @Autowired
-  private JwtImplementationService jwtImplementationService;
 
   private User testUser;
 
@@ -101,8 +97,6 @@ public class SavingGoalControllerTest {
     savingGoal.setAmount(BigDecimal.valueOf(1000));
     savingGoal.setUser(testUser);
     savingGoal = savingGoalService.createSavingGoal(savingGoal, testUser.getInformation().getId());
-    List<SavingGoal> goals = savingGoalService.getSavingGoalsByUserId(testUser.getId());
-    System.out.println("Saved goals: " + goals);
 
     //When
     mockMvc.perform(get("/api/saving-goals/" + savingGoal.getId())
