@@ -1,21 +1,29 @@
 import React from "react";
 import TransactionTable from "./transactionTable";
-import TransactionGraph from "./transactionGraph";
+import { Button } from "@/components/ui/button";
+import { Dialog } from "@radix-ui/react-dialog";
 
 export default function Transactions() {
-  return (
-    <div className="m-3">
-      <div>
-        <h2 className="text-2xl font-bold tracking-tight">Transactions</h2>
-        <p className="text-muted-foreground">
-          View your transactions and track your spending
-        </p>
-      </div>
-      <div className="flex">
-        <div className="m-3 w-2/3">
-          <TransactionTable start={0} end={10} />
-        </div>
-      </div>
-    </div>
-  );
+	return (
+		<div className="m-3 w-[90%] lg:w-[calc(100vw-320px)] max-w-full">
+			<div className="flex justify-between">
+				<div>
+					<h2 className="text-2xl font-bold tracking-tight">
+						Transactions
+					</h2>
+					<p className="text-muted-foreground">
+						View your transactions and track your spending
+					</p>
+				</div>
+				<div>
+					<Button>Add Expense</Button>
+				</div>
+			</div>
+			<div>
+				<div className="">
+					<TransactionTable start={0} end={10} />
+				</div>
+			</div>
+		</div>
+	);
 }

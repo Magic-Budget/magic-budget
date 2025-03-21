@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import jakarta.transaction.Transactional;
 import me.magicbudget.dto.incomingrequest.ReceiptUpdateRequest;
-import me.magicbudget.dto.outgoingresponse.ReceiptResponse;
+import me.magicbudget.dto.outgoing_response.ReceiptResponse;
 import me.magicbudget.model.Receipt;
 import me.magicbudget.model.User;
 import me.magicbudget.repository.ReceiptRepository;
