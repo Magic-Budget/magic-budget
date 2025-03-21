@@ -92,7 +92,6 @@ public class UserInformation implements UserDetails {
     return lastName;
   }
 
-  public String getEmail() { return  email; }
 
   public User getUser() {
     return user;
