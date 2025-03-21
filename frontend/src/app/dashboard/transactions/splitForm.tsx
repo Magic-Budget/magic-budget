@@ -65,7 +65,7 @@ const SplitForm = (props: { expense_id: UUID }) => {
 	const onSubmit = (data: FormValues) => {
 		const { toast } = useToast();
 		axios
-			.post(apiURL + `/split`, {
+			.post(apiURL + `/split/`, {
 				split_with: data.friends,
 				expense_id: props.expense_id,
 			})

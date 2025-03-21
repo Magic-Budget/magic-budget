@@ -1,4 +1,4 @@
-package me.magicbudget.dto.outgoingresponse;
+package me.magicbudget.dto.outgoing_response;
 
 import me.magicbudget.dto.BasicUserInformation;
 import java.util.ArrayList;

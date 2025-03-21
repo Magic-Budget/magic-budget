@@ -1,7 +1,8 @@
 package me.magicbudget.service;
 
 
-import me.magicbudget.dto.outgoingresponse.FriendResponse;
+import me.magicbudget.dto.BasicUserInformation;
+import me.magicbudget.dto.outgoing_response.FriendResponse;
 import me.magicbudget.model.Friendship;
 import me.magicbudget.model.UserInformation;
 import me.magicbudget.repository.FriendshipRepository;
@@ -9,7 +10,6 @@ import me.magicbudget.repository.UserInformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -93,7 +93,7 @@ public class FriendshipService {
     return false;
   }
 
-  public List<FriendResponse> getFriends(UUID userId) throws IllegalArgumentException {
+  public List<BasicUserInformation> getFriends(UUID userId) throws IllegalArgumentException {
 
     Optional<UserInformation> user = userRepository.findById(userId);
 
@@ -104,13 +104,10 @@ public class FriendshipService {
     UserInformation currentUser = user.get();
 
     List<Friendship> friendships = currentUser.getFriendships();
-    List<FriendResponse> response = new ArrayList<>();
+    List<BasicUserInformation> response = new ArrayList<>();
     for(Friendship friendship : friendships){
       UserInformation friend = friendship.getFriend();
-      FriendResponse friendResponse = new FriendResponse(friend.getUsername(),
-          friend.getEmail(),
-          friend.getFirstName() + " " +
-              friend.getLastName());
+      BasicUserInformation friendResponse = UserService.getBasicInformation(friend);
 
       response.add(friendResponse);
     }

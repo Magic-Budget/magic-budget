@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import jakarta.transaction.Transactional;
-import me.magicbudget.dto.incomingrequest.ReceiptUpdateRequest;
+import me.magicbudget.dto.incoming_request.ReceiptUpdateRequest;
 import me.magicbudget.dto.outgoing_response.ReceiptResponse;
 import me.magicbudget.model.Receipt;
 import me.magicbudget.model.User;

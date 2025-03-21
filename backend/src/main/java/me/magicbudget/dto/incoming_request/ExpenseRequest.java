@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public record ExpenseRequest(BigDecimal amount,
                              LocalDateTime expenseDate,
                              String expenseName,
-                             ExpenseCategory expenseCategory,
+                             ExpenseCategory category,
                              String expenseDescription,
                              String shopName) {
 

@@ -2,8 +2,8 @@ package me.magicbudget.service;
 
 import jakarta.transaction.Transactional;
 import me.magicbudget.dto.BasicUserInformation;
-import me.magicbudget.dto.outgoingresponse.GroupResponse;
-import me.magicbudget.dto.outgoingresponse.SplitTransactionResponse;
+import me.magicbudget.dto.outgoing_response.GroupResponse;
+import me.magicbudget.dto.outgoing_response.SplitTransactionResponse;
 import me.magicbudget.model.Group;
 import me.magicbudget.model.SplitTransaction;
 import me.magicbudget.model.TransactionType;
@@ -31,6 +31,8 @@ public class GroupService {
 
   @Autowired
   private final SplitTransactionRepository splitTransactionRepository;
+  @Autowired
+  private UserService userService;
 
   public GroupService(GroupRepository groupRepository,
       UserInformationRepository userRepository,
@@ -124,10 +126,7 @@ public class GroupService {
       GroupResponse groupResponse = new GroupResponse(group.getGroupName());
 
       group.getMembers().forEach(member -> {
-        BasicUserInformation basicUserInformation =
-            new BasicUserInformation(member.getUsername(),
-            member.getFirstName() + " " + member.getLastName(),
-            member.getEmail());
+        BasicUserInformation basicUserInformation =  UserService.getBasicInformation(member);
         groupResponse.add(basicUserInformation);
       });
 
