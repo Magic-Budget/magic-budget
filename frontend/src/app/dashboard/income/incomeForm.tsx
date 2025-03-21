@@ -1,4 +1,3 @@
-"use client";
 
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -15,30 +14,32 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PlusCircle } from "lucide-react";
-
+import { useUserStore } from "@/stores/user-store";
 export default function IncomeForm() {
-  const today = new Date().toISOString().split("T")[0];
-
+  const { id: userId, bearerToken } = useUserStore();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [type, setType] = useState("");
   const [open, setOpen] = useState(false);
-  
-
-
 
   const handleAddIncome = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    
     try {
-      // Generate a new income ID
-      axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/income`, {
-        name: name,
-        description: description,
-        amount: amount,
-        type: type,
-      });
+        http://localhost:8080/api/{userId}/income
+      axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/${userId}/income`, {
+        income_name: name,
+        income_description: description,
+        income_amount: amount,
+        income_type: type,
+      },
+      {
+      headers: {
+        Authorization: `Bearer ${bearerToken}`, // Add Bearer token here
+      },
+    }
+    );
 
       //Clear the inputs 
       setOpen(false);
@@ -53,7 +54,7 @@ export default function IncomeForm() {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen} >
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="flex items-center gap-2">
           <PlusCircle size={16} />

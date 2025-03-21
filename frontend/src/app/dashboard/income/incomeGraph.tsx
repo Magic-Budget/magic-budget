@@ -17,7 +17,7 @@ const mockData = [
 
 export default function IncomeGraph() {
   return (
-    <div className="p-4">
+    <div className="p-4 ">
       <h1 className="text-xl font-bold">Overview</h1>
       <BarGraph chartData={mockData} chartConfig={config} />
     </div>

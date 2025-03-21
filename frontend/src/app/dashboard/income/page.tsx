@@ -3,10 +3,8 @@ import IncomeTable from "./incomeTable";
 import IncomeGraph from "./incomeGraph";
 import IncomeForm from "./incomeForm";
 export default function Incomes() {
-
-
   return (
-    <div className="m-3">
+    <div className="m-3 w-full">
       <div>
         <h2 className="text-2xl font-bold tracking-tight">Income</h2>
         <p className="text-muted-foreground">
@@ -15,14 +13,12 @@ export default function Incomes() {
         <div>
           <IncomeForm/>
         </div>
-      
-        
       </div>
       <div>
           <IncomeGraph/>
         </div>
-      <div className="flex">
-              <div className="m-3 w-full">
+      <div >
+              <div className="m-3 ">
                 <IncomeTable start={0} end={10} />
               </div>
       </div>

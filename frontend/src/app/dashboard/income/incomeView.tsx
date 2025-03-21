@@ -3,12 +3,19 @@ import Income from "./(objects)/income";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { UUID } from "crypto";
+import { useUserStore } from "@/stores/user-store";
+
 export default function IncomeView(props: { incomeId: UUID }) {
 	const [income, setIncome] = useState<Income>();
-
+	const { id: userId, bearerToken } = useUserStore();
 	useEffect(() => {
 	    axios
-	        .get(`/api/income/${props.incomeId}`)
+		
+			.get(`/api/${userId}/income/${props.incomeId}`, {
+				headers: {
+				Authorization: `Bearer ${bearerToken}`,
+				},
+			})
 	        .then((response) => {
                 const incomeData = response.data;
                 incomeData.date = new Date(incomeData.date);
