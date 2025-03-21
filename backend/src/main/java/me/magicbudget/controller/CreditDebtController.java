@@ -4,10 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import me.magicbudget.dto.CreditDebtCreateRequest;
+import me.magicbudget.dto.incoming_request.CreditDebtCreateRequest;
 import me.magicbudget.model.Business;
 import me.magicbudget.model.CreditDebt;
-import me.magicbudget.model.User;
 import me.magicbudget.service.BusinessService;
 import me.magicbudget.service.CreditDebtService;
 import me.magicbudget.service.UserService;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,10 +40,11 @@ public class CreditDebtController {
 
   @PostMapping("/{id}")
   public ResponseEntity<CreditDebt> createCreditDebt(@PathVariable UUID id,
+      @RequestHeader("X-User-Id") UUID userId,
       @RequestBody CreditDebtCreateRequest request) {
     try {
       return userService.getUserById(id)
-          .flatMap(user -> businessService.getBusinessById(request.getBusinessId())
+          .flatMap(user -> businessService.getBusinessById(request.getBusinessId(), userId)
               .map(business -> {
                 CreditDebt creditDebt = new CreditDebt(
                     null,
@@ -79,6 +80,7 @@ public class CreditDebtController {
 
   @PutMapping("/{id}")
   public ResponseEntity<CreditDebt> updateCreditDebt(@PathVariable UUID id,
+      @RequestHeader("X-User-Id") UUID userId,
       @RequestBody CreditDebtCreateRequest request) {
     try {
       Optional<CreditDebt> existingCreditDebtOpt = creditDebtService.getCreditDebtById(id);
@@ -90,7 +92,7 @@ public class CreditDebtController {
 
       if (request.getBusinessId() != null) {
         Optional<Business> businessOptional = businessService.getBusinessById(
-            request.getBusinessId());
+            request.getBusinessId(), userId);
 
         if (businessOptional.isEmpty()) {
           return new ResponseEntity<>(HttpStatus.NOT_FOUND);

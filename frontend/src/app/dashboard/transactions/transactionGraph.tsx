@@ -35,26 +35,7 @@ interface ChartDataItem {
 	fill: string;
 }
 
-const chartData = getChartData();
-
 const chartConfig = getChartConfig();
-
-async function getChartData(): Promise<ChartDataItem[]> {
-	try {
-		const response = await axios.get<CategoryTotals[]>(
-			"/api/transactions/category_totals"
-		);
-
-		return response.data.map((categoryTotal) => ({
-			category: categoryTotal.category,
-			amount: categoryTotal.total,
-			fill: `var(--color-${categoryTotal.category})`,
-		}));
-	} catch (error) {
-		console.error("Failed to fetch chart data:", error);
-		throw error; // Re-throw to allow error handling by caller
-	}
-}
 
 function getChartConfig(): ChartConfig {
 	return {
@@ -88,17 +69,30 @@ function getChartConfig(): ChartConfig {
 	};
 }
 
+const apiURL = "/api/transactions/category_totals";
+
 export default function TransactionGraph() {
 	const [chartData, setChartData] = useState<ChartDataItem[]>([]);
 
 	useEffect(()=>{
-		getChartData()
-		.then((data)=> setChartData(data))
-		.catch((error) => {
-			console.error('Error:', error);
-			throw error;
-		})
-	})
+		axios
+			.get(apiURL)
+			.then((response) => {
+				setChartData( response.data.map(
+					(total: { category: string; total: string }) => ({
+						category: total.category,
+						amount: total.total,
+						fill: `var(--color-${total.category})`,
+					})
+				))
+			})
+			.catch(() => {
+				console.log("Could not get category totals");
+			});
+	},
+	[]
+	)
+	
 	const totalSpent = useMemo(() => {
 		return chartData.reduce((acc, { amount }) => acc + amount, 0);
 	}, [chartData]); 

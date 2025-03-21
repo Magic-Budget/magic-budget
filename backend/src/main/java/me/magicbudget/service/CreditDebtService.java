@@ -48,4 +48,6 @@ public final class CreditDebtService {
     List<CreditDebt> userDebts = creditDebtRepository.findByUserId(userId);
     creditDebtRepository.deleteAll(userDebts);
   }
+
+
 }
