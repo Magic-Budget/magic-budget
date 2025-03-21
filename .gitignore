@@ -291,3 +291,5 @@ gradle-app.setting
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,intellij+all,python,java,gradle
 
 .env
+frontend/package-lock.json
+backend/src/main/java/me/magicbudget/controller/UserController.java
