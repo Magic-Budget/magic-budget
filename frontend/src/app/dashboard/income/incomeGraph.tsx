@@ -4,14 +4,13 @@ import { UUID } from "crypto";
 import { useUserStore } from "@/stores/user-store";
 import { useEffect, useState } from "react";
 
-
-
 const config = {
   actual: {
     label: "Savings",
     color: "#2a9d90",
   }
 };
+
 export default function IncomeGraph() {
   const { id: userId, bearerToken } = useUserStore();
   const [monthlyIncomes, setmonthlyIncomes] = useState<{ month: string; actual: number }[]>([]);
@@ -25,7 +24,6 @@ export default function IncomeGraph() {
   }, [userId, bearerToken]);
   
   
-  
   return (
     <div className="p-4 ">
       <h1 className="text-xl font-bold">Overview</h1>
@@ -33,16 +31,6 @@ export default function IncomeGraph() {
     </div>
   );
 }
-
-
-const mockData = [
-    { month: "October", actual: 180},
-    { month: "November", actual: 220},
-    { month: "December", actual: 190},
-    { month: "January", actual: 210},
-    { month: "February", actual: 250},
-    { month: "Marchh", actual: 300},
-  ];
 
 function getMonth( date: Date): string{
   const months: string[] = [
