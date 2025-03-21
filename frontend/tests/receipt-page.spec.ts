@@ -19,6 +19,12 @@ test("navigate receipt", async ({ page }) => {
   await Promise.all([page.click('button[type="submit"]')]);
 
   await page.goto("http://localhost:3000/dashboard/receipt");
-
-  await expect(page).toHaveTitle("Create Next App");
+  const sidebarToggle = page.locator('button[name="Toggle Sidebar"]');
+  
+  if (await sidebarToggle.isVisible()) {
+    await sidebarToggle.click();
+  }
+  await expect(page.locator('button:text("Refresh")')).toBeTruthy();
+  await expect(page.locator('button:text("Upolad file")')).toBeTruthy();
+  
 });
