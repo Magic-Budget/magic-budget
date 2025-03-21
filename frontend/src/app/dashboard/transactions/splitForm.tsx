@@ -28,7 +28,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 const SplitForm = (props: { expense_id: UUID }) => {
-	const userId = useUserStore((state) => state.id);
+	const { id: userId, bearerToken } = useUserStore();
 	const apiURL = `${process.env.NEXT_PUBLIC_API_URL}/api/${userId}`;
 	const [friendOptions, setFriendOptions] = useState<MultiSelectOption[]>([]);
 
@@ -43,7 +43,11 @@ const SplitForm = (props: { expense_id: UUID }) => {
 	useEffect(() => {
 		const getFriends = async () => {
 			try {
-				const response = await axios.get(`${apiURL}` + "/friend");
+				const response = await axios.get(`${apiURL}` + "/friend/", {
+					headers: {
+						Authorization: `Bearer ${bearerToken}`,
+					},
+				});
 				const friends = response.data.map(
 					(friend: { id: string; name: string }) => ({
 						label: friend.name,
@@ -63,6 +67,7 @@ const SplitForm = (props: { expense_id: UUID }) => {
 		axios
 			.post(apiURL + `/split`, {
 				split_with: data.friends,
+				expense_id: props.expense_id,
 			})
 			.then(() => {
 				toast({
