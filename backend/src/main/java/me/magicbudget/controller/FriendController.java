@@ -1,6 +1,7 @@
 package me.magicbudget.controller;
 
 
+import me.magicbudget.dto.BasicUserInformation;
 import me.magicbudget.dto.outgoing_response.FriendResponse;
 import me.magicbudget.model.Friendship;
 import me.magicbudget.service.FriendshipService;
@@ -37,7 +38,7 @@ public class FriendController {
   }
 
   @GetMapping("/")
-  public ResponseEntity<List<FriendResponse>> getFriends(@PathVariable("userid") UUID userId) {
+  public ResponseEntity<List<BasicUserInformation>> getFriends(@PathVariable("userid") UUID userId) {
     try {
       return new ResponseEntity<>(friendshipService.getFriends(userId),HttpStatus.OK);
     }

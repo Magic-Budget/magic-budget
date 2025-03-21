@@ -31,6 +31,8 @@ public class GroupService {
 
   @Autowired
   private final SplitTransactionRepository splitTransactionRepository;
+  @Autowired
+  private UserService userService;
 
   public GroupService(GroupRepository groupRepository,
       UserInformationRepository userRepository,
@@ -124,10 +126,7 @@ public class GroupService {
       GroupResponse groupResponse = new GroupResponse(group.getGroupName());
 
       group.getMembers().forEach(member -> {
-        BasicUserInformation basicUserInformation =
-            new BasicUserInformation(member.getUsername(),
-            member.getFirstName() + " " + member.getLastName(),
-            member.getEmail());
+        BasicUserInformation basicUserInformation =  UserService.getBasicInformation(member);
         groupResponse.add(basicUserInformation);
       });
 

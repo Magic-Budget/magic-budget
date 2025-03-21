@@ -92,6 +92,8 @@ public class UserInformation implements UserDetails {
     return lastName;
   }
 
+  public String getFullName(){return "%s %s".formatted(firstName, lastName);}
+
 
   public User getUser() {
     return user;

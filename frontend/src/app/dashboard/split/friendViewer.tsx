@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardHeader, CardContent } from "../../../components/ui/card";
 import { Button } from "../../../components/ui/button";
-import { User } from "./(objects)/User";
+import { User as UserIcon } from "lucide-react";
 import { useUserStore } from "@/stores/user-store";
 import axios from "axios";
+import { User } from "./(objects)/User";
 import {
 	Dialog,
 	DialogContent,
@@ -12,23 +13,19 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import GroupForm from "./(components)/groupForm";
+import FriendForm from "./(components)/friendForm";
 
-interface Group {
-	groupName: string;
-	userInformation: User[];
-}
-
-const GroupsPage = () => {
-	const [groups, setGroups] = useState<Group[]>([]);
+const FriendViewer = () => {
+	const [friends, setFriends] = useState<User[]>([]);
 	const { id: userId, bearerToken } = useUserStore();
 	const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/${userId}`;
 	const requestHeaders = { Authorization: `Bearer ${bearerToken}` };
 
 	useEffect(() => {
 		axios
-			.get(`${apiUrl}/group/`, { headers: requestHeaders })
+			.get(`${apiUrl}/friend/`, { headers: requestHeaders })
 			.then((response) => {
-				setGroups(response.data);
+				setFriends(response.data);
 			})
 			.catch((error) => {
 				console.error(error);
@@ -38,36 +35,36 @@ const GroupsPage = () => {
 	return (
 		<div className="p-8">
 			<div className="flex justify-between items-center mb-6">
-				<h1 className="text-2xl font-bold">Groups</h1>
+				<h1 className="text-2xl font-bold">Friends</h1>
 				<Dialog>
 					<DialogTrigger asChild>
-						<Button>Add Group</Button>
+						<Button>Add Friend</Button>
 					</DialogTrigger>
 					<DialogContent>
 						<DialogHeader>
-							<DialogTitle>Add a group</DialogTitle>
+							<DialogTitle>Add a friend</DialogTitle>
 						</DialogHeader>
-						<GroupForm />
+						<FriendForm />
 					</DialogContent>
 				</Dialog>
 			</div>
 
 			{/* Grid of group cards */}
-			<div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-[50vw]">
-				{groups.map((group, index) => (
-					<Card key={index} className="p-4 shadow">
+			<div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+				{friends.map((friend: User) => (
+					<Card
+						id={friend.userId}
+						key={friend.userId}
+						className="p-2 shadow items-align-center"
+					>
+						<CardContent className="flex items-center gap-2">
+							<UserIcon size={60} />
+						</CardContent>
 						<CardHeader>
 							<h2 className="text-xl font-semibold">
-								{group.groupName}
+								{friend.fullName}
 							</h2>
 						</CardHeader>
-						<CardContent>
-							<ul className="list-disc pl-5">
-								{group.userInformation.map((user: User) => (
-									<li key={user.userId}>{user.fullName}</li>
-								))}
-							</ul>
-						</CardContent>
 					</Card>
 				))}
 			</div>
@@ -75,4 +72,4 @@ const GroupsPage = () => {
 	);
 };
 
-export default GroupsPage;
+export default FriendViewer;
