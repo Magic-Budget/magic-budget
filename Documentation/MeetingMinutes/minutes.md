@@ -133,3 +133,40 @@ We decided to build an AI-Enhanced Budgeting tool
 - Start on the seminar presentation
 
 ### Notes
+
+## Meeting 7 (Mar 4)
+
+### Agenda
+- Rehearse the presentation for the seminar
+- Finalize what everyone is presenting
+
+### Notes
+- Fixed grammatical issues in the presentation
+
+## Meeting 8 (Mar 6)
+### Agenda
+- Reflect on the sprint
+
+### Notes
+- Change our approach in doing dev task, split our group into multiple teams
+- Addressed inefficiencies
+
+
+## Meeting 9 (Mar 7)
+### Agenda
+- Assign Dev tasks
+
+###
+- Refactor sprint 3
+
+## Meeting 10 (Mar 12)
+### Agenda
+- Progress check
+
+## Meeting 10 (Mar 20)
+### Agenda
+- Start Merging
+- Look over rubric to see what we are missing
+
+### Notes
+- Need to create more tests
