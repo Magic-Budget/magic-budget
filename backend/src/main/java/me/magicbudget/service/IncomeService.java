@@ -18,12 +18,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static me.magicbudget.model.IncomeType.BIWEEKLY;
-import static me.magicbudget.model.IncomeType.MONTHLY;
-import static me.magicbudget.model.IncomeType.ONETIME;
-import static me.magicbudget.model.IncomeType.WEEKLY;
-import static me.magicbudget.model.IncomeType.YEARLY;
-
 @Service
 public class IncomeService {
 

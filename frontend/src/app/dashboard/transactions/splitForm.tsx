@@ -1,4 +1,4 @@
-"use client";
+/*"use client";
 
 import {
 	MultiSelect,
@@ -109,4 +109,4 @@ const SplitForm = (props: { expense_id: UUID }) => {
 	);
 };
 
-export default SplitForm;
+export default SplitForm;*/
