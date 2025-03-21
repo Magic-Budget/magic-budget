@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/{userid}/income")
@@ -22,31 +24,41 @@ public class IncomeController {
 
   private final IncomeService incomeService;
 
-  public IncomeController(IncomeService incomeService, IncomeRepository incomeRepository,
-      TransactionRepository transactionRepository, UserService userService) {
+  public IncomeController(IncomeService incomeService) {
     this.incomeService = incomeService;
   }
 
   @GetMapping("/view-all")
-  public ResponseEntity<List<IncomeResponse>> findIncomeByUserId(@PathVariable("userid") String userId) {
+  public ResponseEntity<List<IncomeResponse>> findIncomeByUserId(@PathVariable("userid") UUID userId) {
     try {
       List<IncomeResponse> income = incomeService.viewAllIncome(userId);
       return new ResponseEntity<>(income, HttpStatus.OK);
     }
-    catch (Exception e) {
-      return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+    catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
   }
 
   @PostMapping("/add-income")
-  public ResponseEntity<String> addIncome(@PathVariable("userid") String userId,
+  public ResponseEntity<String> addIncome(@PathVariable("userid") UUID userId,
       @RequestBody IncomeRequest incomeRequest) {
     try{
       incomeService.addIncome(userId, incomeRequest);
       return new ResponseEntity<>("Income added successfully", HttpStatus.CREATED);
     }
-    catch (Exception e) {
-      return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+    catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @GetMapping("/total")
+  public ResponseEntity<BigDecimal> totalIncome(@PathVariable("userid") UUID userId) {
+    try {
+      BigDecimal bigDecimal = incomeService.totalIncome(userId);
+      return new ResponseEntity<>(bigDecimal, HttpStatus.OK);
+    }
+    catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
   }
 
