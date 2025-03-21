@@ -1,7 +1,7 @@
 package me.magicbudget.service;
 
 
-import me.magicbudget.dto.outgoingresponse.FriendResponse;
+import me.magicbudget.dto.outgoing_response.FriendResponse;
 import me.magicbudget.model.Friendship;
 import me.magicbudget.model.UserInformation;
 import me.magicbudget.repository.FriendshipRepository;
@@ -9,7 +9,6 @@ import me.magicbudget.repository.UserInformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
