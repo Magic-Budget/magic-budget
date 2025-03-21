@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import me.magicbudget.dto.incoming_request.IncomeRequest;
 import me.magicbudget.dto.incoming_request.LoginUserRequest;
 import me.magicbudget.dto.incoming_request.RegistrationAndAuthRequest;
+import me.magicbudget.model.Income;
 import me.magicbudget.model.IncomeType;
 import me.magicbudget.model.User;
 import me.magicbudget.model.UserInformation;

@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import me.magicbudget.dto.incoming_request.ExpenseRequest;
 import me.magicbudget.dto.incoming_request.LoginUserRequest;
 import me.magicbudget.dto.incoming_request.RegistrationAndAuthRequest;
+import me.magicbudget.model.Expense;
 import me.magicbudget.model.ExpenseCategory;
 import me.magicbudget.model.User;
 import me.magicbudget.model.UserInformation;
