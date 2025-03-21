@@ -1,7 +1,6 @@
 package me.magicbudget.service;
 
 import me.magicbudget.model.Goal;
-import me.magicbudget.model.User;
 import me.magicbudget.repository.GoalRepository;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;

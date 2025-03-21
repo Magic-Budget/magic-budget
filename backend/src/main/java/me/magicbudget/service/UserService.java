@@ -34,7 +34,6 @@ public final class UserService {
   }
 
 
-
   public User updateUser(@NonNull User user) {
     return userRepository.save(user);
   }
