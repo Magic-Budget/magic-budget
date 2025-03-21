@@ -74,7 +74,6 @@ async function getMonthlyIncomes(
     }
   });
 
-  // Map the aggregated data into the format expected by BarGraph (Month and Actual)
   return Object.keys(monthTotals).map((month) => ({
     month: month,
     actual: monthTotals[month],
