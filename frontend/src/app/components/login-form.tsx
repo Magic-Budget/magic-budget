@@ -38,7 +38,7 @@ export function LoginForm({
     setError("");
 
     axios
-      .post(`http://localhost:8080/api/auth/register`, {
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/sign-in`, {
         username: email,
         password,
       })

@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import { useState } from "react";
 import {
     Table,
@@ -17,25 +16,23 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import IncomeView from "./incomeView";
-import { Button } from "@/components/ui/button";
 import TablePagination from "@/components/ui/paginationButton";
 import Income from "./(objects)/income";
+import { UUID } from "crypto";
 
 interface Props {
     incomes: Income[];
 }
 
 export default function IncomeTableClient({incomes}: Props) {
-    const [selectedTransactionId, setSelectedTransactionId] = useState<
-        string | null
-    >(null);
+    const [selectedIncomeId, setSelectedIncomeId] = useState<UUID | null>(null);
 
-    const handleOpenDialog = (transactionId: string) => {
-        setSelectedTransactionId(transactionId);
+    const handleOpenDialog = (incomeId: UUID) => {
+        setSelectedIncomeId(incomeId);
     };
 
     const handleCloseDialog = () => {
-        setSelectedTransactionId(null);
+        setSelectedIncomeId(null);
     };
     return (
         <div>
@@ -95,16 +92,16 @@ export default function IncomeTableClient({incomes}: Props) {
                 </TableBody>
             </Table>
             <Dialog
-                open={selectedTransactionId !== null}
+                open={selectedIncomeId !== null}
                 onOpenChange={handleCloseDialog}
             >
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>Transaction</DialogTitle>
                     </DialogHeader>
-                    {selectedTransactionId && (
+                    {selectedIncomeId && (
                         <IncomeView
-                            transactionId={selectedTransactionId}
+                            incomeId={selectedIncomeId}
                         />
                     )}
                 </DialogContent>

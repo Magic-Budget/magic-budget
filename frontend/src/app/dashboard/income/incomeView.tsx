@@ -2,17 +2,17 @@ import { useEffect, useState } from "react";
 import Income from "./(objects)/income";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
-
-export default function IncomeView(props: { transactionId: string }) {
-	const [transaction, setTransaction] = useState<Income>();
+import { UUID } from "crypto";
+export default function IncomeView(props: { incomeId: UUID }) {
+	const [income, setIncome] = useState<Income>();
 
 	useEffect(() => {
 	    axios
-	        .get(`/api/transactions/${props.transactionId}`)
+	        .get(`/api/income/${props.incomeId}`)
 	        .then((response) => {
-                const transactionData = response.data;
-                transactionData.date = new Date(transactionData.date);
-	            setTransaction(transactionData);
+                const incomeData = response.data;
+                incomeData.date = new Date(incomeData.date);
+	            setIncome(incomeData);
 	        })
 	        .catch((error) => {
 	            console.error(
@@ -20,24 +20,28 @@ export default function IncomeView(props: { transactionId: string }) {
 	                error
 	            );
 	        });
-	}, [props.transactionId]);
+	}, [props.incomeId]);
 
 	return (
 		<div>
 			<p>
 				<b>Name:</b>
-				{transaction?.name}
+				{income?.name}
 			</p>
 			<p>
-				<b>Amount:</b>${transaction?.amount}
+				<b>Amount:</b>${income?.amount}
 			</p>
 			<p>
 				<b>Date:</b>
-				{transaction?.date.toLocaleDateString()}
+				{income?.date.toLocaleDateString()}
+			</p>
+			<p>
+				<b>Description:</b>
+				{income?.description}
 			</p>
 			<p>
 				<b>Type:</b>
-				{transaction?.description}
+				{income?.type}
 			</p>
 			<div className="flex my-2 px-4 justify-center">
 				<Button>Edit</Button>
