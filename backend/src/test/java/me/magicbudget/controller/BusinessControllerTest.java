@@ -3,8 +3,8 @@ package me.magicbudget.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
-import me.magicbudget.dto.incomingrequest.LoginUserRequest;
-import me.magicbudget.dto.incomingrequest.RegistrationAndAuthRequest;
+import me.magicbudget.dto.incoming_request.LoginUserRequest;
+import me.magicbudget.dto.incoming_request.RegistrationAndAuthRequest;
 import me.magicbudget.model.Business;
 import me.magicbudget.model.User;
 import me.magicbudget.model.UserInformation;
@@ -19,7 +19,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.HashMap;

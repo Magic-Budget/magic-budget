@@ -1,7 +1,7 @@
 package me.magicbudget.service;
 
-import me.magicbudget.dto.incomingrequest.ExpenseRequest;
-import me.magicbudget.dto.outgoingresponse.ExpenseResponse;
+import me.magicbudget.dto.incoming_request.ExpenseRequest;
+import me.magicbudget.dto.outgoing_response.ExpenseResponse;
 import me.magicbudget.model.Expense;
 import me.magicbudget.model.ExpenseCategory;
 import me.magicbudget.model.Transaction;
@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class ExpenseService {

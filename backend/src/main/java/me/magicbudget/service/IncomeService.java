@@ -1,7 +1,7 @@
 package me.magicbudget.service;
 
-import me.magicbudget.dto.incomingrequest.IncomeRequest;
-import me.magicbudget.dto.outgoingresponse.IncomeResponse;
+import me.magicbudget.dto.incoming_request.IncomeRequest;
+import me.magicbudget.dto.outgoing_response.IncomeResponse;
 import me.magicbudget.model.Income;
 import me.magicbudget.model.IncomeType;
 import me.magicbudget.model.Transaction;
@@ -17,12 +17,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
-import static me.magicbudget.model.IncomeType.BIWEEKLY;
-import static me.magicbudget.model.IncomeType.MONTHLY;
-import static me.magicbudget.model.IncomeType.ONETIME;
-import static me.magicbudget.model.IncomeType.WEEKLY;
-import static me.magicbudget.model.IncomeType.YEARLY;
 
 @Service
 public class IncomeService {

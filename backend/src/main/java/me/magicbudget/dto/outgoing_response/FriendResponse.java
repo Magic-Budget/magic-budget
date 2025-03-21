@@ -1,6 +1,4 @@
-package me.magicbudget.dto.outgoingresponse;
-
-import java.math.BigDecimal;
+package me.magicbudget.dto.outgoing_response;
 
 public record FriendResponse(String username,
                              String email,

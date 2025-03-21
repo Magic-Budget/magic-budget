@@ -9,8 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.springframework.http.MediaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
-import me.magicbudget.dto.incomingrequest.LoginUserRequest;
-import me.magicbudget.dto.incomingrequest.RegistrationAndAuthRequest;
+import me.magicbudget.dto.incoming_request.LoginUserRequest;
+import me.magicbudget.dto.incoming_request.RegistrationAndAuthRequest;
 import me.magicbudget.model.SavingGoal;
 import me.magicbudget.model.UserInformation;
 import me.magicbudget.model.User;
@@ -26,7 +26,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;

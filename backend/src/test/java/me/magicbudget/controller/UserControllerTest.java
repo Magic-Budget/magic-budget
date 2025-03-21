@@ -2,10 +2,7 @@ package me.magicbudget.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
-import me.magicbudget.dto.incomingrequest.LoginUserRequest;
-import me.magicbudget.dto.incomingrequest.RegistrationAndAuthRequest;
-import me.magicbudget.model.User;
-import me.magicbudget.model.UserInformation;
+import me.magicbudget.dto.incoming_request.RegistrationAndAuthRequest;
 import me.magicbudget.security.service.RegistrationAndAuthService;
 import me.magicbudget.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
