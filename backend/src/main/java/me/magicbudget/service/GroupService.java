@@ -2,8 +2,8 @@ package me.magicbudget.service;
 
 import jakarta.transaction.Transactional;
 import me.magicbudget.dto.BasicUserInformation;
-import me.magicbudget.dto.outgoingresponse.GroupResponse;
-import me.magicbudget.dto.outgoingresponse.SplitTransactionResponse;
+import me.magicbudget.dto.outgoing_response.GroupResponse;
+import me.magicbudget.dto.outgoing_response.SplitTransactionResponse;
 import me.magicbudget.model.Group;
 import me.magicbudget.model.SplitTransaction;
 import me.magicbudget.model.TransactionType;
