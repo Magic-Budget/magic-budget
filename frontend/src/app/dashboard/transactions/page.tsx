@@ -2,6 +2,7 @@ import React from "react";
 import TransactionTable from "./transactionTable";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@radix-ui/react-dialog";
+import TransactionBarGraph from "./transactionBarGraph";
 
 export default function Transactions() {
 	return (
@@ -19,6 +20,9 @@ export default function Transactions() {
 					<Button>Add Expense</Button>
 				</div>
 			</div>
+				<div>
+					<TransactionBarGraph />
+				</div>
 			<div>
 				<div className="">
 					<TransactionTable start={0} end={10} />

@@ -1,7 +1,7 @@
 package me.magicbudget.service;
 
-import me.magicbudget.dto.incomingrequest.ExpenseRequest;
-import me.magicbudget.dto.outgoingresponse.ExpenseResponse;
+import me.magicbudget.dto.incoming_request.ExpenseRequest;
+import me.magicbudget.dto.outgoing_response.ExpenseResponse;
 import me.magicbudget.model.Expense;
 import me.magicbudget.model.ExpenseCategory;
 import me.magicbudget.model.Transaction;
@@ -11,9 +11,11 @@ import me.magicbudget.repository.ExpenseRepository;
 import me.magicbudget.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class ExpenseService {
@@ -29,9 +31,9 @@ public class ExpenseService {
     this.userService = userService;
   }
 
-  public List<ExpenseResponse> viewExpenses(String userId) throws Exception {
+  public List<ExpenseResponse> viewExpenses(UUID userId) throws IllegalArgumentException {
 
-    Optional<User> userById = userService.getUserById(UUID.fromString(userId));
+    Optional<User> userById = userService.getUserById(userId);
 
     if (userById.isPresent()) {
       List<Expense> expenses = expenseRepository.findExpenseByUserId(userById.get());
@@ -47,12 +49,12 @@ public class ExpenseService {
       }).toList();
 
     }
-    throw new RuntimeException("User not found");
+    throw new IllegalArgumentException("User not found");
   }
 
   @Transactional
-  public void addExpense(String userId, ExpenseRequest expenseRequest) throws Exception {
-    Optional<User> userById = userService.getUserById(UUID.fromString(userId));
+  public void addExpense(UUID userId, ExpenseRequest expenseRequest) throws IllegalArgumentException {
+    Optional<User> userById = userService.getUserById(userId);
 
     if (userById.isPresent()) {
       User user = userById.get();
@@ -70,10 +72,10 @@ public class ExpenseService {
         expense.setId(transaction.getId());
         expenseRepository.save(expense);
       } catch (Exception e) {
-        throw new RuntimeException("An error occurred while adding the expense", e);
+        throw new IllegalArgumentException("An error occurred while adding the expense", e);
       }
     } else {
-      throw new RuntimeException("User not found");
+      throw new IllegalArgumentException("User not found");
     }
   }
 
@@ -89,5 +91,22 @@ public class ExpenseService {
     }
     throw new IllegalArgumentException("User not found");
   }
-}
 
+  public ExpenseResponse viewExpense(UUID userId, UUID expenseId) {
+    Optional<User> userById = userService.getUserById(userId);
+    if (userById.isPresent()) {
+      Optional<Expense> expense = expenseRepository.findExpenseById(expenseId);
+      if (expense.isPresent()) {
+        Transaction transaction = expense.get().getTransaction();
+        return new ExpenseResponse(expense.get().getId(),
+            transaction.getAmount(),
+            transaction.getName(),
+            transaction.getDescription(),
+            transaction.getTrasnactionDate(),
+            expense.get().getExpenseCategory(),
+            expense.get().getShopName());
+      }
+    }
+    throw new IllegalArgumentException("User or Expense not found");
+  }
+}
