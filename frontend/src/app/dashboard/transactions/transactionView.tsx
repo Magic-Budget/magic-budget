@@ -2,24 +2,26 @@ import { useEffect, useState } from "react";
 import Transaction from "./(objects)/transaction";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
+import SplitExpense from "./splitExpense";
+import { UUID } from "crypto";
 
-export default function TransactionView(props: { transactionId: string }) {
+export default function TransactionView(props: { transactionId: UUID }) {
 	const [transaction, setTransaction] = useState<Transaction>();
 
 	useEffect(() => {
-	    axios
-	        .get(`/api/transactions/${props.transactionId}`)
-	        .then((response) => {
-                const transactionData = response.data;
-                transactionData.date = new Date(transactionData.date);
-	            setTransaction(transactionData);
-	        })
-	        .catch((error) => {
-	            console.error(
-	                "There was an error fetching the transaction!",
-	                error
-	            );
-	        });
+		axios
+			.get(`/api/transactions/${props.transactionId}`)
+			.then((response) => {
+				const transactionData = response.data;
+				transactionData.date = new Date(transactionData.date);
+				setTransaction(transactionData);
+			})
+			.catch((error) => {
+				console.error(
+					"There was an error fetching the transaction!",
+					error
+				);
+			});
 	}, [props.transactionId]);
 
 	return (
@@ -39,8 +41,9 @@ export default function TransactionView(props: { transactionId: string }) {
 				<b>Description:</b>
 				{transaction?.description}
 			</p>
-			<div className="flex my-2 px-4 justify-center">
+			<div className="my-2 justify-center">
 				<Button>Edit</Button>
+				<SplitExpense expense_id={props.transactionId} />
 			</div>
 		</div>
 	);
