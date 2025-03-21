@@ -68,7 +68,7 @@ public class ExpenseService {
         );
         transactionRepository.save(transaction);
         Expense expense = new Expense(user, transaction, expenseRequest.shopName(),
-            ExpenseCategory.GROCERY);
+            expenseRequest.expenseCategory());
         expense.setId(transaction.getId());
         expenseRepository.save(expense);
       } catch (Exception e) {
@@ -90,6 +90,24 @@ public class ExpenseService {
           .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
     throw new IllegalArgumentException("User not found");
+  }
+
+  public ExpenseResponse viewExpense(UUID userId, UUID expenseId) {
+    Optional<User> userById = userService.getUserById(userId);
+    if (userById.isPresent()) {
+      Optional<Expense> expense = expenseRepository.findExpenseById(expenseId);
+      if (expense.isPresent()) {
+        Transaction transaction = expense.get().getTransaction();
+        return new ExpenseResponse(expense.get().getId(),
+            transaction.getAmount(),
+            transaction.getName(),
+            transaction.getDescription(),
+            transaction.getTrasnactionDate(),
+            expense.get().getExpenseCategory(),
+            expense.get().getShopName());
+      }
+    }
+    throw new IllegalArgumentException("User or Expense not found");
   }
 }
 

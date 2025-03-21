@@ -47,7 +47,7 @@ public class IncomeController {
       return new ResponseEntity<>("Income added successfully", HttpStatus.CREATED);
     }
     catch (IllegalArgumentException e) {
-      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
   }
 
