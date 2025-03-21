@@ -2,6 +2,7 @@ package me.magicbudget.controller;
 
 
 import me.magicbudget.dto.incoming_request.AddUserToGroupRequest;
+import me.magicbudget.dto.incoming_request.CreateGroupRequest;
 import me.magicbudget.dto.incoming_request.TransactionRequest;
 import me.magicbudget.dto.outgoing_response.GroupResponse;
 import me.magicbudget.dto.outgoing_response.SplitTransactionResponse;
@@ -31,9 +32,9 @@ public class GroupController {
 
   @PostMapping("/create-group")
   public ResponseEntity<String> createGroup(@PathVariable("userid") UUID userId,
-      @RequestBody String groupName) {
+      @RequestBody CreateGroupRequest request) {
     try {
-      groupService.createGroup(groupName, userId);
+      groupService.createGroup(request.groupName(), userId);
       return new ResponseEntity<>(HttpStatus.CREATED);
     }
     catch (IllegalArgumentException e) {
