@@ -18,8 +18,6 @@ test("navigate transactions", async ({ page }) => {
 
   await Promise.all([page.click('button[type="submit"]')]);
 
-  //await page.goto("http://localhost:3000/dashboard");
-
   await page.goto("http://localhost:3000/dashboard/transactions");
 
   await page.waitForLoadState("networkidle");
