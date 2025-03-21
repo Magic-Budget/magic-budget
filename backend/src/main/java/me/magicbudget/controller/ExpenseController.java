@@ -34,6 +34,16 @@ public class ExpenseController {
     }
   }
 
+  @GetMapping("/view/{expenseid}")
+  public ResponseEntity<ExpenseResponse> findExpenseById(@PathVariable("userid") UUID userId,
+      @PathVariable("expenseid") UUID expenseId) {
+    try {
+      return new ResponseEntity<>(expenseService.viewExpense(userId, expenseId), HttpStatus.OK);
+    } catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+  }
+
   @PostMapping("/add-expense")
   public ResponseEntity<String> addExpense(@PathVariable("userid") String userId, @RequestBody
       ExpenseRequest expenseRequest) {

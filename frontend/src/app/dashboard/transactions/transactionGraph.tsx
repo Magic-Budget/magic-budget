@@ -8,7 +8,8 @@
 import * as React from "react";
 import { TrendingUp } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
-import axios from 'axios'
+import axios from "axios";
+import { useUserStore } from "@/stores/user-store";
 
 import {
 	Card,
@@ -25,33 +26,12 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/components/ui/chart";
-import { error } from "console";
-import { Amarante } from "next/font/google";
 import { useEffect, useMemo, useState } from "react";
 
 interface ChartDataItem {
 	category: string;
 	amount: number;
 	fill: string;
-}
-
-const chartConfig = getChartConfig();
-
-async function getChartData(): Promise<ChartDataItem[]> {
-	try {
-		const response = await axios.get<CategoryTotals[]>(
-			"/api/transactions/category_totals"
-		);
-
-		return response.data.map((categoryTotal) => ({
-			category: categoryTotal.category,
-			amount: categoryTotal.total,
-			fill: `var(--color-${categoryTotal.category})`,
-		}));
-	} catch (error) {
-		console.error("Failed to fetch chart data:", error);
-		throw error; // Re-throw to allow error handling by caller
-	}
 }
 
 function getChartConfig(): ChartConfig {
@@ -87,19 +67,39 @@ function getChartConfig(): ChartConfig {
 }
 
 export default function TransactionGraph() {
+	const { id: userid, bearerToken } = useUserStore();
+	const chartConfig = getChartConfig();
+
+	const apiURL = `${process.env.NEXT_PUBLIC_API_URL}/api/${userid}/expense/view-all`;
+
 	const [chartData, setChartData] = useState<ChartDataItem[]>([]);
 
-	useEffect(()=>{
-		getChartData()
-		.then((data)=> setChartData(data))
-		.catch((error) => {
-			console.error('Error:', error);
-			throw error;
-		})
-	})
+	useEffect(() => {
+		axios
+			.get(apiURL, {
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			})
+			.then((response) => {
+				setChartData(
+					response.data.map(
+						(total: { category: string; total: string }) => ({
+							category: total.category,
+							amount: total.total,
+							fill: `var(--color-${total.category})`,
+						})
+					)
+				);
+			})
+			.catch(() => {
+				console.log("Could not get category totals");
+			});
+	}, []);
+
 	const totalSpent = useMemo(() => {
 		return chartData.reduce((acc, { amount }) => acc + amount, 0);
-	}, [chartData]); 
+	}, [chartData]);
 
 	return (
 		<Card className="flex flex-col">
@@ -143,7 +143,8 @@ export default function TransactionGraph() {
 													y={viewBox.cy}
 													className="fill-foreground text-3xl font-bold"
 												>
-													${totalSpent.toLocaleString()}
+													$
+													{totalSpent.toLocaleString()}
 												</tspan>
 												<tspan
 													x={viewBox.cx}

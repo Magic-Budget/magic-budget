@@ -66,7 +66,7 @@ public class ExpenseService {
         );
         transactionRepository.save(transaction);
         Expense expense = new Expense(user, transaction, expenseRequest.shopName(),
-            ExpenseCategory.GROCERY);
+            expenseRequest.expenseCategory());
         expense.setId(transaction.getId());
         expenseRepository.save(expense);
       } catch (Exception e) {
@@ -77,5 +77,17 @@ public class ExpenseService {
     }
   }
 
+  public BigDecimal getTotalExpense(UUID userId) throws IllegalArgumentException {
+    Optional<User> userById = userService.getUserById(userId);
+    if (userById.isPresent()) {
+      List<Expense> expenses = expenseRepository.findExpenseByUserId(userById.get());
+
+
+      return expenses.stream()
+          .map(expense -> expense.getTransaction().getAmount())
+          .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+    throw new IllegalArgumentException("User not found");
+  }
 }
 

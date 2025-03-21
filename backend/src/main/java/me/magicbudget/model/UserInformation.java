@@ -60,6 +60,7 @@ public class UserInformation implements UserDetails {
     return lastName;
   }
 
+
   public User getUser() {
     return user;
   }
