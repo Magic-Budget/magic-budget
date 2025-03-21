@@ -1,8 +1,8 @@
 package me.magicbudget.controller;
 
 import jakarta.transaction.Transactional;
-import me.magicbudget.dto.incoming_request.LoginUserRequest;
-import me.magicbudget.dto.incoming_request.RegistrationAndAuthRequest;
+import me.magicbudget.dto.incomingrequest.LoginUserRequest;
+import me.magicbudget.dto.incomingrequest.RegistrationAndAuthRequest;
 import me.magicbudget.model.Business;
 import me.magicbudget.model.CreditDebt;
 import me.magicbudget.model.User;
