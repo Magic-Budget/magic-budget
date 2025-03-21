@@ -15,40 +15,43 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PlusCircle } from "lucide-react";
 import { useUserStore } from "@/stores/user-store";
+
 export default function IncomeForm() {
   const { id: userId, bearerToken } = useUserStore();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState(0);
   const [type, setType] = useState("");
   const [open, setOpen] = useState(false);
+  const [date, setDate] = useState("");
 
   const handleAddIncome = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     try {
-        http://localhost:8080/api/{userId}/income
-      axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/${userId}/income`, {
-        income_name: name,
-        income_description: description,
-        income_amount: amount,
-        income_type: type,
+      axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/${userId}/income/add-income`, 
+      {
+        name: name,
+        description: description,
+        amount: amount,
+        type: type,
+        date: date
       },
       {
-      headers: {
-        Authorization: `Bearer ${bearerToken}`, // Add Bearer token here
-      },
-    }
+        headers: {
+          Authorization: `Bearer ${bearerToken}`,
+          },
+      }
     );
 
       //Clear the inputs 
       setOpen(false);
       setName("");
       setDescription("");
-      setAmount("");
+      setAmount(0);
       setType("");
 
     } catch (error) {
+      console.log("Bearer Token:", bearerToken);
       console.error("Error adding income:", error);
     }
   };
@@ -88,7 +91,7 @@ export default function IncomeForm() {
                 min="0.01"
                 step="0.01"
                 value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                onChange={(e) => setAmount(parseFloat(e.target.value))}
                 required
               />
             </div>
@@ -104,12 +107,30 @@ export default function IncomeForm() {
             </div>
             <div className="grid gap-2">
               <Label htmlFor="type">Type</Label>
-              <Input
+              <select
                 id="type"
                 name="type"
-                type="text"
                 value={type}
                 onChange={(e) => setType(e.target.value)}
+                required
+                className="border p-2 rounded-md"
+              >
+                <option value="" >Select Income Type</option>
+                <option value="ONETIME">One-Time</option>
+                <option value="WEEKLY">Weekly</option>
+                <option value="BIWEEKLY">Biweekly</option>
+                <option value="MONTHLY">Monthly</option>
+                <option value="YEARLY">Yearly</option>
+              </select>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="date">Date</Label>
+              <Input
+                id="date"
+                name="date"
+                type="datetime-local"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
                 required
               />
             </div>

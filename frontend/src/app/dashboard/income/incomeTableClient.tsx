@@ -24,6 +24,14 @@ interface Props {
     incomes: Income[];
 }
 
+export const IncomeType = {
+    ONETIME: 1,
+    WEEKLY: 7,
+    BIWEEKLY: 14,
+    MONTHLY: 30,
+    YEARLY: 365,
+  };
+
 export default function IncomeTableClient({incomes}: Props) {
     const [selectedIncomeId, setSelectedIncomeId] = useState<UUID | null>(null);
 
@@ -36,23 +44,19 @@ export default function IncomeTableClient({incomes}: Props) {
     };
     return (
         <div>
+            
             <Table>
                 <TableHeader>
                     <TableRow className="bg-gray-600">
                         <TableHead className="w-1/8 text-white">Date</TableHead>
                         <TableHead className="w-1/5 text-white">Name</TableHead>
-                        <TableHead className="w-1/5 text-white">
-                            Amount
-                        </TableHead>
-                        <TableHead className="w-1/5 text-white">
-                            Type
-                        </TableHead>
-                        <TableHead className="text-right text-white">
-                            Description
-                        </TableHead>
+                        <TableHead className="w-1/5 text-white"> Amount </TableHead>
+                        <TableHead className="w-1/5 text-white">Type </TableHead>
+                        <TableHead className="text-right text-white">Description</TableHead>
                     </TableRow>
                 </TableHeader>
 
+                
                 <TableBody className="bg-gray-200">
                     {incomes.map((income) => (
                         <TableRow
@@ -97,7 +101,7 @@ export default function IncomeTableClient({incomes}: Props) {
             >
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>Transaction</DialogTitle>
+                        <DialogTitle>Income</DialogTitle>
                     </DialogHeader>
                     {selectedIncomeId && (
                         <IncomeView

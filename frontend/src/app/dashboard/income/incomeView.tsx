@@ -10,8 +10,8 @@ export default function IncomeView(props: { incomeId: UUID }) {
 	const { id: userId, bearerToken } = useUserStore();
 	useEffect(() => {
 	    axios
-		
-			.get(`/api/${userId}/income/${props.incomeId}`, {
+			//get a user's id
+			.get(`${process.env.NEXT_PUBLIC_API_URL}/api/${userId}/income/${props.incomeId}`, {
 				headers: {
 				Authorization: `Bearer ${bearerToken}`,
 				},
@@ -30,6 +30,7 @@ export default function IncomeView(props: { incomeId: UUID }) {
 	}, [props.incomeId]);
 
 	return (
+		
 		<div>
 			<p>
 				<b>Name:</b>
@@ -50,9 +51,6 @@ export default function IncomeView(props: { incomeId: UUID }) {
 				<b>Type:</b>
 				{income?.type}
 			</p>
-			<div className="flex my-2 px-4 justify-center">
-				<Button>Edit</Button>
-			</div>
 		</div>
 	);
 }
