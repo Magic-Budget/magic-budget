@@ -26,5 +26,4 @@ test("navigate receipt", async ({ page }) => {
   }
   await expect(page.locator('button:text("Refresh")')).toBeTruthy();
   await expect(page.locator('button:text("Upolad file")')).toBeTruthy();
-  
 });
