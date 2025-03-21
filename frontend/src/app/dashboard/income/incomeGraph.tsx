@@ -17,10 +17,15 @@ export default function IncomeGraph() {
   
   useEffect(() => {
     async function fetchIncomes() {
-      const data = await getMonthlyIncomes(userId, bearerToken, 0, 0); // Modify start and end as needed
+      const data = await getMonthlyIncomes(userId, bearerToken, 0, 0); 
       setmonthlyIncomes(data);
     }
-    fetchIncomes();
+    //update
+    const intervalId = setInterval(() => {
+			fetchIncomes();
+		  }, 1000);
+    return () => clearInterval(intervalId); 
+
   }, [userId, bearerToken]);
   
   
