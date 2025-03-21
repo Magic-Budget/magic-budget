@@ -1,7 +1,7 @@
 package me.magicbudget.controller;
 
-import me.magicbudget.dto.incomingrequest.GoalCreateRequest;
-import me.magicbudget.dto.outgoingresponse.GoalResponse;
+import me.magicbudget.dto.incoming_request.GoalCreateRequest;
+import me.magicbudget.dto.outgoing_response.GoalResponse;
 import me.magicbudget.service.GoalService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

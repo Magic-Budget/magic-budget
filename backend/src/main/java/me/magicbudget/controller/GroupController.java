@@ -1,10 +1,10 @@
 package me.magicbudget.controller;
 
 
-import me.magicbudget.dto.incomingrequest.AddUserToGroupRequest;
-import me.magicbudget.dto.incomingrequest.TransactionRequest;
-import me.magicbudget.dto.outgoingresponse.GroupResponse;
-import me.magicbudget.dto.outgoingresponse.SplitTransactionResponse;
+import me.magicbudget.dto.incoming_request.AddUserToGroupRequest;
+import me.magicbudget.dto.incoming_request.TransactionRequest;
+import me.magicbudget.dto.outgoing_response.GroupResponse;
+import me.magicbudget.dto.outgoing_response.SplitTransactionResponse;
 import me.magicbudget.service.GroupService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
