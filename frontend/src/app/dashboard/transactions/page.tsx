@@ -1,7 +1,14 @@
 import React from "react";
 import TransactionTable from "./transactionTable";
 import { Button } from "@/components/ui/button";
-import { Dialog } from "@radix-ui/react-dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { ExpenseForm } from "./expense-form";
+import {
+	Dialog,
+	DialogContent,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog";
 
 export default function Transactions() {
 	return (
@@ -16,7 +23,19 @@ export default function Transactions() {
 					</p>
 				</div>
 				<div>
-					<Button>Add Expense</Button>
+					<Dialog>
+						<DialogTrigger asChild>
+							<Button>Add Expense</Button>
+						</DialogTrigger>
+						<DialogContent className="w-fit">
+							<div>
+								<VisuallyHidden>
+									<DialogTitle>Expense Form</DialogTitle>
+								</VisuallyHidden>
+								<ExpenseForm></ExpenseForm>
+							</div>
+						</DialogContent>
+					</Dialog>
 				</div>
 			</div>
 			<div>

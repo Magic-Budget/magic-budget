@@ -3,7 +3,6 @@ package me.magicbudget.service;
 import me.magicbudget.dto.incoming_request.ExpenseRequest;
 import me.magicbudget.dto.outgoing_response.ExpenseResponse;
 import me.magicbudget.model.Expense;
-import me.magicbudget.model.ExpenseCategory;
 import me.magicbudget.model.Transaction;
 import me.magicbudget.model.TransactionType;
 import me.magicbudget.model.User;
@@ -68,7 +67,7 @@ public class ExpenseService {
         );
         transactionRepository.save(transaction);
         Expense expense = new Expense(user, transaction, expenseRequest.shopName(),
-            expenseRequest.expenseCategory());
+            expenseRequest.category());
         expense.setId(transaction.getId());
         expenseRepository.save(expense);
       } catch (Exception e) {
