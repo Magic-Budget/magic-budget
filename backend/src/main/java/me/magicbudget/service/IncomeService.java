@@ -53,24 +53,22 @@ public class IncomeService {
 
   @Transactional
   public void addIncome(UUID userId, IncomeRequest incomeRequest) throws IllegalArgumentException {
-    Optional<User> userById = userService.getUserById(userId);
-    if (userById.isPresent()) {
-      User user = userById.get();
-      try {
-        Transaction transaction = new Transaction(incomeRequest.name(), incomeRequest.date(),
-            incomeRequest.amount(), incomeRequest.description(), TransactionType.INCOME);
+    System.out.println(userId);
+    User user = userService.getUserById(userId)
+        .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        transactionRepository.save(transaction);
+    try {
+      Transaction transaction = new Transaction(incomeRequest.name(), incomeRequest.date(),
+          incomeRequest.amount(), incomeRequest.description(), TransactionType.INCOME);
 
-        Income income = new Income(user, transaction, incomeRequest.type());
-        income.setId(transaction.getId());
-        incomeRepository.save(income);
-      } catch (Exception e) {
-        throw new IllegalArgumentException("An error occurred while adding the income", e);
-      }
+      transactionRepository.save(transaction);
 
+      Income income = new Income(user, transaction, incomeRequest.type());
+      income.setId(transaction.getId());
+      incomeRepository.save(income);
+    } catch (Exception e) {
+      throw new IllegalArgumentException("An error occurred while adding the income", e);
     }
-    throw new IllegalArgumentException("User not found");
   }
 
   public BigDecimal totalIncome(UUID userId) throws IllegalArgumentException {

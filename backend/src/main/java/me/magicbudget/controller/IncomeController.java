@@ -38,17 +38,19 @@ public class IncomeController {
     }
   }
 
-  @PostMapping("/add-income")
-  public ResponseEntity<String> addIncome(@PathVariable("userid") UUID userId,
-      @RequestBody IncomeRequest incomeRequest) {
-    try{
-      incomeService.addIncome(userId, incomeRequest);
-      return new ResponseEntity<>("Income added successfully", HttpStatus.CREATED);
-    }
-    catch (IllegalArgumentException e) {
-      return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-    }
+@PostMapping("/add-income")
+public ResponseEntity<String> addIncome(@PathVariable("userid") UUID userId,
+    @RequestBody IncomeRequest incomeRequest) {
+  try{
+    incomeService.addIncome(userId, incomeRequest);
+    return new ResponseEntity<>("Income added successfully", HttpStatus.CREATED);
   }
+  catch (IllegalArgumentException e) {
+    // Log the actual exception message to help debug
+    System.err.println("Error adding income: " + e.getMessage());
+    return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+  }
+}
 
   @GetMapping("/total")
   public ResponseEntity<BigDecimal> totalIncome(@PathVariable("userid") UUID userId) {
