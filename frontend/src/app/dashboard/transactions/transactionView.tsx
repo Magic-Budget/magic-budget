@@ -51,8 +51,9 @@ export default function TransactionView(props: { transactionId: UUID }) {
         <b>Description: </b>
         {transaction?.description}
       </p>
-      <div className="flex my-2 px-4 justify-center">
+      <div className="my-2 justify-center">
         <Button>Edit</Button>
+        <SplitExpense expense_id={props.transactionId} />
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ export default function DashboardPage() {
       <div>
         <h2 className="text-2xl font-bold tracking-tight">Home</h2>
         <p className="text-muted-foreground">
-          Weclome {firstName} {lastName} to your dashboard
+          Welcome {firstName} {lastName} to your dashboard
         </p>
       </div>
 

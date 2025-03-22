@@ -31,8 +31,7 @@ public class ExpenseController {
       @PathVariable("userid") UUID userId) {
     try {
       return new ResponseEntity<>(expenseService.viewExpenses(userId), HttpStatus.OK);
-    }
-    catch (IllegalArgumentException e) {
+    } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -69,5 +68,16 @@ public class ExpenseController {
       return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
     }
 
+  }
+
+  @PostMapping("/split/")
+  public ResponseEntity<Boolean> splitExpense(@PathVariable("userid") UUID userID,
+      @RequestBody List<UUID> split_with, @RequestBody UUID expenseID) {
+    try {
+      return new ResponseEntity<>(expenseService.splitExpense(userID, expenseID, split_with),
+          HttpStatus.OK);
+    } catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
   }
 }

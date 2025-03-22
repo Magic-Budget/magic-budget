@@ -4,10 +4,12 @@ import me.magicbudget.model.Category;
 import me.magicbudget.model.CategoryTotals;
 import me.magicbudget.repository.CategoryRepository;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Service
 public class CategoryService {
   private final CategoryRepository categoryRepository;
 
@@ -28,5 +30,9 @@ public class CategoryService {
 
   public List<CategoryTotals> getCategoryTotals(@NonNull UUID userID) {
     return this.categoryRepository.findTotalAmountPerCategory(userID);
+  }
+
+  public List<Category> getAllCategories() {
+    return this.categoryRepository.findAll();
   }
 }
