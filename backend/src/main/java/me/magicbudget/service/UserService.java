@@ -2,6 +2,7 @@ package me.magicbudget.service;
 
 import java.util.Optional;
 import java.util.UUID;
+import me.magicbudget.dto.BasicUserInformation;
 import me.magicbudget.model.User;
 import me.magicbudget.model.UserInformation;
 import me.magicbudget.repository.UserInformationRepository;
@@ -33,6 +34,14 @@ public final class UserService {
     return Optional.ofNullable(userInformationRepository.findByUsername(username));
   }
 
+  public static BasicUserInformation getBasicInformation(UserInformation user){
+    return new BasicUserInformation(
+        user.getId(),
+        user.getUsername(),
+        user.getFullName(),
+        user.getEmail()
+    );
+  }
 
 
   public User updateUser(@NonNull User user) {
