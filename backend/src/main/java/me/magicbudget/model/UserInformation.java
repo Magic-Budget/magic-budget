@@ -6,13 +6,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -38,47 +35,18 @@ public class UserInformation implements UserDetails {
   @PrimaryKeyJoinColumn
   private User user;
 
-  @OneToMany(mappedBy = "user")
-  private List<Friendship> friendships;
-
-  @ManyToMany(mappedBy = "members")
-  private List<Group> groups;
-
   public UserInformation() {
   }
 
 
   public UserInformation(String username, String password, String firstName,
       String lastName, String email) {
+    this.email = email;
     this.username = username;
     this.password = password;
     this.firstName = firstName;
     this.lastName = lastName;
-    this.email = email;
-    this.friendships = new ArrayList<>();
-    this.groups = new ArrayList<>();
   }
-
-  public List<Group> getGroups() {
-    return groups;
-  }
-
-  public void addGroup(Group group) {
-    groups.add(group);
-  }
-
-  public void addFriend(Friendship friendship) {
-    friendships.add(friendship);
-  }
-
-  public List<Friendship> getFriendships() {
-    return friendships;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
 
   public UUID getId() {
     return id;

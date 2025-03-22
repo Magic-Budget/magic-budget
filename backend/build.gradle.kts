@@ -31,7 +31,6 @@ dependencies {
     testImplementation("com.h2database:h2:2.3.232")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
-    implementation("net.sourceforge.tess4j:tess4j:5.15.0")
 }
 
 tasks.withType<Test> {

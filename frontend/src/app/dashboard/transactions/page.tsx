@@ -9,6 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import TransactionBarGraph from "./transactionBarGraph";
 
 export default function Transactions() {
   return (
@@ -35,6 +36,9 @@ export default function Transactions() {
             </DialogContent>
           </Dialog>
         </div>
+      </div>
+      <div>
+        <TransactionBarGraph />
       </div>
       <div>
         <TransactionTable start={0} end={10} />

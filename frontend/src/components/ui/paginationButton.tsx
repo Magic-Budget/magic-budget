@@ -1,9 +1,5 @@
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import TransactionTable from "./transactionTable";
-
-
 export default function TablePagination(){
-
 
     return (
 		<div>

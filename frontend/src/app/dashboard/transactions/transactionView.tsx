@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Transaction from "./(objects)/transaction";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
-import SplitExpense from "./splitExpense";
 import { UUID } from "crypto";
 import { useUserStore } from "@/stores/user-store";
 

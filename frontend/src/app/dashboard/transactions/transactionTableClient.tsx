@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/dialog";
 import TransactionView from "./transactionView";
 import { Button } from "@/components/ui/button";
-import TablePagination from "./paginationButton";
+import TablePagination from "@/components/ui/paginationButton";
 import Transaction from "./(objects)/transaction";
 import { UUID } from "crypto";
 import { Skeleton } from "@/components/ui/skeleton";

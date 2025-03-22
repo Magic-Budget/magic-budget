@@ -9,7 +9,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Home, ScrollText, Target, Receipt, Split} from "lucide-react";
+import {
+  Home,
+  ScrollText,
+  Target,
+  Receipt,
+  Split,
+  PiggyBank,
+} from "lucide-react";
 import Link from "next/link";
 
 const items = [
@@ -22,6 +29,11 @@ const items = [
     title: "Transactions",
     url: "/dashboard/transactions",
     icon: ScrollText,
+  },
+  {
+    title: "Income",
+    url: "/dashboard/income",
+    icon: PiggyBank,
   },
   {
     title: "Goals",

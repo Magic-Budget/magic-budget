@@ -11,7 +11,7 @@
 //import java.time.LocalDateTime;
 //import java.util.List;
 //import java.util.Optional;
-//import me.magicbudget.model.TransactionRequest;
+//import me.magicbudget.model.Transaction;
 //import me.magicbudget.model.User;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@
 //
 //    // Create a new transaction for the user
 //    LocalDateTime now = LocalDateTime.now();
-//    TransactionRequest transaction = new TransactionRequest(
+//    Transaction transaction = new Transaction(
 //        null,
 //        savedUser,
 //        "Grocery Shopping",
@@ -46,12 +46,12 @@
 //    );
 //
 //    // Test the create transaction method
-//    TransactionRequest savedTransaction = transactionService.createTransaction(transaction);
+//    Transaction savedTransaction = transactionService.createTransaction(transaction);
 //
 //    // Assert the transaction was saved correctly
-//    assertNotNull(savedTransaction.getId(), "TransactionRequest ID should not be null");
+//    assertNotNull(savedTransaction.getId(), "Transaction ID should not be null");
 //    assertEquals(savedUser.getId(), savedTransaction.getUser().getId(), "User ID should match");
-//    assertEquals(now, savedTransaction.getTrasnactionDate(), "TransactionRequest date should match");
+//    assertEquals(now, savedTransaction.getTrasnactionDate(), "Transaction date should match");
 //    assertEquals(new BigDecimal("100.00"), savedTransaction.getAmount(), "Amount should match");
 //    assertEquals("Test transaction", savedTransaction.getDescription(), "Description should match");
 //  }
@@ -63,7 +63,7 @@
 //    User savedUser = userService.createUser(user);
 //
 //    // Create and save a transaction
-//    TransactionRequest transaction = new TransactionRequest(
+//    Transaction transaction = new Transaction(
 //        null,
 //        savedUser,
 //        "Paycheck Deposit",
@@ -71,17 +71,17 @@
 //        new BigDecimal("50.00"),
 //        "Find by ID test"
 //    );
-//    TransactionRequest savedTransaction = transactionService.createTransaction(transaction);
+//    Transaction savedTransaction = transactionService.createTransaction(transaction);
 //
 //    // Test getting transaction by ID
-//    Optional<TransactionRequest> retrievedTransactionOpt = transactionService.getTransactionById(
+//    Optional<Transaction> retrievedTransactionOpt = transactionService.getTransactionById(
 //        savedTransaction.getId());
 //
 //    // Assert the transaction was retrieved correctly
-//    assertTrue(retrievedTransactionOpt.isPresent(), "TransactionRequest should be present");
-//    TransactionRequest retrievedTransaction = retrievedTransactionOpt.get();
+//    assertTrue(retrievedTransactionOpt.isPresent(), "Transaction should be present");
+//    Transaction retrievedTransaction = retrievedTransactionOpt.get();
 //    assertEquals(savedTransaction.getId(), retrievedTransaction.getId(),
-//        "TransactionRequest ID should match");
+//        "Transaction ID should match");
 //    assertEquals(savedUser.getId(), retrievedTransaction.getUser().getId(), "User ID should match");
 //    assertEquals("Find by ID test", retrievedTransaction.getDescription(),
 //        "Description should match");
@@ -94,7 +94,7 @@
 //    User savedUser = userService.createUser(user);
 //
 //    // Create and save a transaction
-//    TransactionRequest transaction = new TransactionRequest(
+//    Transaction transaction = new Transaction(
 //        null,
 //        savedUser,
 //        "Restaurant",
@@ -102,10 +102,10 @@
 //        new BigDecimal("75.00"),
 //        "Original description"
 //    );
-//    TransactionRequest savedTransaction = transactionService.createTransaction(transaction);
+//    Transaction savedTransaction = transactionService.createTransaction(transaction);
 //
 //    // Update the transaction
-//    TransactionRequest updatedTransactionData = new TransactionRequest(
+//    Transaction updatedTransactionData = new Transaction(
 //        savedTransaction.getId(),
 //        savedTransaction.getUser(),
 //        savedTransaction.getName(),
@@ -115,7 +115,7 @@
 //    );
 //
 //    // Test update transaction
-//    TransactionRequest updatedTransaction = transactionService.updateTransaction(updatedTransactionData);
+//    Transaction updatedTransaction = transactionService.updateTransaction(updatedTransactionData);
 //
 //    // Assert the transaction was updated correctly
 //    assertEquals(savedTransaction.getId(), updatedTransaction.getId(), "ID should not change");
@@ -134,37 +134,37 @@
 //    // Create and save multiple transactions for this user
 //    LocalDateTime now = LocalDateTime.now();
 //
-//    TransactionRequest transaction1 = new TransactionRequest(
+//    Transaction transaction1 = new Transaction(
 //        null,
 //        savedUser,
 //        "Groceries",
 //        now.minusDays(1),
 //        new BigDecimal("30.00"),
-//        "TransactionRequest 1"
+//        "Transaction 1"
 //    );
 //
-//    TransactionRequest transaction2 = new TransactionRequest(
+//    Transaction transaction2 = new Transaction(
 //        null,
 //        savedUser,
 //        "Gas",
 //        now,
 //        new BigDecimal("45.00"),
-//        "TransactionRequest 2"
+//        "Transaction 2"
 //    );
 //
 //    transactionService.createTransaction(transaction1);
 //    transactionService.createTransaction(transaction2);
 //
 //    // Test getting transactions by user ID
-//    List<TransactionRequest> userTransactions = transactionService.getTransactionsByUserId(
+//    List<Transaction> userTransactions = transactionService.getTransactionsByUserId(
 //        savedUser.getId());
 //
 //    // Assert the correct transactions were retrieved
-//    assertFalse(userTransactions.isEmpty(), "TransactionRequest list should not be empty");
+//    assertFalse(userTransactions.isEmpty(), "Transaction list should not be empty");
 //    assertEquals(2, userTransactions.size(), "Should have 2 transactions for this user");
 //
 //    // Verify the transactions belong to the user
-//    for (TransactionRequest tx : userTransactions) {
+//    for (Transaction tx : userTransactions) {
 //      assertEquals(savedUser.getId(), tx.getUser().getId(),
 //          "All transactions should belong to the test user");
 //    }
@@ -182,7 +182,7 @@
 //    LocalDateTime twoDaysAgo = now.minusDays(2);
 //    LocalDateTime threeDaysAgo = now.minusDays(3);
 //
-//    TransactionRequest transaction1 = new TransactionRequest(
+//    Transaction transaction1 = new Transaction(
 //        null,
 //        savedUser,
 //        "Coffee",
@@ -191,7 +191,7 @@
 //        "Yesterday"
 //    );
 //
-//    TransactionRequest transaction2 = new TransactionRequest(
+//    Transaction transaction2 = new Transaction(
 //        null,
 //        savedUser,
 //        "Lunch",
@@ -200,7 +200,7 @@
 //        "Two days ago"
 //    );
 //
-//    TransactionRequest transaction3 = new TransactionRequest(
+//    Transaction transaction3 = new Transaction(
 //        null,
 //        savedUser,
 //        "Paycheck",
@@ -214,14 +214,14 @@
 //    transactionService.createTransaction(transaction3);
 //
 //    // Test getting transactions by date range (all three transactions)
-//    List<TransactionRequest> dateRangeTransactions = transactionService.getTransactionsByTransactionDateBetween(
+//    List<Transaction> dateRangeTransactions = transactionService.getTransactionsByTransactionDateBetween(
 //        threeDaysAgo, yesterday);
 //
 //    // Assert the correct transactions were retrieved
 //    assertEquals(3, dateRangeTransactions.size(), "Should have 3 transactions in the date range");
 //
 //    // Test getting transactions with a more specific date range
-//    List<TransactionRequest> specificRangeTransactions = transactionService.getTransactionsByTransactionDateBetween(
+//    List<Transaction> specificRangeTransactions = transactionService.getTransactionsByTransactionDateBetween(
 //        twoDaysAgo, yesterday.plusHours(1));
 //
 //    assertEquals(2, specificRangeTransactions.size(),
