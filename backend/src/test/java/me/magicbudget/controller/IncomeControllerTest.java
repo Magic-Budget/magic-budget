@@ -148,7 +148,7 @@ public class IncomeControllerTest {
         BigDecimal.valueOf(5000),
         IncomeType.MONTHLY,
         LocalDateTime.of(2025, 3, 21, 12, 30, 0));
-    incomeService.addIncome(testUser.getId().toString(),income1);
+    incomeService.addIncome(testUser.getId(), income1);
 
     // Create second income (optional, to test multiple elements).
     IncomeRequest income2 = new IncomeRequest(
@@ -157,7 +157,7 @@ public class IncomeControllerTest {
         BigDecimal.valueOf(500000),
         IncomeType.ONETIME,
         LocalDateTime.of(2025, 3, 21, 12, 30, 0));
-    incomeService.addIncome(testUser.getId().toString(),income2);
+    incomeService.addIncome(testUser.getId(), income2);
 
     // When
     mockMvc.perform(get("/api/" + testUser.getId() + "/income/view-all")
