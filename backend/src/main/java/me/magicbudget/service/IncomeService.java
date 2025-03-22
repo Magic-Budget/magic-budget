@@ -71,7 +71,6 @@ public class IncomeService {
         Income income = new Income(user, transaction, incomeRequest.type());
         income.setId(transaction.getId());
         incomeRepository.save(income);
-        return;
       } catch (Exception e) {
         throw new IllegalArgumentException("An error occurred while adding the income", e);
       }
