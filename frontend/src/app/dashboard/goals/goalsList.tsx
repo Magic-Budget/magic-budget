@@ -20,7 +20,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import Goal from "./objects/goal";
-import { CalendarClock, Flag, Target } from "lucide-react";
 
 interface GoalsListProps {
   goals: Goal[];
@@ -48,10 +47,15 @@ export default function GoalsList({ goals, onUpdateGoal }: GoalsListProps) {
     <>
       <div className="space-y-6">
         {goals.map((goal: Goal) => (
-          <Card key={goal.id} className="w-full p-6 bg-gray-50 border-2 border-gray-200">
+          <Card
+            key={goal.id}
+            className="w-full p-6 bg-gray-50 border-2 border-gray-200"
+          >
             <CardHeader className="space-y-2">
               <CardTitle className="text-2xl">Goal: {goal.name}</CardTitle>
-              <CardDescription className="text-lg">Save By: {goal.getDateString()}</CardDescription>
+              <CardDescription className="text-lg">
+                Save By: {goal.getDateString()}
+              </CardDescription>
             </CardHeader>
 
             <CardContent className="py-6">
@@ -61,9 +65,12 @@ export default function GoalsList({ goals, onUpdateGoal }: GoalsListProps) {
               />
             </CardContent>
 
-            <CardFooter className="flex justify-between items-center">
+            <div className="flex justify-between items-center">
               <p className="text-lg font-medium">${goal.currAmount}</p>
               <p className="text-lg font-medium">${goal.targetPrice}</p>
+            </div>
+
+            <CardFooter className="flex justify-between items-center">
               <Button
                 variant="outline"
                 size="sm"

@@ -1,0 +1,20 @@
+meta {
+  name: Registeer
+  type: http
+  seq: 9
+}
+
+post {
+  url: http://localhost:8080/api/auth/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "test@email.com",
+    "password": "hello_world",
+    "firstName": "B",
+    "lastname": "N"
+  }
+}

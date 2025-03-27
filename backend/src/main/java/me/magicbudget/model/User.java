@@ -1,55 +1,49 @@
 package me.magicbudget.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "auth_users")
-public class User implements UserDetails {
+public class User{
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
 
-  @NotNull
-  @Size(max = 50)
-  private String username;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "information_id", referencedColumnName = "id")
+  private UserInformation information;
 
-  @NotNull
-  @Size(max = 50)
-  private String firstName;
+  @OneToMany(cascade = CascadeType.ALL)
+  private List<Income> incomes;
 
-  @NotNull
-  @Size(max = 50)
-  private String lastName;
-
-  @NotNull
-  private String password;
+  @OneToMany(cascade = CascadeType.ALL)
+  private List<Expense> expenses;
 
   public User() {
   }
 
-  public User(String username, String password) {
-    this.username = username;
-    this.password = password;
-  }
-
-  public User(UUID id, String username, String firstName, String lastName, String password) {
-    this.id = id;
-    this.username = username;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.password = password;
+  public User(UserInformation information) {
+    this.information = information;
+    this.incomes = new ArrayList<>();
+    this.expenses = new ArrayList<>();
   }
 
   public UUID getId() {
@@ -60,59 +54,11 @@ public class User implements UserDetails {
     this.id = id;
   }
 
-  public @NotNull @Size(max = 50) String getUsername() {
-    return username;
+  public void setInformation(UserInformation information) {
+    this.information = information;
   }
 
-  public void setUsername(@NotNull @Size(max = 50) String username) {
-    this.username = username;
-  }
-
-  public @NotNull @Size(max = 50) String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(@NotNull @Size(max = 50) String firstName) {
-    this.firstName = firstName;
-  }
-
-  public @NotNull @Size(max = 50) String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(@NotNull @Size(max = 50) String lastName) {
-    this.lastName = lastName;
-  }
-
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return List.of();
-  }
-
-  public @NotNull String getPassword() {
-    return password;
-  }
-
-  public void setPassword(@NotNull String hashedPassword) {
-    this.password = hashedPassword;
-  }
-  @Override
-  public boolean isAccountNonExpired() {
-    return true;
-  }
-
-  @Override
-  public boolean isAccountNonLocked() {
-    return true;
-  }
-
-  @Override
-  public boolean isCredentialsNonExpired() {
-    return true;
-  }
-
-  @Override
-  public boolean isEnabled() {
-    return true;
+  public UserInformation getInformation() {
+    return information;
   }
 }
