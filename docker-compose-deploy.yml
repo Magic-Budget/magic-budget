@@ -39,6 +39,7 @@ services:
             - backend
         environment:
             - NEXT_PUBLIC_API_URL=http://localhost:8080
+            - OLLAMA_URL = ws://localhost:8080
         networks:
             - magicbudget-network
 

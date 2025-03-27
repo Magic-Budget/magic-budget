@@ -5,6 +5,7 @@ import { useUserStore } from "@/stores/user-store";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { serialize } from "v8";
 
 const chatSocket = new WebSocket(`${process.env.OLLAMA_URL}`);
 enum Sender {
@@ -33,7 +34,12 @@ function SupportChat() {
 	const handleButtonClick = () => {
 		if (messageText.trim()) {
 			setDisableChat(true);
-			chatSocket.send(messageText);
+			chatSocket.send(
+				JSON.stringify({
+					userID: useUserStore().id,
+					prompt: messageText,
+				})
+			);
 			setChatMessages([
 				...chatMessages,
 				{ message: messageText, sender: Sender.user },
@@ -44,8 +50,20 @@ function SupportChat() {
 
 	return (
 		<>
-			<ScrollArea></ScrollArea>
-			<div className="grid grid-cols-6 gap-2 m-1">
+			<ScrollArea className="w-full">
+				{chatMessages.map((entry) => (
+					<p
+						className={
+							entry.sender == Sender.user
+								? "font-bold text-lg"
+								: "text-md"
+						}
+					>
+						{entry.message}
+					</p>
+				))}
+			</ScrollArea>
+			<div className="w-full grid grid-cols-6 gap-2 m-1">
 				<Textarea
 					id="message_textbox"
 					className="col-span-5"
