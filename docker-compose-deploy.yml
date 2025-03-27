@@ -2,49 +2,59 @@ version: "3.9"
 name: magic-budget
 
 services:
-  postgres:
-    image: postgres:latest
-    container_name: postgres
-    environment:
-      POSTGRES_USER: magic-username
-      POSTGRES_PASSWORD: magic-password
-      POSTGRES_DB: magic-db
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - magicbudget-network
+    postgres:
+        image: postgres:latest
+        container_name: postgres
+        environment:
+            POSTGRES_USER: magic-username
+            POSTGRES_PASSWORD: magic-password
+            POSTGRES_DB: magic-db
+        ports:
+            - "5432:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        networks:
+            - magicbudget-network
 
-  backend:
-    image: magicbudget-backend
-    container_name: magicbudget-backend
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgres
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/magic-db
-      - SPRING_DATASOURCE_USERNAME=magic-username
-      - SPRING_DATASOURCE_PASSWORD=magic-password
-    networks:
-      - magicbudget-network
+    backend:
+        image: magicbudget-backend
+        container_name: magicbudget-backend
+        ports:
+            - "8080:8080"
+        depends_on:
+            - postgres
+        environment:
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/magic-db
+            - SPRING_DATASOURCE_USERNAME=magic-username
+            - SPRING_DATASOURCE_PASSWORD=magic-password
+        networks:
+            - magicbudget-network
 
-  frontend:
-    image: magicbudget-frontend
-    container_name: magicbudget-frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-    environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:8080
-    networks:
-      - magicbudget-network
+    frontend:
+        image: magicbudget-frontend
+        container_name: magicbudget-frontend
+        ports:
+            - "3000:3000"
+        depends_on:
+            - backend
+        environment:
+            - NEXT_PUBLIC_API_URL=http://localhost:8080
+        networks:
+            - magicbudget-network
+
+    llama:
+        image: ollama/ollama:latest
+        container_name: ollama
+        ports:
+            - "7869:7869"
+        volumes:
+            - ./ollama/ollama:/root/.ollama
+        networks:
+            - magicbudget-network
 
 networks:
-  magicbudget-network:
-    driver: bridge
+    magicbudget-network:
+        driver: bridge
 
 volumes:
-  postgres_data:
+    postgres_data:
