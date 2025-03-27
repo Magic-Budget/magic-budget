@@ -144,7 +144,7 @@ public class ExpenseControllerTest {
         "Have to eat",
         "Soriana"
     );
-    expenseService.addExpense(testUser.getId().toString(), expense1);
+    expenseService.addExpense(testUser.getId(), expense1);
 
     ExpenseRequest expense2 = new ExpenseRequest(
         BigDecimal.valueOf(1500),
@@ -154,7 +154,7 @@ public class ExpenseControllerTest {
         "Need light in my life",
         "Manitoba Hydro"
     );
-    expenseService.addExpense(testUser.getId().toString(), expense2);
+    expenseService.addExpense(testUser.getId(), expense2);
 
     // When
     mockMvc.perform(get("/api/" + testUser.getId() + "/expense/view-all")
