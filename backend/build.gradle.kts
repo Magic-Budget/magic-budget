@@ -1,7 +1,10 @@
+import org.checkerframework.gradle.plugin.CheckerFrameworkExtension
+
 plugins {
     java
     id("org.springframework.boot") version "3.4.1"
     id("io.spring.dependency-management") version "1.1.7"
+    id("org.checkerframework") version "0.6.52"
 }
 
 group = "me.magicbudget"
@@ -36,4 +39,13 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+
+
+configure<CheckerFrameworkExtension> {
+    checkers = listOf(
+            "org.checkerframework.checker.tainting.TaintingChecker",
+            "org.checkerframework.checker.sqlquotes.SqlQuotesChecker",
+    )
 }
