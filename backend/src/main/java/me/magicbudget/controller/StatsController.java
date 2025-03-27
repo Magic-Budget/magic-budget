@@ -12,8 +12,14 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/{userid}/stats")
-public class StatsController {
-  private final StatsServ
+public final class StatsController {
+
+  private final StatsService statsService;
+
+  public StatsController(StatsService statsService) {
+    this.statsService = statsService;
+  }
+
   /**
    * Retrieves statistics for the user.
    *
@@ -21,6 +27,7 @@ public class StatsController {
    */
   @GetMapping
   public ResponseEntity<StatsResponse> getStats(@PathVariable("userid") UUID userId) {
-    return new ResponseEntity<>(HttpStatus.OK);
+    StatsResponse stats = statsService.getStats(userId);
+    return ResponseEntity.ok(stats);
   }
 }
