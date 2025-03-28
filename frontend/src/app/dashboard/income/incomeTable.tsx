@@ -20,7 +20,7 @@ export default function TransactionTable(props: {
         userId,
         bearerToken,
         props.start,
-        props.end
+        props.end,
       );
       setIncomes(fetchedIncomes);
     }
@@ -39,7 +39,7 @@ async function getIncomes(
   userId: UUID,
   bearerToken: string,
   start: number,
-  end: number
+  end: number,
 ): Promise<Income[]> {
   try {
     //get all incomes
@@ -49,7 +49,7 @@ async function getIncomes(
         headers: {
           Authorization: `Bearer ${bearerToken}`,
         },
-      }
+      },
     );
 
     return response.data.map((income: any) => ({

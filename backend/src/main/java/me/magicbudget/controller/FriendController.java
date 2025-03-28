@@ -1,6 +1,8 @@
 package me.magicbudget.controller;
 
 
+import java.util.List;
+import java.util.UUID;
 import me.magicbudget.dto.BasicUserInformation;
 import me.magicbudget.dto.incoming_request.FriendAddRequest;
 import me.magicbudget.service.FriendshipService;
@@ -12,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("api/{userid}/friend")

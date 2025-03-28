@@ -19,7 +19,7 @@ export default function TransactionTable(props: {
         userid,
         bearerToken,
         props.start,
-        props.end
+        props.end,
       );
       setTransactions(fetchedTransactions);
     }
@@ -38,7 +38,7 @@ async function getTransactions(
   userId: UUID,
   bearerToken: string,
   start: number,
-  end: number
+  end: number,
 ): Promise<Transaction[]> {
   try {
     const response = await axios.get(
@@ -47,7 +47,7 @@ async function getTransactions(
         headers: {
           Authorization: `Bearer ${bearerToken}`,
         },
-      }
+      },
     );
 
     return response.data.map((expense: any) => ({

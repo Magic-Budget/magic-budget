@@ -67,9 +67,11 @@ public class Group {
   public void addMember(UserInformation member) {
     members.add(member);
   }
+
   public List<SplitTransaction> getTransactions() {
     return transactions;
   }
+
   public void addTransaction(SplitTransaction transaction) {
     transactions.add(transaction);
   }

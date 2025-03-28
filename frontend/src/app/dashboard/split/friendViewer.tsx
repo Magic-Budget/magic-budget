@@ -28,7 +28,7 @@ const FriendViewer = () => {
       .get(`${apiUrl}/friend/`, { headers: requestHeaders })
       .then((response) => {
         const uniqueFriends = Array.from(
-          new Map(response.data.map((friend: User) => [friend.userId, friend]))
+          new Map(response.data.map((friend: User) => [friend.userId, friend])),
         ).map((entry) => entry[1] as User);
         setFriends(uniqueFriends);
       })

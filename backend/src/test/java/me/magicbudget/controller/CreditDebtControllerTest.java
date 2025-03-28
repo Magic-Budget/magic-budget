@@ -1,6 +1,19 @@
 package me.magicbudget.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 import me.magicbudget.dto.incoming_request.LoginUserRequest;
 import me.magicbudget.dto.incoming_request.RegistrationAndAuthRequest;
 import me.magicbudget.model.Business;
@@ -19,19 +32,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -109,7 +109,7 @@ public class CreditDebtControllerTest {
 
     creditDebt.setBusiness(business);
     creditDebt.setUser(testUser);
-    creditDebt = creditDebtService.createCreditDebt(creditDebt,testUser.getInformation().getId());
+    creditDebt = creditDebtService.createCreditDebt(creditDebt, testUser.getInformation().getId());
 
     // When
     mockMvc.perform(get("/api/credit-debts/" + creditDebt.getId())
@@ -121,7 +121,8 @@ public class CreditDebtControllerTest {
         .andExpect(jsonPath("$.interestRate").value(creditDebt.getInterestRate().intValue()))
         .andExpect(jsonPath("$.business.id").value(creditDebt.getBusiness().getId().toString()))
         .andExpect(jsonPath("$.business.name").value(creditDebt.getBusiness().getName()))
-        .andExpect(jsonPath("$.business.user.id").value(creditDebt.getBusiness().getUser().getId().toString()))
+        .andExpect(jsonPath("$.business.user.id").value(
+            creditDebt.getBusiness().getUser().getId().toString()))
         .andExpect(jsonPath("$.business.user.information.username")
             .value(creditDebt.getBusiness().getUser().getInformation().getUsername()))
         .andExpect(jsonPath("$.business.user.information.firstName")
@@ -144,9 +145,9 @@ public class CreditDebtControllerTest {
 
     //When
     mockMvc.perform(get("/api/credit-debts/" + nonExistentId)
-        .header("Authorization","Bearer " + bearerToken))
-    // Then
-    .andExpect(status().isNotFound());
+            .header("Authorization", "Bearer " + bearerToken))
+        // Then
+        .andExpect(status().isNotFound());
   }
 
   @Test
@@ -164,7 +165,7 @@ public class CreditDebtControllerTest {
 
     creditDebt.setBusiness(business);
     creditDebt.setUser(testUser);
-    creditDebt = creditDebtService.createCreditDebt(creditDebt,testUser.getInformation().getId());
+    creditDebt = creditDebtService.createCreditDebt(creditDebt, testUser.getInformation().getId());
 
     // For the update, create a new Business object
     Business newBusiness = new Business();
@@ -224,11 +225,11 @@ public class CreditDebtControllerTest {
 
     //When
     mockMvc.perform(put("/api/credit-debts/" + nonExistentId)
-        .header("Authorization", "Bearer " + bearerToken)
-        .header("X-User-Id", testUser.getId().toString())
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(updateJson))
-    //Then
+            .header("Authorization", "Bearer " + bearerToken)
+            .header("X-User-Id", testUser.getId().toString())
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(updateJson))
+        //Then
         .andExpect(status().isNotFound());
   }
 
@@ -250,7 +251,7 @@ public class CreditDebtControllerTest {
 
     creditDebt.setBusiness(business);
     creditDebt.setUser(testUser);
-    creditDebt = creditDebtService.createCreditDebt(creditDebt,testUser.getInformation().getId());
+    creditDebt = creditDebtService.createCreditDebt(creditDebt, testUser.getInformation().getId());
 
     // For the update, create a new Business object
     Business newBusiness = new Business();
@@ -390,12 +391,12 @@ public class CreditDebtControllerTest {
 
     creditDebt.setBusiness(business);
     creditDebt.setUser(testUser);
-    creditDebt = creditDebtService.createCreditDebt(creditDebt,testUser.getInformation().getId());
+    creditDebt = creditDebtService.createCreditDebt(creditDebt, testUser.getInformation().getId());
 
     //When
     mockMvc.perform(delete("/api/credit-debts/" + creditDebt.getId())
-        .header("Authorization", "Bearer " + bearerToken))
-    // Then
+            .header("Authorization", "Bearer " + bearerToken))
+        // Then
         .andExpect(status().isNoContent());
   }
 
@@ -426,7 +427,8 @@ public class CreditDebtControllerTest {
     creditDebt1.setInterestRate(BigDecimal.valueOf(5));
     creditDebt1.setBusiness(business1);
     creditDebt1.setUser(testUser);
-    creditDebt1 = creditDebtService.createCreditDebt(creditDebt1, testUser.getInformation().getId());
+    creditDebt1 = creditDebtService.createCreditDebt(creditDebt1,
+        testUser.getInformation().getId());
 
     // Create second CreditDebt with its associated Business.
     Business business2 = new Business();
@@ -439,7 +441,8 @@ public class CreditDebtControllerTest {
     creditDebt2.setInterestRate(BigDecimal.valueOf(7));
     creditDebt2.setBusiness(business2);
     creditDebt2.setUser(testUser);
-    creditDebt2 = creditDebtService.createCreditDebt(creditDebt2, testUser.getInformation().getId());
+    creditDebt2 = creditDebtService.createCreditDebt(creditDebt2,
+        testUser.getInformation().getId());
 
     // When
     mockMvc.perform(get("/api/credit-debts/user/" + testUser.getId())
@@ -497,7 +500,8 @@ public class CreditDebtControllerTest {
     creditDebt1.setInterestRate(BigDecimal.valueOf(5));
     creditDebt1.setBusiness(business1);
     creditDebt1.setUser(testUser);
-    creditDebt1 = creditDebtService.createCreditDebt(creditDebt1, testUser.getInformation().getId());
+    creditDebt1 = creditDebtService.createCreditDebt(creditDebt1,
+        testUser.getInformation().getId());
 
     // Create second CreditDebt with its associated Business.
     Business business2 = new Business();
@@ -510,7 +514,8 @@ public class CreditDebtControllerTest {
     creditDebt2.setInterestRate(BigDecimal.valueOf(7));
     creditDebt2.setBusiness(business2);
     creditDebt2.setUser(testUser);
-    creditDebt2 = creditDebtService.createCreditDebt(creditDebt2, testUser.getInformation().getId());
+    creditDebt2 = creditDebtService.createCreditDebt(creditDebt2,
+        testUser.getInformation().getId());
 
     // When
     mockMvc.perform(delete("/api/credit-debts/user/" + testUser.getId())

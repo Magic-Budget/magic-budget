@@ -1,6 +1,10 @@
 package me.magicbudget.controller;
 
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 import me.magicbudget.dto.incoming_request.AddUserToGroupRequest;
 import me.magicbudget.dto.incoming_request.CreateGroupRequest;
 import me.magicbudget.dto.incoming_request.TransactionRequest;
@@ -15,10 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("api/{userid}/group")
@@ -36,9 +36,8 @@ public class GroupController {
     try {
       groupService.createGroup(request.groupName(), userId);
       return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-    catch (IllegalArgumentException e) {
-      return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+    } catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -50,9 +49,8 @@ public class GroupController {
           request.otherUsername(),
           request.groupName());
       return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-    catch (IllegalArgumentException e) {
-      return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+    } catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
   }
@@ -60,19 +58,18 @@ public class GroupController {
   @GetMapping("/")
   public ResponseEntity<List<GroupResponse>> getGroups(@PathVariable UUID userid) {
     try {
-      return new ResponseEntity<>(groupService.getGroups(userid),HttpStatus.OK);
-    }
-    catch (Exception e) {
+      return new ResponseEntity<>(groupService.getGroups(userid), HttpStatus.OK);
+    } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
   }
 
   @PostMapping("/add-transaction")
   public ResponseEntity<String> addTransaction(
-      @PathVariable UUID userid ,
+      @PathVariable UUID userid,
       @RequestBody TransactionRequest transactionRequest) {
 
-    try{
+    try {
       String transactionName = transactionRequest.getName();
       LocalDateTime transactionDate = transactionRequest.getTransactionDate();
       BigDecimal amount = transactionRequest.getAmount();
@@ -90,9 +87,8 @@ public class GroupController {
           usernames,
           groupName);
       return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-    catch (IllegalArgumentException e) {
-      return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+    } catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -100,10 +96,9 @@ public class GroupController {
   public ResponseEntity<List<SplitTransactionResponse>> getTransaction(@PathVariable UUID userid,
       @PathVariable(name = "group") String groupName) {
 
-    try{
-      return new ResponseEntity<>(groupService.getTransactions(userid,groupName),HttpStatus.OK);
-    }
-    catch (Exception e) {
+    try {
+      return new ResponseEntity<>(groupService.getTransactions(userid, groupName), HttpStatus.OK);
+    } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 

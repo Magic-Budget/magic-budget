@@ -1,9 +1,9 @@
 package me.magicbudget.dto.outgoing_response;
 
-import me.magicbudget.model.IncomeType;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import me.magicbudget.model.IncomeType;
 
 public record IncomeResponse(
     UUID transaction_id,

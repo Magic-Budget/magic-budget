@@ -22,6 +22,15 @@ public final class UserService {
     this.userInformationRepository = userInformationRepository;
   }
 
+  public static BasicUserInformation getBasicInformation(UserInformation user) {
+    return new BasicUserInformation(
+        user.getId(),
+        user.getUsername(),
+        user.getFullName(),
+        user.getEmail()
+    );
+  }
+
   public User createUser(@NonNull User user) {
     return userRepository.save(user);
   }
@@ -33,16 +42,6 @@ public final class UserService {
   public Optional<UserInformation> getUserByUsername(@NonNull String username) {
     return Optional.ofNullable(userInformationRepository.findByUsername(username));
   }
-
-  public static BasicUserInformation getBasicInformation(UserInformation user){
-    return new BasicUserInformation(
-        user.getId(),
-        user.getUsername(),
-        user.getFullName(),
-        user.getEmail()
-    );
-  }
-
 
   public User updateUser(@NonNull User user) {
     return userRepository.save(user);

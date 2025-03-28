@@ -1,6 +1,12 @@
 package me.magicbudget.service;
 
 import jakarta.transaction.Transactional;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import me.magicbudget.dto.BasicUserInformation;
 import me.magicbudget.dto.outgoing_response.GroupResponse;
 import me.magicbudget.dto.outgoing_response.SplitTransactionResponse;
@@ -13,12 +19,6 @@ import me.magicbudget.repository.SplitTransactionRepository;
 import me.magicbudget.repository.UserInformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class GroupService {
@@ -55,7 +55,8 @@ public class GroupService {
         .anyMatch(group -> group.getGroupName().equalsIgnoreCase(groupName));
 
     if (alreadyInGroup) {
-      throw new IllegalArgumentException("User is already a member of a group with the same name: " + groupName);
+      throw new IllegalArgumentException(
+          "User is already a member of a group with the same name: " + groupName);
     }
 
     // Create a new group
@@ -93,7 +94,8 @@ public class GroupService {
     UserInformation otherUser = userRepository.findByUsername(otherUsername);
 
     if (!areUsersFriends(userInformation, otherUser)) {
-      throw new IllegalArgumentException("User must be friends with the current user to be added to the group");
+      throw new IllegalArgumentException(
+          "User must be friends with the current user to be added to the group");
     }
 
     if (group.getMembers().contains(otherUser)) {
@@ -107,6 +109,7 @@ public class GroupService {
     otherUser.getGroups().add(group);
     userRepository.save(otherUser);
   }
+
   private boolean areUsersFriends(UserInformation currentUser, UserInformation otherUser) {
     return currentUser.getFriendships().stream()
         .anyMatch(friendship -> friendship.getFriend().equals(otherUser));
@@ -126,7 +129,7 @@ public class GroupService {
       GroupResponse groupResponse = new GroupResponse(group.getGroupName());
 
       group.getMembers().forEach(member -> {
-        BasicUserInformation basicUserInformation =  UserService.getBasicInformation(member);
+        BasicUserInformation basicUserInformation = UserService.getBasicInformation(member);
         groupResponse.add(basicUserInformation);
       });
 

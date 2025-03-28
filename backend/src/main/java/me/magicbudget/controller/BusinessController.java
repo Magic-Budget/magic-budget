@@ -3,7 +3,6 @@ package me.magicbudget.controller;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 import me.magicbudget.dto.incoming_request.CreateBusinessRequest;
 import me.magicbudget.model.Business;
 import me.magicbudget.model.User;

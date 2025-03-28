@@ -1,11 +1,14 @@
 package me.magicbudget.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
-import me.magicbudget.dto.incoming_request.LoginUserRequest;
+import java.util.HashMap;
+import java.util.Map;
 import me.magicbudget.dto.incoming_request.RegistrationAndAuthRequest;
-import me.magicbudget.model.User;
-import me.magicbudget.model.UserInformation;
 import me.magicbudget.security.service.RegistrationAndAuthService;
 import me.magicbudget.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,33 +20,22 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 @Transactional
 public class UserControllerTest {
 
-  @Autowired
-  private MockMvc mockMvc;
-
-  @Autowired
-  private ObjectMapper objectMapper;
-
-  @Autowired
-  private RegistrationAndAuthService registrationAndAuthService;
-
-  @Autowired
-  private UserService userService;
-
   private final String username = "testusername";
   private final String password = "test123";
+  @Autowired
+  private MockMvc mockMvc;
+  @Autowired
+  private ObjectMapper objectMapper;
+  @Autowired
+  private RegistrationAndAuthService registrationAndAuthService;
+  @Autowired
+  private UserService userService;
 
   @BeforeEach
   public void setup() {

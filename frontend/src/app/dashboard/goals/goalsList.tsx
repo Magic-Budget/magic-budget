@@ -103,7 +103,7 @@ export default function GoalsList({ goals, onUpdateGoal }: GoalsListProps) {
                         editingGoal.due.toISOString(),
                         editingGoal.name,
                         parseFloat(e.target.value) || 0,
-                        editingGoal.targetPrice
+                        editingGoal.targetPrice,
                       );
                       setEditingGoal(updatedGoal);
                     }
@@ -125,7 +125,7 @@ export default function GoalsList({ goals, onUpdateGoal }: GoalsListProps) {
                         editingGoal.due.toISOString(),
                         editingGoal.name,
                         editingGoal.currAmount,
-                        parseFloat(e.target.value) || 0
+                        parseFloat(e.target.value) || 0,
                       );
                       setEditingGoal(updatedGoal);
                     }

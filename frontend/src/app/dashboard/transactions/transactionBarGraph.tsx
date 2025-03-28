@@ -62,7 +62,7 @@ async function getMonthlySpendings(
   userId: UUID,
   bearerToken: string,
   start: number,
-  end: number
+  end: number,
 ): Promise<{ month: string; actual: number }[]> {
   try {
     const response = await axios.get(
@@ -71,7 +71,7 @@ async function getMonthlySpendings(
         headers: {
           Authorization: `Bearer ${bearerToken}`,
         },
-      }
+      },
     );
 
     // Aggregate spendings by the month

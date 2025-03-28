@@ -1,20 +1,18 @@
 package me.magicbudget.security.service;
 
+import java.util.HashMap;
 import me.magicbudget.dto.incoming_request.LoginUserRequest;
 import me.magicbudget.dto.incoming_request.RegistrationAndAuthRequest;
 import me.magicbudget.model.User;
 import me.magicbudget.model.UserInformation;
 import me.magicbudget.repository.UserInformationRepository;
+import me.magicbudget.repository.UserRepository;
 import me.magicbudget.security.jwt.JwtImplementationService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import me.magicbudget.repository.UserRepository;
-
-
-import java.util.HashMap;
 
 @Service
 public class RegistrationAndAuthService {

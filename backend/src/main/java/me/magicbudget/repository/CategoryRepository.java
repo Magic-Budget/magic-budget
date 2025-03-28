@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 import me.magicbudget.model.Category;
 import me.magicbudget.model.CategoryTotals;
-import org.hibernate.annotations.Parameter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

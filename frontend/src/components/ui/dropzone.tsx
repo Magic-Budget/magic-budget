@@ -16,7 +16,6 @@ import {
 } from "react-dropzone";
 import { ButtonProps, Button } from "./button";
 
-
 type DropzoneResult<TUploadRes, TUploadError> =
   | {
       status: "pending";

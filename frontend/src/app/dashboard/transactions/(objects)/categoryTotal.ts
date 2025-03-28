@@ -1,4 +1,4 @@
-interface CategoryTotals{
-    "category": string;
-    "total": number;
+interface CategoryTotals {
+  category: string;
+  total: number;
 }
