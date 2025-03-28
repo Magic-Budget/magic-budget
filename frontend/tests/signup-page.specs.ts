@@ -18,7 +18,5 @@ test("signup form submission works correctly", async ({ page }) => {
 
   await page.fill("input#password", "yourpassword");
 
-  await Promise.all([
-    page.click('button[type="submit"]'),
-  ]);   
+  await Promise.all([page.click('button[type="submit"]')]);
 });

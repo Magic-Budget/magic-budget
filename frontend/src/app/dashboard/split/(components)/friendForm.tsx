@@ -57,7 +57,7 @@ export default function FriendForm({ onSuccess }: FriendFormProps) {
       },
       {
         headers: requestHeaders,
-      }
+      },
     );
 
     form.reset();

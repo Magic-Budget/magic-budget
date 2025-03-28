@@ -11,22 +11,25 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-public class ApplicationConfiguration   {
+public class ApplicationConfiguration {
 
-  private final UserDetailsServiceImpl userDetailsService ;
+  private final UserDetailsServiceImpl userDetailsService;
 
   public ApplicationConfiguration(UserDetailsServiceImpl userDetailsService) {
     this.userDetailsService = userDetailsService;
   }
 
   @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration authentication) throws Exception {
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration authentication)
+      throws Exception {
     return authentication.getAuthenticationManager();
   }
+
   @Bean
-  public PasswordEncoder passwordEncoder(){
+  public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
+
   @Bean
   public AuthenticationProvider authenticationProvider() {
 

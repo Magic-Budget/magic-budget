@@ -1,18 +1,16 @@
 package me.magicbudget.controller;
 
-import me.magicbudget.model.Category;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 import me.magicbudget.model.CategoryTotals;
 import me.magicbudget.model.ExpenseCategory;
 import me.magicbudget.service.CategoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("api/{userId}/categories")
@@ -25,7 +23,8 @@ public class CategoryController {
   }
 
   @GetMapping("/totals")
-  public ResponseEntity<List<CategoryTotals>> getTransactionByCategoryTotals(@PathVariable("userId") UUID userId) {
+  public ResponseEntity<List<CategoryTotals>> getTransactionByCategoryTotals(
+      @PathVariable("userId") UUID userId) {
     List<CategoryTotals> categoryTotals = categoryService.getCategoryTotals(userId);
     return categoryTotals.isEmpty()
         ? ResponseEntity.notFound().build()

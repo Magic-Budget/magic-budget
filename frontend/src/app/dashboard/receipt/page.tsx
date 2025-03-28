@@ -54,7 +54,7 @@ export default function Receipt() {
               Authorization: `Bearer ${bearerToken}`,
               "Content-Type": "multipart/form-data",
             },
-          }
+          },
         );
 
         return {
@@ -94,7 +94,7 @@ export default function Receipt() {
           headers: {
             Authorization: `Bearer ${bearerToken}`,
           },
-        }
+        },
       );
       setReceipts(response.data);
       console.log("Fetched receipts:", response.data);
@@ -140,15 +140,15 @@ export default function Receipt() {
           headers: {
             Authorization: `Bearer ${bearerToken}`,
           },
-        }
+        },
       );
 
       setReceipts(
         receipts.map((receipt) =>
           receipt.receiptId === selectedReceipt.receiptId
             ? { ...receipt, amount }
-            : receipt
-        )
+            : receipt,
+        ),
       );
 
       setSelectedReceipt({ ...selectedReceipt, amount });
@@ -269,7 +269,7 @@ export default function Receipt() {
                         setEditedAmount(
                           selectedReceipt.amount !== null
                             ? selectedReceipt.amount.toString()
-                            : ""
+                            : "",
                         );
                         setIsEditing(true);
                       }}

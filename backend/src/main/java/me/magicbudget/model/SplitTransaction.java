@@ -52,6 +52,10 @@ public class SplitTransaction extends Transaction {
     return owedTo;
   }
 
+  public void setOwedTo(List<UserInformation> owedTo) {
+    this.owedTo = owedTo;
+  }
+
   public UserInformation getPaidBy() {
     return paidBy;
   }
@@ -63,11 +67,6 @@ public class SplitTransaction extends Transaction {
   public void setGroup(Group group) {
     this.group = group;
   }
-
-  public void setOwedTo(List<UserInformation> owedTo) {
-    this.owedTo = owedTo;
-  }
-
 
   @Override
   public LocalDateTime getTransactionDate() {

@@ -1,5 +1,9 @@
 package me.magicbudget.service;
 
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import me.magicbudget.dto.incoming_request.ExpenseRequest;
 import me.magicbudget.dto.outgoing_response.ExpenseResponse;
 import me.magicbudget.model.Expense;
@@ -10,10 +14,6 @@ import me.magicbudget.repository.ExpenseRepository;
 import me.magicbudget.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class ExpenseService {

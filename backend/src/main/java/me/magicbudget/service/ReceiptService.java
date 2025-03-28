@@ -1,5 +1,6 @@
 package me.magicbudget.service;
 
+import jakarta.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -10,7 +11,6 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import jakarta.transaction.Transactional;
 import me.magicbudget.dto.incoming_request.ReceiptUpdateRequest;
 import me.magicbudget.dto.outgoing_response.ReceiptResponse;
 import me.magicbudget.model.Receipt;
@@ -35,6 +35,21 @@ public class ReceiptService {
   public ReceiptService(UserRepository userRepository, ReceiptRepository receiptRepository) {
     this.userRepository = userRepository;
     this.receiptRepository = receiptRepository;
+  }
+
+  private static BigDecimal extractAmount(String input) {
+    Pattern pattern = Pattern.compile("\\$([\\d,]+\\.?\\d*)");
+    Matcher matcher = pattern.matcher(input);
+    if (matcher.find()) {
+      String amountStr = matcher.group(1).replace(",", "");
+      return new BigDecimal(amountStr);
+    }
+    return null;
+  }
+
+  private static String convertImageToBase64(File imageFile) throws IOException {
+    byte[] fileContent = Files.readAllBytes(imageFile.toPath());
+    return Base64.getEncoder().encodeToString(fileContent);
   }
 
   /**
@@ -118,20 +133,5 @@ public class ReceiptService {
     receipt.setAmount(amount);
 
     receiptRepository.save(receipt);
-  }
-
-  private static BigDecimal extractAmount(String input) {
-    Pattern pattern = Pattern.compile("\\$([\\d,]+\\.?\\d*)");
-    Matcher matcher = pattern.matcher(input);
-    if (matcher.find()) {
-      String amountStr = matcher.group(1).replace(",", "");
-      return new BigDecimal(amountStr);
-    }
-    return null;
-  }
-
-  private static String convertImageToBase64(File imageFile) throws IOException {
-    byte[] fileContent = Files.readAllBytes(imageFile.toPath());
-    return Base64.getEncoder().encodeToString(fileContent);
   }
 }

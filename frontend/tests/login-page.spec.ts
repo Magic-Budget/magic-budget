@@ -16,7 +16,5 @@ test("login form submission works correctly", async ({ page }) => {
   // Fill in the password field using its id.
   await page.fill("input#password", "yourpassword");
 
-  await Promise.all([
-    page.click('button[type="submit"]'),
-  ]);
+  await Promise.all([page.click('button[type="submit"]')]);
 });

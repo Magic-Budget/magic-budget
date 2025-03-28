@@ -18,7 +18,7 @@ export default function IncomeView(props: { incomeId: UUID }) {
           headers: {
             Authorization: `Bearer ${bearerToken}`,
           },
-        }
+        },
       )
       .then((response) => {
         const incomeData = response.data;

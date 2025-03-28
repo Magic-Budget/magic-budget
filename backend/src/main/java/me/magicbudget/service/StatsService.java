@@ -1,10 +1,8 @@
 package me.magicbudget.service;
 
-import me.magicbudget.dto.outgoing_response.IncomeResponse;
+import java.util.UUID;
 import me.magicbudget.dto.outgoing_response.StatsResponse;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.UUID;
 
 @Service
 public final class StatsService {
