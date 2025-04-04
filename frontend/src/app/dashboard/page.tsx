@@ -34,7 +34,7 @@ export default function DashboardPage() {
             headers: {
               Authorization: `Bearer ${bearerToken}`,
             },
-          }
+          },
         );
         setStats(response.data);
         console.log("Stats:", response.data);

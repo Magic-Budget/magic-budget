@@ -1,8 +1,11 @@
 package me.magicbudget.service;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import me.magicbudget.dto.BasicUserInformation;
-import me.magicbudget.dto.outgoing_response.FriendResponse;
 import me.magicbudget.model.Friendship;
 import me.magicbudget.model.UserInformation;
 import me.magicbudget.repository.FriendshipRepository;
@@ -10,10 +13,6 @@ import me.magicbudget.repository.UserInformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class FriendshipService {
@@ -44,7 +43,7 @@ public class FriendshipService {
 
     Optional<UserInformation> user = userRepository.findById(userId);
 
-    if(user.isEmpty()){
+    if (user.isEmpty()) {
       throw new IllegalArgumentException("User with username " + userId + " not found.");
     }
 
@@ -97,7 +96,7 @@ public class FriendshipService {
 
     Optional<UserInformation> user = userRepository.findById(userId);
 
-    if(user.isEmpty()){
+    if (user.isEmpty()) {
       throw new IllegalArgumentException("User with username " + userId + " not found.");
     }
 
@@ -105,7 +104,7 @@ public class FriendshipService {
 
     List<Friendship> friendships = currentUser.getFriendships();
     List<BasicUserInformation> response = new ArrayList<>();
-    for(Friendship friendship : friendships){
+    for (Friendship friendship : friendships) {
       UserInformation friend = friendship.getFriend();
       BasicUserInformation friendResponse = UserService.getBasicInformation(friend);
 

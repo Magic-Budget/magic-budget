@@ -40,7 +40,7 @@ export default function IncomeForm() {
           headers: {
             Authorization: `Bearer ${bearerToken}`,
           },
-        }
+        },
       );
 
       //Clear the inputs

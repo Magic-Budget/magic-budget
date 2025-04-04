@@ -16,7 +16,9 @@ public class BasicUserInformation {
     this.email = email;
   }
 
-  public UUID getUserId() { return userId; }
+  public UUID getUserId() {
+    return userId;
+  }
 
   public String getUsername() {
     return username;

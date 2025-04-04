@@ -46,7 +46,6 @@ public class Transaction {
   private TransactionType transactionType;
 
 
-
   public Transaction() {
   }
 
@@ -75,6 +74,10 @@ public class Transaction {
     return transactionDate;
   }
 
+  public void setTransactionDate(@NotNull LocalDateTime transactionDate) {
+    this.transactionDate = transactionDate;
+  }
+
   public TransactionType getTransactionType() {
     return transactionType;
   }
@@ -93,10 +96,6 @@ public class Transaction {
 
   public @NotNull LocalDateTime getTrasnactionDate() {
     return transactionDate;
-  }
-
-  public void setTransactionDate(@NotNull LocalDateTime transactionDate) {
-    this.transactionDate = transactionDate;
   }
 
   public @NotNull @Digits(integer = 19, fraction = 4) BigDecimal getAmount() {

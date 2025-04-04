@@ -53,7 +53,7 @@ export default function GroupForm({ onSuccess }: GroupFormProps) {
         },
         {
           headers: requestHeaders,
-        }
+        },
       );
 
       form.reset();

@@ -61,7 +61,7 @@ async function getMonthlyIncomes(
   userId: UUID,
   bearerToken: string,
   start: number,
-  end: number
+  end: number,
 ): Promise<{ month: string; actual: number }[]> {
   try {
     //get all incomes
@@ -71,7 +71,7 @@ async function getMonthlyIncomes(
         headers: {
           Authorization: `Bearer ${bearerToken}`,
         },
-      }
+      },
     );
 
     // Aggregate incomes by month

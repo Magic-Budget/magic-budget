@@ -27,17 +27,13 @@ public class Income {
   private IncomeType type;
 
 
-  public Income(User userId,Transaction transaction, IncomeType incomeType) {
+  public Income(User userId, Transaction transaction, IncomeType incomeType) {
     this.userId = userId;
     this.transaction = transaction;
     this.type = incomeType;
   }
 
   public Income() {
-  }
-
-  public void setId(UUID id) {
-    this.id = id;
   }
 
   public User getUserId() {
@@ -48,24 +44,28 @@ public class Income {
     return id;
   }
 
+  public void setId(UUID id) {
+    this.id = id;
+  }
+
   public Transaction getTransaction() {
     return transaction;
-  }
-
-  public User getUser() {
-    return userId;
-  }
-
-  public IncomeType getType() {
-    return type;
   }
 
   public void setTransaction(Transaction transaction) {
     this.transaction = transaction;
   }
 
+  public User getUser() {
+    return userId;
+  }
+
   public void setUser(User user) {
     this.userId = user;
+  }
+
+  public IncomeType getType() {
+    return type;
   }
 
   public void setType(IncomeType type) {

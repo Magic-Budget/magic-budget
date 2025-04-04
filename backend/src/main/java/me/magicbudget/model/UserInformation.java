@@ -5,17 +5,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 public class UserInformation implements UserDetails {
@@ -92,7 +91,9 @@ public class UserInformation implements UserDetails {
     return lastName;
   }
 
-  public String getFullName(){return "%s %s".formatted(firstName, lastName);}
+  public String getFullName() {
+    return "%s %s".formatted(firstName, lastName);
+  }
 
 
   public User getUser() {
