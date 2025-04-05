@@ -35,6 +35,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
     implementation("net.sourceforge.tess4j:tess4j:5.15.0")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
 }
 
 tasks.withType<Test> {

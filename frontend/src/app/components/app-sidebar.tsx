@@ -16,6 +16,7 @@ import {
   Receipt,
   Split,
   PiggyBank,
+  BotMessageSquare
 } from "lucide-react";
 import Link from "next/link";
 
@@ -50,6 +51,11 @@ const items = [
     url: "/dashboard/split",
     icon: Split,
   },
+  {
+    title: "Support Chat",
+    url: "/dashboard/chat",
+    icon: BotMessageSquare,
+  }
 ];
 
 export function AppSidebar() {
