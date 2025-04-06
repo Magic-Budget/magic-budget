@@ -13,6 +13,7 @@ enum Sender {
 }
 
 function SupportChat() {
+	const { id: userId, bearerToken } = useUserStore();
 	const [chatMessages, setChatMessages] = useState<
 		{
 			message: string;
@@ -33,11 +34,17 @@ function SupportChat() {
 			]);
 
 			try {
-				// Make POST request to Spring Boot backend
-				const response = await axios.post("/api/chat", {
-					userID: useUserStore().id,
-					prompt: messageText,
-				});
+				const response = await axios.post(
+					`${process.env.NEXT_PUBLIC_API_URL}/api/${userId}/chat`,
+					{
+						message: messageText,
+					},
+					{
+						headers: {
+							Authorization: `Bearer ${bearerToken}`,
+						},
+					}
+				);
 
 				// Save the AI response
 				setChatMessages((prev) => [
