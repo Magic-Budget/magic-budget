@@ -58,7 +58,7 @@ export function SignupForm({
         setLoading(false);
         setError(
           error.response?.data?.message ||
-            "Registration failed. Please try again."
+            "Registration failed. Please try again.",
         );
       });
   }

@@ -42,9 +42,7 @@ export function SingleFile() {
         <DropzoneMessage />
       </div>
       <DropZoneArea>
-        <DropzoneTrigger className="flex gap-8 bg-transparent text-sm">
-        
-        </DropzoneTrigger>
+        <DropzoneTrigger className="flex gap-8 bg-transparent text-sm"></DropzoneTrigger>
       </DropZoneArea>
     </Dropzone>
   );

@@ -19,4 +19,8 @@ public class CategoryService {
   public List<CategoryTotals> getCategoryTotals(@NonNull UUID userID) {
     return this.categoryRepository.findTotalAmountPerCategory(userID);
   }
+
+  public List<Category> getAllCategories() {
+    return this.categoryRepository.findAll();
+  }
 }

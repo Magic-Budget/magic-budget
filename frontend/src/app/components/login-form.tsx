@@ -54,7 +54,7 @@ export function LoginForm({
       .catch((error) => {
         setError(
           error.response?.data?.message ||
-            "Something went wrong. Please try again."
+            "Something went wrong. Please try again.",
         );
       });
   }

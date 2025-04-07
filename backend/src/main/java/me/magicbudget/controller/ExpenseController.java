@@ -1,5 +1,8 @@
 package me.magicbudget.controller;
 
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.UUID;
 import me.magicbudget.dto.incoming_request.ExpenseRequest;
 import me.magicbudget.dto.outgoing_response.ExpenseResponse;
 import me.magicbudget.service.ExpenseService;
@@ -11,9 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.UUID;
 
 
 @RestController
@@ -31,8 +31,7 @@ public class ExpenseController {
       @PathVariable("userid") UUID userId) {
     try {
       return new ResponseEntity<>(expenseService.viewExpenses(userId), HttpStatus.OK);
-    }
-    catch (IllegalArgumentException e) {
+    } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -69,5 +68,16 @@ public class ExpenseController {
       return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
     }
 
+  }
+
+  @PostMapping("/split/")
+  public ResponseEntity<Boolean> splitExpense(@PathVariable("userid") UUID userID,
+      @RequestBody List<UUID> split_with, @RequestBody UUID expenseID) {
+    try {
+      return new ResponseEntity<>(expenseService.splitExpense(userID, expenseID, split_with),
+          HttpStatus.OK);
+    } catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
   }
 }

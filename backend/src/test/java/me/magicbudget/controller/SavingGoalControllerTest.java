@@ -4,16 +4,21 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.springframework.http.MediaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 import me.magicbudget.dto.incoming_request.LoginUserRequest;
 import me.magicbudget.dto.incoming_request.RegistrationAndAuthRequest;
 import me.magicbudget.model.SavingGoal;
-import me.magicbudget.model.UserInformation;
 import me.magicbudget.model.User;
+import me.magicbudget.model.UserInformation;
 import me.magicbudget.security.service.RegistrationAndAuthService;
 import me.magicbudget.service.SavingGoalService;
 import me.magicbudget.service.UserService;
@@ -22,14 +27,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -101,7 +101,7 @@ public class SavingGoalControllerTest {
     //When
     mockMvc.perform(get("/api/saving-goals/" + savingGoal.getId())
             .header("Authorization", "Bearer " + bearerToken))
-    // Then
+        // Then
         .andExpect(status().isOk())
 
         .andExpect(jsonPath("$.id").value(savingGoal.getId().toString()))
@@ -131,7 +131,7 @@ public class SavingGoalControllerTest {
     // When
     mockMvc.perform(get("/api/saving-goals/" + nonExistentId)
             .header("Authorization", "Bearer " + bearerToken))
-    // Then
+        // Then
         .andExpect(status().isNotFound());
   }
 
@@ -170,7 +170,7 @@ public class SavingGoalControllerTest {
     // When
     mockMvc.perform(get("/api/saving-goals/" + nonExistentId)
             .header("Authorization", "Bearer " + bearerToken))
-    // Then
+        // Then
         .andExpect(status().isNotFound());
   }
 
@@ -256,7 +256,8 @@ public class SavingGoalControllerTest {
     savingGoal2.setName("Goal 2");
     savingGoal2.setAmount(BigDecimal.valueOf(2000));
     savingGoal2.setUser(testUser);
-    savingGoal2 = savingGoalService.createSavingGoal(savingGoal2, testUser.getInformation().getId());
+    savingGoal2 = savingGoalService.createSavingGoal(savingGoal2,
+        testUser.getInformation().getId());
 
     //When
     mockMvc.perform(get("/api/saving-goals/user/" + testUser.getId())

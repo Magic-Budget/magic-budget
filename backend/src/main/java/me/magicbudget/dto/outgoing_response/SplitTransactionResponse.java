@@ -1,4 +1,4 @@
-package me.magicbudget.dto.outgoingresponse;
+package me.magicbudget.dto.outgoing_response;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -18,7 +18,8 @@ public class SplitTransactionResponse {
 
   private final String paidBy;
 
-  public SplitTransactionResponse(UUID transactionId, String name, LocalDateTime transactionDate, BigDecimal amount,
+  public SplitTransactionResponse(UUID transactionId, String name, LocalDateTime transactionDate,
+      BigDecimal amount,
       String description, String paidBy) {
     this.transactionId = transactionId;
     this.name = name;

@@ -1,8 +1,8 @@
-package me.magicbudget.dto.outgoingresponse;
+package me.magicbudget.dto.outgoing_response;
 
-import me.magicbudget.dto.BasicUserInformation;
 import java.util.ArrayList;
 import java.util.List;
+import me.magicbudget.dto.BasicUserInformation;
 
 public class GroupResponse {
 
@@ -15,7 +15,7 @@ public class GroupResponse {
     this.userInformation = new ArrayList<>();
   }
 
-  public void add (BasicUserInformation basicUserInformation) {
+  public void add(BasicUserInformation basicUserInformation) {
     this.userInformation.add(basicUserInformation);
   }
 

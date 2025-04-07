@@ -1,5 +1,7 @@
 package me.magicbudget.controller;
 
+import java.util.List;
+import java.util.UUID;
 import me.magicbudget.dto.incoming_request.GoalCreateRequest;
 import me.magicbudget.dto.outgoing_response.GoalResponse;
 import me.magicbudget.service.GoalService;
@@ -11,8 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("api/{userid}/goals")
@@ -59,7 +59,8 @@ public class GoalController {
   @PatchMapping("/{goalId}")
   public ResponseEntity<GoalResponse> updateGoal(@PathVariable("userid") UUID userId,
       @PathVariable UUID goalId, @RequestBody GoalCreateRequest request) {
-    return goalService.updateGoal(goalId, request.name(), request.target(),request.currentAmount(), request.due())
+    return goalService.updateGoal(goalId, request.name(), request.target(), request.currentAmount(),
+            request.due())
         .map(goal -> new GoalResponse(goal.id(), userId, goal.name(), goal.target(),
             goal.currentAmount(), goal.due()))
         .map(ResponseEntity::ok)

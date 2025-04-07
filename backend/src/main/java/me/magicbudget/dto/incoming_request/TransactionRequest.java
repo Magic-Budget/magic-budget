@@ -1,4 +1,4 @@
-package me.magicbudget.dto.incomingrequest;
+package me.magicbudget.dto.incoming_request;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,7 +17,7 @@ public class TransactionRequest {
   private final String groupName;
 
   public TransactionRequest(String name, LocalDateTime transactionDate, BigDecimal amount,
-                            String description, String groupName) {
+      String description, String groupName) {
     this.name = name;
     this.transactionDate = transactionDate;
     this.amount = amount;

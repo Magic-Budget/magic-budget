@@ -1,5 +1,11 @@
 package me.magicbudget.service;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import me.magicbudget.dto.incoming_request.IncomeRequest;
 import me.magicbudget.dto.outgoing_response.IncomeResponse;
 import me.magicbudget.model.Income;
@@ -11,18 +17,6 @@ import me.magicbudget.repository.IncomeRepository;
 import me.magicbudget.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import static me.magicbudget.model.IncomeType.BIWEEKLY;
-import static me.magicbudget.model.IncomeType.MONTHLY;
-import static me.magicbudget.model.IncomeType.ONETIME;
-import static me.magicbudget.model.IncomeType.WEEKLY;
-import static me.magicbudget.model.IncomeType.YEARLY;
 
 @Service
 public class IncomeService {
@@ -59,24 +53,22 @@ public class IncomeService {
 
   @Transactional
   public void addIncome(UUID userId, IncomeRequest incomeRequest) throws IllegalArgumentException {
-    Optional<User> userById = userService.getUserById(userId);
-    if (userById.isPresent()) {
-      User user = userById.get();
-      try {
-        Transaction transaction = new Transaction(incomeRequest.name(), incomeRequest.date(),
-            incomeRequest.amount(), incomeRequest.description(), TransactionType.INCOME);
+    System.out.println(userId);
+    User user = userService.getUserById(userId)
+        .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        transactionRepository.save(transaction);
+    try {
+      Transaction transaction = new Transaction(incomeRequest.name(), incomeRequest.date(),
+          incomeRequest.amount(), incomeRequest.description(), TransactionType.INCOME);
 
-        Income income = new Income(user, transaction, incomeRequest.type());
-        income.setId(transaction.getId());
-        incomeRepository.save(income);
-      } catch (Exception e) {
-        throw new IllegalArgumentException("An error occurred while adding the income", e);
-      }
+      transactionRepository.save(transaction);
 
+      Income income = new Income(user, transaction, incomeRequest.type());
+      income.setId(transaction.getId());
+      incomeRepository.save(income);
+    } catch (Exception e) {
+      throw new IllegalArgumentException("An error occurred while adding the income", e);
     }
-    throw new IllegalArgumentException("User not found");
   }
 
   public BigDecimal totalIncome(UUID userId) throws IllegalArgumentException {

@@ -1,13 +1,13 @@
 package me.magicbudget.service;
 
-import me.magicbudget.model.Goal;
-import me.magicbudget.repository.GoalRepository;
-import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import me.magicbudget.model.Goal;
+import me.magicbudget.repository.GoalRepository;
+import org.springframework.stereotype.Service;
 
 @Service
 public final class GoalService {

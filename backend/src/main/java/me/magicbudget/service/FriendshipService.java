@@ -1,7 +1,11 @@
 package me.magicbudget.service;
 
 
-import me.magicbudget.dto.outgoingresponse.FriendResponse;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import me.magicbudget.dto.BasicUserInformation;
 import me.magicbudget.model.Friendship;
 import me.magicbudget.model.UserInformation;
 import me.magicbudget.repository.FriendshipRepository;
@@ -9,11 +13,6 @@ import me.magicbudget.repository.UserInformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class FriendshipService {
@@ -44,7 +43,7 @@ public class FriendshipService {
 
     Optional<UserInformation> user = userRepository.findById(userId);
 
-    if(user.isEmpty()){
+    if (user.isEmpty()) {
       throw new IllegalArgumentException("User with username " + userId + " not found.");
     }
 
@@ -93,24 +92,21 @@ public class FriendshipService {
     return false;
   }
 
-  public List<FriendResponse> getFriends(UUID userId) throws IllegalArgumentException {
+  public List<BasicUserInformation> getFriends(UUID userId) throws IllegalArgumentException {
 
     Optional<UserInformation> user = userRepository.findById(userId);
 
-    if(user.isEmpty()){
+    if (user.isEmpty()) {
       throw new IllegalArgumentException("User with username " + userId + " not found.");
     }
 
     UserInformation currentUser = user.get();
 
     List<Friendship> friendships = currentUser.getFriendships();
-    List<FriendResponse> response = new ArrayList<>();
-    for(Friendship friendship : friendships){
+    List<BasicUserInformation> response = new ArrayList<>();
+    for (Friendship friendship : friendships) {
       UserInformation friend = friendship.getFriend();
-      FriendResponse friendResponse = new FriendResponse(friend.getUsername(),
-          friend.getEmail(),
-          friend.getFirstName() + " " +
-              friend.getLastName());
+      BasicUserInformation friendResponse = UserService.getBasicInformation(friend);
 
       response.add(friendResponse);
     }
