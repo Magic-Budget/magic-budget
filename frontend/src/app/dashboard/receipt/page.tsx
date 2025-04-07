@@ -165,7 +165,7 @@ export default function Receipt() {
   }, [selectedReceipt]);
 
   return (
-    <div>
+    <div className="m-3">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">Receipts</h2>
         <Button
