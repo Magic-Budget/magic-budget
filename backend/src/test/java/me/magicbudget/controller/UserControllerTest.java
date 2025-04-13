@@ -6,8 +6,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
-import java.util.HashMap;
-import java.util.Map;
 import me.magicbudget.dto.incoming_request.RegistrationAndAuthRequest;
 import me.magicbudget.security.service.RegistrationAndAuthService;
 import me.magicbudget.service.UserService;
@@ -19,6 +17,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @SpringBootTest
 @ActiveProfiles("test")

@@ -21,6 +21,13 @@ public class Category {
   @Size(max = 50)
   private String name;
 
+  public Category() {
+  }
+
+  public Category(@NotNull @Size(max = 50) String name) {
+    this.name = name;
+  }
+
   public UUID getId() {
     return id;
   }

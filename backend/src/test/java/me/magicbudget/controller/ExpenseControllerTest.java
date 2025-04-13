@@ -22,6 +22,7 @@ import me.magicbudget.model.UserInformation;
 import me.magicbudget.security.service.RegistrationAndAuthService;
 import me.magicbudget.service.ExpenseService;
 import me.magicbudget.service.UserService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

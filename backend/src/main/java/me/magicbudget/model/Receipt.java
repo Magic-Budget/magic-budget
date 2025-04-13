@@ -22,7 +22,7 @@ public class Receipt {
   private UUID id;
 
   @Lob
-  @Column(name = "image")
+  @Column(name = "image", columnDefinition = "text")
   private String image;
 
   @ManyToOne
