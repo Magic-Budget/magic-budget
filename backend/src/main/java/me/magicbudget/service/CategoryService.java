@@ -20,7 +20,4 @@ public class CategoryService {
     return this.categoryRepository.findTotalAmountPerCategory(userID);
   }
 
-  public List<Category> getAllCategories() {
-    return this.categoryRepository.findAll();
-  }
 }
