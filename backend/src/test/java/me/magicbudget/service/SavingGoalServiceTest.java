@@ -1,6 +1,6 @@
 // This code was generated with Claud 3.7 Thinker inside VScode with
 // the prompt "Create a test class for the SavingGoalService class".
-/*package me.magicbudget.service;
+package me.magicbudget.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 import me.magicbudget.model.SavingGoal;
 import me.magicbudget.model.User;
+import me.magicbudget.model.UserInformation;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,7 +33,7 @@ class SavingGoalServiceTest {
   @Test
   void testCreateSavingGoal() {
     // Create a new user
-    User user = new User(null, "savinguser1", "John", "Doe", "password123");
+    User user = new User(new UserInformation("savinguser1", "John", "Doe", "password123", ""));
     User savedUser = userService.createUser(user);
 
     // Create a saving goal
@@ -53,7 +54,7 @@ class SavingGoalServiceTest {
   @Test
   void testGetSavingGoalById() {
     // Create a new user
-    User user = new User(null, "savinguser2", "Jane", "Smith", "password456");
+    User user = new User(new UserInformation("savinguser2", "Jane", "Smith", "password456", ""));
     User savedUser = userService.createUser(user);
 
     // Create and save a saving goal
@@ -76,7 +77,7 @@ class SavingGoalServiceTest {
   @Test
   void testGetSavingGoalsByUserId() {
     // Create a new user
-    User user = new User(null, "savinguser3", "Bob", "Johnson", "password789");
+    User user = new User(new UserInformation("savinguser3", "Bob", "Johnson", "password789", ""));
     User savedUser = userService.createUser(user);
 
     // Create and save multiple saving goals
@@ -104,7 +105,7 @@ class SavingGoalServiceTest {
   @Test
   void testUpdateSavingGoal() {
     // Create a new user
-    User user = new User(null, "savinguser4", "Alice", "Brown", "password101");
+    User user = new User(new UserInformation("savinguser4", "Alice", "Brown", "password101", ""));
     User savedUser = userService.createUser(user);
 
     // Create and save a saving goal
@@ -120,13 +121,14 @@ class SavingGoalServiceTest {
 
     // Assertions
     assertEquals("Complete Home Renovation", updatedGoal.getName(), "Updated name should match");
-    assertEquals(new BigDecimal("20000.00"), updatedGoal.getAmount(), "Updated amount should match");
+    assertEquals(new BigDecimal("20000.00"), updatedGoal.getAmount(),
+        "Updated amount should match");
   }
 
   @Test
   void testDeleteSavingGoal() {
     // Create a new user
-    User user = new User(null, "savinguser5", "Tom", "Wilson", "password202");
+    User user = new User(new UserInformation("savinguser5", "Tom", "Wilson", "password202", ""));
     User savedUser = userService.createUser(user);
 
     // Create and save a saving goal
@@ -148,7 +150,7 @@ class SavingGoalServiceTest {
   @Test
   void testDeleteAllSavingGoalsByUserId() {
     // Create a new user
-    User user = new User(null, "savinguser6", "Emily", "Davis", "password303");
+    User user = new User(new UserInformation("savinguser6", "Emily", "Davis", "password303", ""));
     User savedUser = userService.createUser(user);
 
     // Create and save multiple saving goals
@@ -194,4 +196,4 @@ class SavingGoalServiceTest {
     assertTrue(actualMessage.contains(expectedMessage),
         "Exception message should contain the expected text");
   }
-}*/
+}
