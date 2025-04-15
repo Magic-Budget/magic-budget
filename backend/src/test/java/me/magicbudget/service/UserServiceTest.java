@@ -1,93 +1,70 @@
-/// / This code was generated with Claud 3.7 Thinker inside VScode with / the prompt "Create a test
-/// class for the UserService class".
-//package me.magicbudget.service;
-//
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertNotNull;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
-//
-//import java.util.Optional;
-//import me.magicbudget.model.User;
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.test.context.ActiveProfiles;
-//
-//@SpringBootTest
-//@ActiveProfiles("test")
-//class UserServiceTest {
-//
-//  @Autowired
-//  private UserService userService;
-//
-//  @Test
-//  void testCreateUser() {
-//    var user = new User(null, "testuser", "bruce", "wayne", "");
-//
-//    var savedUser = userService.createUser(user);
-//
-//    assertNotNull(savedUser.getId(), "User ID should not be null after saving");
-//    assertEquals("testuser", savedUser.getUsername(), "Username should match");
-//
-//    System.out.println("Does this work?");
-//  }
-//
-//  @Test
-//  void testGetUserByGetId() {
-//    User user = new User(
-//        null,
-//        "testuser2",
-//        "Clark",
-//        "Kent",
-//        "hashedPass456"
-//    );
-//    User savedUser = userService.createUser(user);
-//
-//    Optional<User> retrievedUserOpt = userService.getUserById(savedUser.getId());
-//
-//    assertTrue(retrievedUserOpt.isPresent(), "User should be present");
-//    User retrievedUser = retrievedUserOpt.get();
-//    assertEquals(savedUser.getId(), retrievedUser.getId());
-//    assertEquals("testuser2", retrievedUser.getUsername());
-//    assertEquals("Clark", retrievedUser.getFirstName());
-//  }
-//
-//
-//  @Test
-//  void testGetUserByGetUsername() {
-//    User user = new User(
-//        null,
-//        "testuser3",
-//        "Diana",
-//        "Prince",
-//        "hashedPass789"
-//    );
-//    userService.createUser(user);
-//
-//    Optional<User> retrievedUserOpt = userService.getUserByUsername("testuser3");
-//
-//    assertTrue(retrievedUserOpt.isPresent(), "User should be present");
-//    User retrievedUser = retrievedUserOpt.get();
-//    assertEquals("testuser3", retrievedUser.getUsername());
-//    assertEquals("Diana", retrievedUser.getFirstName());
-//    assertEquals("Prince", retrievedUser.getLastName());
-//    assertEquals("hashedPass789", retrievedUser.getPassword());
-//  }
-//
-//  @Test
-//  void testUpdateUser() {
-//    User user = new User(
-//        null,
-//        "testuser4",
-//        "Barry",
-//        "Allen",
-//        "hashedPass000"
-//    );
-//    User savedUser = userService.createUser(user);
-//
-//    savedUser.setPassword("newHashedPass000");
-//    User updatedUser = userService.updateUser(savedUser);
-//
-//    assertEquals("newHashedPass000", updatedUser.getPassword());
-//  }
-//}
+package me.magicbudget.service;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Optional;
+
+import me.magicbudget.model.User;
+import me.magicbudget.model.UserInformation;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
+
+@SpringBootTest
+@ActiveProfiles("test")
+@Transactional
+class UserServiceTest {
+
+  @Autowired
+  private UserService userService;
+
+  @Test
+  void testCreateUser() {
+    var user = new User(new UserInformation("testuser", "hashedPass123", "Bruce", "Wayne", ""));
+
+    var savedUser = userService.createUser(user);
+
+    assertNotNull(savedUser.getId(), "User ID should not be null after saving");
+    assertEquals("testuser", savedUser.getInformation().getUsername(), "Username should match");
+  }
+
+  @Test
+  void testGetUserById() {
+    var user = new User(new UserInformation("testuser2", "hashedPass123", "Bruce", "Wayne", ""));
+
+    var savedUser = userService.createUser(user);
+
+    Optional<User> retrievedUserOpt = userService.getUserById(savedUser.getId());
+
+    assertTrue(retrievedUserOpt.isPresent(), "User should be present");
+    User retrievedUser = retrievedUserOpt.get();
+    assertEquals(savedUser.getId(), retrievedUser.getId(), "IDs should match");
+    assertEquals("testuser2", retrievedUser.getInformation().getUsername(),
+        "Username should match");
+  }
+
+  @Test
+  void testGetUserByUsername() {
+    var user = new User(new UserInformation("testuser3", "hashedPass789", "Diana", "Prince", ""));
+
+    userService.createUser(user);
+
+    Optional<UserInformation> retrievedUserOpt = userService.getUserByUsername("testuser3");
+
+    assertTrue(retrievedUserOpt.isPresent(), "User should be present");
+  }
+
+  @Test
+  void testUpdateUser() {
+    var user = new User(new UserInformation("testuser4", "hashedPass000", "Barry", "Allen", ""));
+    var savedUser = userService.createUser(user);
+
+    savedUser.setInformation(new UserInformation("testuser4", "hashedPass", "Barry", "Allen", ""));
+    var updatedUser = userService.updateUser(savedUser);
+
+    assertEquals("hashedPass", updatedUser.getInformation().getPassword(),
+        "Password should be updated");
+  }
+}
