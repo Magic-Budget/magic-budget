@@ -8,9 +8,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import me.magicbudget.dto.incoming_request.RegistrationAndAuthRequest;
 import me.magicbudget.model.Goal;
 import me.magicbudget.model.User;
 import me.magicbudget.model.UserInformation;
+import me.magicbudget.security.service.RegistrationAndAuthService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ class GoalServiceTest {
   @Autowired
   private UserService userService;
 
+  @Autowired
+  private RegistrationAndAuthService registrationService;
+
   private User user;
 
   @BeforeEach
@@ -39,9 +44,19 @@ class GoalServiceTest {
         "Doe",
         "");
 
-    user = new User(userInfo);
-    
-    userService.createUser(user);
+    RegistrationAndAuthRequest request = new RegistrationAndAuthRequest(
+        userInfo.getUsername(),
+        userInfo.getPassword(),
+        userInfo.getFirstName(),
+        userInfo.getLastName(),
+        userInfo.getEmail()
+    );
+    registrationService.registerUser(request);
+
+    var responseInfo = userService.getUserByUsername(userInfo.getUsername())
+        .orElseThrow(() -> new RuntimeException("User not found"));
+
+    user = new User(responseInfo);
   }
 
   @Test

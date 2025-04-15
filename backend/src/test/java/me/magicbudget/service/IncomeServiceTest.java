@@ -4,10 +4,12 @@
 package me.magicbudget.service;
 
 import me.magicbudget.dto.incoming_request.IncomeRequest;
+import me.magicbudget.dto.incoming_request.RegistrationAndAuthRequest;
 import me.magicbudget.dto.outgoing_response.IncomeResponse;
 import me.magicbudget.model.*;
 import me.magicbudget.repository.IncomeRepository;
 import me.magicbudget.repository.TransactionRepository;
+import me.magicbudget.security.service.RegistrationAndAuthService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +41,32 @@ class IncomeServiceTest {
   @Autowired
   private TransactionRepository transactionRepository;
 
+  @Autowired
+  private RegistrationAndAuthService registrationService;
+
   private User testUser;
 
   @BeforeEach
-  void setUp() {
-    var userInfo = new UserInformation("testuser", "password123", "John", "Doe", "");
-    testUser = new User(userInfo);
-    testUser = userService.createUser(testUser);
+  void setup() {
+    var userInfo = new UserInformation("goaluser",
+        "password123",
+        "John",
+        "Doe",
+        "");
+
+    RegistrationAndAuthRequest request = new RegistrationAndAuthRequest(
+        userInfo.getUsername(),
+        userInfo.getPassword(),
+        userInfo.getFirstName(),
+        userInfo.getLastName(),
+        userInfo.getEmail()
+    );
+    registrationService.registerUser(request);
+
+    var responseInfo = userService.getUserByUsername(userInfo.getUsername())
+        .orElseThrow(() -> new RuntimeException("User not found"));
+
+    testUser = new User(responseInfo);
   }
 
   @Test

@@ -18,7 +18,6 @@ import java.util.UUID;
 public class User {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
 
   @OneToOne(cascade = CascadeType.ALL)
@@ -35,6 +34,7 @@ public class User {
   }
 
   public User(UserInformation information) {
+    this.id = information.getId();
     this.information = information;
     this.incomes = new ArrayList<>();
     this.expenses = new ArrayList<>();
