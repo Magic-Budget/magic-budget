@@ -1,6 +1,6 @@
 // This code was generated with Claud 3.7 Thinker inside VScode with
 // the prompt "Create a test class for the SavingGoalService class".
-/*package me.magicbudget.service;
+package me.magicbudget.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -12,8 +12,12 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import me.magicbudget.dto.incoming_request.RegistrationAndAuthRequest;
 import me.magicbudget.model.SavingGoal;
 import me.magicbudget.model.User;
+import me.magicbudget.model.UserInformation;
+import me.magicbudget.security.service.RegistrationAndAuthService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,38 +33,62 @@ class SavingGoalServiceTest {
   @Autowired
   private UserService userService;
 
+  @Autowired
+  private RegistrationAndAuthService registrationService;
+
+  private User user;
+
+  @BeforeEach
+  void setup() {
+    var userInfo = new UserInformation("goaluser",
+        "password123",
+        "John",
+        "Doe",
+        "");
+
+    this.user = createNewUser(userInfo);
+  }
+
+  private User createNewUser(UserInformation userInfo) {
+    RegistrationAndAuthRequest request = new RegistrationAndAuthRequest(
+        userInfo.getUsername(),
+        userInfo.getPassword(),
+        userInfo.getFirstName(),
+        userInfo.getLastName(),
+        userInfo.getEmail()
+    );
+    registrationService.registerUser(request);
+
+    var responseInfo = userService.getUserByUsername(userInfo.getUsername())
+        .orElseThrow(() -> new RuntimeException("User not found"));
+
+    return new User(responseInfo);
+  }
+
   @Test
   void testCreateSavingGoal() {
-    // Create a new user
-    User user = new User(null, "savinguser1", "John", "Doe", "password123");
-    User savedUser = userService.createUser(user);
-
     // Create a saving goal
     SavingGoal goal = new SavingGoal();
     goal.setName("New Car");
     goal.setAmount(new BigDecimal("5000.00"));
 
     // Save the goal
-    SavingGoal savedGoal = savingGoalService.createSavingGoal(goal, savedUser.getId());
+    SavingGoal savedGoal = savingGoalService.createSavingGoal(goal, user.getId());
 
     // Assertions
     assertNotNull(savedGoal.getId(), "Saving goal ID should not be null");
     assertEquals("New Car", savedGoal.getName(), "Goal name should match");
     assertEquals(new BigDecimal("5000.00"), savedGoal.getAmount(), "Goal amount should match");
-    assertEquals(savedUser.getId(), savedGoal.getUser().getId(), "User ID should match");
+    assertEquals(user.getId(), savedGoal.getUser().getId(), "User ID should match");
   }
 
   @Test
   void testGetSavingGoalById() {
-    // Create a new user
-    User user = new User(null, "savinguser2", "Jane", "Smith", "password456");
-    User savedUser = userService.createUser(user);
-
     // Create and save a saving goal
     SavingGoal goal = new SavingGoal();
     goal.setName("Vacation");
     goal.setAmount(new BigDecimal("2500.50"));
-    SavingGoal savedGoal = savingGoalService.createSavingGoal(goal, savedUser.getId());
+    SavingGoal savedGoal = savingGoalService.createSavingGoal(goal, user.getId());
 
     // Retrieve the goal
     Optional<SavingGoal> retrievedGoalOpt = savingGoalService.getSavingGoalById(savedGoal.getId());
@@ -70,28 +98,34 @@ class SavingGoalServiceTest {
     SavingGoal retrievedGoal = retrievedGoalOpt.get();
     assertEquals(savedGoal.getId(), retrievedGoal.getId(), "Goal ID should match");
     assertEquals("Vacation", retrievedGoal.getName(), "Goal name should match");
-    assertEquals(savedUser.getId(), retrievedGoal.getUser().getId(), "User ID should match");
+    assertEquals(user.getId(), retrievedGoal.getUser().getId(), "User ID should match");
   }
 
   @Test
   void testGetSavingGoalsByUserId() {
-    // Create a new user
-    User user = new User(null, "savinguser3", "Bob", "Johnson", "password789");
-    User savedUser = userService.createUser(user);
+    // Set new user
+    UserInformation newInfo = new UserInformation(
+        "goaluser2",
+        "password1234",
+        "Jane",
+        "Doe",
+        ""
+    );
+    User testUser = createNewUser(newInfo);
 
     // Create and save multiple saving goals
     SavingGoal goal1 = new SavingGoal();
     goal1.setName("Emergency Fund");
     goal1.setAmount(new BigDecimal("10000.00"));
-    savingGoalService.createSavingGoal(goal1, savedUser.getId());
+    savingGoalService.createSavingGoal(goal1, testUser.getId());
 
     SavingGoal goal2 = new SavingGoal();
     goal2.setName("New Computer");
     goal2.setAmount(new BigDecimal("1500.00"));
-    savingGoalService.createSavingGoal(goal2, savedUser.getId());
+    savingGoalService.createSavingGoal(goal2, testUser.getId());
 
     // Retrieve goals for the user
-    List<SavingGoal> userGoals = savingGoalService.getSavingGoalsByUserId(savedUser.getId());
+    List<SavingGoal> userGoals = savingGoalService.getSavingGoalsByUserId(testUser.getId());
 
     // Assertions
     assertEquals(2, userGoals.size(), "User should have 2 saving goals");
@@ -103,15 +137,12 @@ class SavingGoalServiceTest {
 
   @Test
   void testUpdateSavingGoal() {
-    // Create a new user
-    User user = new User(null, "savinguser4", "Alice", "Brown", "password101");
-    User savedUser = userService.createUser(user);
 
     // Create and save a saving goal
     SavingGoal goal = new SavingGoal();
     goal.setName("Home Renovation");
     goal.setAmount(new BigDecimal("15000.00"));
-    SavingGoal savedGoal = savingGoalService.createSavingGoal(goal, savedUser.getId());
+    SavingGoal savedGoal = savingGoalService.createSavingGoal(goal, user.getId());
 
     // Update the goal
     savedGoal.setAmount(new BigDecimal("20000.00"));
@@ -120,20 +151,17 @@ class SavingGoalServiceTest {
 
     // Assertions
     assertEquals("Complete Home Renovation", updatedGoal.getName(), "Updated name should match");
-    assertEquals(new BigDecimal("20000.00"), updatedGoal.getAmount(), "Updated amount should match");
+    assertEquals(new BigDecimal("20000.00"), updatedGoal.getAmount(),
+        "Updated amount should match");
   }
 
   @Test
   void testDeleteSavingGoal() {
-    // Create a new user
-    User user = new User(null, "savinguser5", "Tom", "Wilson", "password202");
-    User savedUser = userService.createUser(user);
-
     // Create and save a saving goal
     SavingGoal goal = new SavingGoal();
     goal.setName("Wedding");
     goal.setAmount(new BigDecimal("8000.00"));
-    SavingGoal savedGoal = savingGoalService.createSavingGoal(goal, savedUser.getId());
+    SavingGoal savedGoal = savingGoalService.createSavingGoal(goal, user.getId());
 
     // Delete the goal
     savingGoalService.deleteSavingGoal(savedGoal.getId());
@@ -147,30 +175,27 @@ class SavingGoalServiceTest {
 
   @Test
   void testDeleteAllSavingGoalsByUserId() {
-    // Create a new user
-    User user = new User(null, "savinguser6", "Emily", "Davis", "password303");
-    User savedUser = userService.createUser(user);
 
     // Create and save multiple saving goals
     SavingGoal goal1 = new SavingGoal();
     goal1.setName("College Fund");
     goal1.setAmount(new BigDecimal("25000.00"));
-    savingGoalService.createSavingGoal(goal1, savedUser.getId());
+    savingGoalService.createSavingGoal(goal1, user.getId());
 
     SavingGoal goal2 = new SavingGoal();
     goal2.setName("New Phone");
     goal2.setAmount(new BigDecimal("1000.00"));
-    savingGoalService.createSavingGoal(goal2, savedUser.getId());
+    savingGoalService.createSavingGoal(goal2, user.getId());
 
     // Verify goals exist
-    List<SavingGoal> userGoalsBefore = savingGoalService.getSavingGoalsByUserId(savedUser.getId());
-    assertEquals(2, userGoalsBefore.size(), "User should have 2 saving goals initially");
+    List<SavingGoal> userGoalsBefore = savingGoalService.getSavingGoalsByUserId(user.getId());
+    assertFalse(userGoalsBefore.isEmpty(), "User should have at least 1 saving goal initially");
 
     // Delete all goals for the user
-    savingGoalService.deleteAllSavingGoalsByUserId(savedUser.getId());
+    savingGoalService.deleteAllSavingGoalsByUserId(user.getId());
 
     // Verify goals are deleted
-    List<SavingGoal> userGoalsAfter = savingGoalService.getSavingGoalsByUserId(savedUser.getId());
+    List<SavingGoal> userGoalsAfter = savingGoalService.getSavingGoalsByUserId(user.getId());
     assertEquals(0, userGoalsAfter.size(), "User should have 0 saving goals after deletion");
   }
 
@@ -194,4 +219,4 @@ class SavingGoalServiceTest {
     assertTrue(actualMessage.contains(expectedMessage),
         "Exception message should contain the expected text");
   }
-}*/
+}

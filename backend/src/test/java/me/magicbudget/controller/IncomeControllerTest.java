@@ -169,8 +169,6 @@ public class IncomeControllerTest {
 
   @Test
   public void testGetIncomeForUserEmpty() throws Exception {
-    // Given
-    // No Income for the user
 
     // When
     mockMvc.perform(get("/api/" + testUser.getId() + "/income/view-all")

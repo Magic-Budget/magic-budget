@@ -2,6 +2,8 @@ package me.magicbudget.model;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
@@ -32,6 +34,7 @@ public class User {
   }
 
   public User(UserInformation information) {
+    this.id = information.getId();
     this.information = information;
     this.incomes = new ArrayList<>();
     this.expenses = new ArrayList<>();
