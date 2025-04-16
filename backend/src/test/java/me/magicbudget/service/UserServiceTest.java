@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import me.magicbudget.model.User;
 import me.magicbudget.model.UserInformation;
+import me.magicbudget.security.service.RegistrationAndAuthService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,10 +20,14 @@ class UserServiceTest {
 
   @Autowired
   private UserService userService;
+  @Autowired
+  private RegistrationAndAuthService registrationAndAuthService;
 
   @Test
   void testCreateUser() {
-    var user = new User(new UserInformation("testuser", "hashedPass123", "Bruce", "Wayne", ""));
+
+    var user = registrationAndAuthService.createUser(
+        new UserInformation("testuser", "hashedPass123", "Bruce", "Wayne", ""));
 
     var savedUser = userService.createUser(user);
 
@@ -32,7 +37,8 @@ class UserServiceTest {
 
   @Test
   void testGetUserById() {
-    var user = new User(new UserInformation("testuser2", "hashedPass123", "Bruce", "Wayne", ""));
+    var user = registrationAndAuthService.createUser(
+        new UserInformation("testuser2", "hashedPass123", "Bruce", "Wayne", ""));
 
     var savedUser = userService.createUser(user);
 
@@ -47,7 +53,8 @@ class UserServiceTest {
 
   @Test
   void testGetUserByUsername() {
-    var user = new User(new UserInformation("testuser3", "hashedPass789", "Diana", "Prince", ""));
+    var user = registrationAndAuthService.createUser(
+        new UserInformation("testuser3", "hashedPass789", "Diana", "Prince", ""));
 
     userService.createUser(user);
 
@@ -58,7 +65,8 @@ class UserServiceTest {
 
   @Test
   void testUpdateUser() {
-    var user = new User(new UserInformation("testuser4", "hashedPass000", "Barry", "Allen", ""));
+    var user = registrationAndAuthService.createUser(
+        new UserInformation("testuser4", "hashedPass000", "Barry", "Allen", ""));
     var savedUser = userService.createUser(user);
 
     savedUser.setInformation(new UserInformation("testuser4", "hashedPass", "Barry", "Allen", ""));

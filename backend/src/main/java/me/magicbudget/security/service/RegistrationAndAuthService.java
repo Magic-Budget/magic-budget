@@ -57,6 +57,21 @@ public class RegistrationAndAuthService {
     return true;
   }
 
+  public User createUser(UserInformation userInformation) {
+    if (userInformationRepository.findByUsername(userInformation.getUsername()) != null) {
+      return null;
+    }
+
+    userInformationRepository.save(userInformation);
+
+    User user = new User(userInformation);
+    user.setId(userInformation.getId());
+    user.setInformation(userInformation);
+    userRepository.save(user);
+
+    return user;
+  }
+
   public String authenticate(LoginUserRequest request) {
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(request.username(), request.password()));
